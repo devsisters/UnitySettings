@@ -37,6 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
+    <Compile Include="src\GUI\*.cs" />
+    <Compile Include="src\Log\*.cs" />
+    <Compile Include="src\Util\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
