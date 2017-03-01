@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum ReportView
+public enum DashboardView
 {
     Logs,
     Info,
 }
 
-public class Reporter : MonoBehaviour
+public class Dashboard : MonoBehaviour
 {
     private Config _config;
     private Log.Stash _logStash;
@@ -49,7 +49,7 @@ public class Reporter : MonoBehaviour
         if (_isShowingGUI)
         {
             // TODO: close
-            _guiDrawer.OnGUI(ReportView.Logs);
+            _guiDrawer.OnGUI(DashboardView.Logs);
         }
         else
         {

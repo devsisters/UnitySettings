@@ -9,7 +9,7 @@
     <ProjectGuid>{D2868622-A814-44FF-A5BE-1DA488EB660D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>UnityReporter</AssemblyName>
+    <AssemblyName>UnityDashboard</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>

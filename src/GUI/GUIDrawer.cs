@@ -20,17 +20,17 @@ namespace GUI
             _logStash = logStash;
         }
 
-        public void OnGUI(ReportView view)
+        public void OnGUI(DashboardView view)
         {
             switch (view)
             {
-                case ReportView.Info:
+                case DashboardView.Info:
                     {
                         var screenRect = new Rect(0, 0, Screen.width, Screen.height);
                         _infoDrawer.Draw(screenRect, _sizeY * 2, _sizeX * 2);
                     }
                     break;
-                case ReportView.Logs:
+                case DashboardView.Logs:
                     {
                         var toolbarHeight = _sizeY * 2;
                         var toolbarRect = new Rect(0, 0,

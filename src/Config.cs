@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class Config
 {
-    public ReportView StartView = ReportView.Logs;
+    public DashboardView StartView = DashboardView.Logs;
     public bool Collapse = false;
     public bool ClearOnSceneLoad = false;
     public bool ShowTime = false;
@@ -12,7 +12,7 @@ public class Config
     public string FilterText = string.Empty;
     public float Size = 32;
 
-    private const string _prefKey = "UnityReporter_Config";
+    private const string _prefKey = "UnityDashboard_Config";
 
     public static Config LoadFromPrefs()
     {
