@@ -7,7 +7,6 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
     <ProjectGuid>{D2868622-A814-44FF-A5BE-1DA488EB660D}</ProjectGuid>
-    <RootNamespace>Dashboard</RootNamespace>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>UnityDashboard</AssemblyName>
@@ -38,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
+    <Compile Include="src\Gesture\*.cs" />
     <Compile Include="src\GUI\*.cs" />
     <Compile Include="src\Log\*.cs" />
     <Compile Include="src\Util\*.cs" />

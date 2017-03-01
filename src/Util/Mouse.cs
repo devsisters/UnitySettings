@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Util
+namespace Dashboard.Util
 {
     internal static class Mouse
     {

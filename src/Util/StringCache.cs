@@ -1,10 +1,12 @@
 using Cache = System.Collections.Generic.Dictionary<int, string>;
 
-namespace Util
+namespace Dashboard.Util
 {
     internal class StringCache
     {
         private readonly Cache _cache = new Cache(128);
+
+        // public int Count { get { return _cache.Count; } }
 
         public string Cache(string queryStr)
         {

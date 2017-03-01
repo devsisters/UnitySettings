@@ -1,10 +1,12 @@
 using UnityEngine;
 
-namespace Util
+namespace Dashboard
 {
-    internal class CircleGestureDetector
+    internal class CircleGesture : IGesture
     {
         private const int _minSqrDistToSample = 100;
+
+        private readonly ITouchProvider _touchProvider;
 
         private int _touchCnt;
         private Vector2 _touchSum;
@@ -13,6 +15,11 @@ namespace Util
         private Vector2 _lastTouch;
         private Vector2 _lastDelta;
 
+        public CircleGesture(ITouchProvider touchProvider)
+        {
+            _touchProvider = touchProvider;
+        }
+
         public void Clear()
         {
             _touchCnt = 0;
@@ -20,30 +27,10 @@ namespace Util
             _touchLength = 0;
         }
 
-        public bool GetTouchPosition(out Vector2 result)
-        {
-            result = Vector2.zero;
-            if (Input.touchSupported)
-            {
-                if (Input.touches.Length != 1) return false;
-                var touch = Input.touches[0];
-                if (touch.phase != TouchPhase.Moved) return false;
-                result = touch.position;
-                return true;
-            }
-            else
-            {
-                if (Input.GetMouseButtonUp(0)) return false;
-                if (!Input.GetMouseButton(0)) return false;
-                result = Input.mousePosition;
-                return true;
-            }
-        }
-
         public void SampleOrCancel()
         {
             Vector2 touchPos;
-            if (!GetTouchPosition(out touchPos))
+            if (!_touchProvider.GetDown(out touchPos))
             {
                 Clear();
                 return;

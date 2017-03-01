@@ -1,56 +1,30 @@
 ﻿using UnityEngine;
+using Drawers = System.Collections.Generic.Dictionary<string, Dashboard.GUI.IDrawer>;
 
-namespace GUI
+namespace Dashboard.GUI
 {
     internal class Drawer
     {
         private int _sizeX = 32;
         private int _sizeY = 32;
 
-        private readonly InfoDrawer _infoDrawer;
-        private readonly ToolbarDrawer _toolbarDrawer;
-        private readonly LogDrawer _logDrawer;
-        private readonly Log.Stash _logStash;
+        private readonly Drawers _drawers = new Drawers(4);
 
-        public Drawer(Icons icons, Styles styles, Log.Stash logStash)
+        public void OnGUI(string key)
         {
-            _infoDrawer = new InfoDrawer(icons, styles);
-            _toolbarDrawer = new ToolbarDrawer(icons, styles);
-            _logDrawer = new LogDrawer(icons, styles);
-            _logStash = logStash;
-        }
-
-        public void OnGUI(DashboardView view)
-        {
-            switch (view)
+            IDrawer drawer;
+            if (!_drawers.TryGetValue(key, out drawer))
             {
-                case DashboardView.Info:
-                    {
-                        var screenRect = new Rect(0, 0, Screen.width, Screen.height);
-                        _infoDrawer.Draw(screenRect, _sizeY * 2, _sizeX * 2);
-                    }
-                    break;
-                case DashboardView.Logs:
-                    {
-                        var toolbarHeight = _sizeY * 2;
-                        var toolbarRect = new Rect(0, 0,
-                            Screen.width, toolbarHeight);
-                        _toolbarDrawer.Draw(toolbarRect, _sizeX * 2);
-                        var logRect = new Rect(0, toolbarHeight,
-                            Screen.width, Screen.height * 0.75f - toolbarHeight);
-                        // TODO
-                        _logDrawer.Draw(logRect, _sizeY, _sizeX, _logStash.Danger_All(), 0, default(Log.Mask), false, false);
-                    }
-                    break;
-                default:
-                    // something went wrong.
-                    break;
+                // something went wrong.
+                return;
             }
+
+            var screenRect = new Rect(0, 0, Screen.width, Screen.height);
+            drawer.Draw(screenRect, _sizeX, _sizeY);
         }
-
     }
-
 }
+
 // logDate = System.DateTime.Now.ToString();
 // float toolbarOldDrag = 0;
 // float oldDrag;
@@ -80,3 +54,36 @@ graphScrollerSkin.verticalScrollbarThumb.fixedWidth = 0f;
 graphScrollerSkin.horizontalScrollbarThumb.fixedHeight = size.x * 2f;
 */
 
+// private readonly InfoDrawer _infoDrawer;
+// private readonly ToolbarDrawer _toolbarDrawer;
+// private readonly LogDrawer _logDrawer;
+// private readonly Log.Stash _logStash;
+// _infoDrawer = new InfoDrawer(icons, styles);
+// _toolbarDrawer = new ToolbarDrawer(icons, styles);
+// _logDrawer = new LogDrawer(icons, styles);
+// _logStash = logStash;
+
+// switch (view)
+// {
+//     case DashboardView.Info:
+//         {
+//             var screenRect = new Rect(0, 0, Screen.width, Screen.height);
+//             _infoDrawer.Draw(screenRect, _sizeY * 2, _sizeX * 2);
+//         }
+//         break;
+//     case DashboardView.Logs:
+//         {
+//             var toolbarHeight = _sizeY * 2;
+//             var toolbarRect = new Rect(0, 0,
+//                 Screen.width, toolbarHeight);
+//             _toolbarDrawer.Draw(toolbarRect, _sizeX * 2);
+//             var logRect = new Rect(0, toolbarHeight,
+//                 Screen.width, Screen.height * 0.75f - toolbarHeight);
+//             // TODO
+//             _logDrawer.Draw(logRect, _sizeY, _sizeX, _logStash.Danger_All(), 0, default(Log.Mask), false, false);
+//         }
+//         break;
+//     default:
+//         // something went wrong.
+//         break;
+// }

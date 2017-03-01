@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GUI
+namespace Dashboard.GUI
 {
     internal class InfoDrawer
     {

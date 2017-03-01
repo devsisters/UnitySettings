@@ -1,6 +1,6 @@
 using L = UnityEngine.LogType;
 
-namespace Log
+namespace Dashboard.Log
 {
     public struct Mask
     {

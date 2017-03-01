@@ -1,5 +1,11 @@
-using UnityDashboard;
-
-public class CircleGestureDetector
+namespace Test
 {
+    public class CircleGesture
+    {
+        public void Foo()
+        {
+            var target = new Dashboard.CircleGesture();
+            target.
+        }
+    }
 }

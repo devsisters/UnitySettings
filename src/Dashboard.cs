@@ -1,73 +1,66 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using BehaviourListeners = System.Collections.Generic.List<Dashboard.IBehaviourListener>;
 
-public enum DashboardView
+namespace Dashboard
 {
-    Logs,
-    Info,
-}
-
-public class Dashboard : MonoBehaviour
-{
-    private Config _config;
-    private Log.Stash _logStash;
-    private Log.Broker _logBroker;
-    private GUI.Drawer _guiDrawer;
-    private Util.CircleGestureDetector _gestureDetector;
-    private bool _isShowingGUI;
-
-    private void Awake()
+    public class Dashboard : MonoBehaviour
     {
-        _config = Config.LoadFromPrefs();
-        _logStash = new Log.Stash();
-        _logBroker = new Log.Broker(_logStash);
-        var icons = GUI.Icons.Load();
-        var styles = new GUI.Styles();
-        _guiDrawer = new GUI.Drawer(icons, styles, _logStash);
-    }
+        private Config _config;
+        private string _viewToDraw;
+        private IGesture _gesture;
+        private GUI.Drawer _guiDrawer;
+        private bool _isShowingGUI;
+        private readonly BehaviourListeners _behaviourListeners = new BehaviourListeners(8);
 
-    private void OnDestroy()
-    {
-        _config.SaveToPrefs();
-    }
-
-    private void OnEnable()
-    {
-        _logBroker.Connect();
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        _logBroker.Disconnect();
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void Update()
-    {
-        _logBroker.Update();
-        if (_isShowingGUI)
+        private void Awake()
         {
-            // TODO: close
-            _guiDrawer.OnGUI(DashboardView.Logs);
+            _config = Config.LoadFromPrefs();
+            _viewToDraw = _config.StartView;
+            _gesture = new CircleGesture(new TouchProvider());
+            _guiDrawer = new GUI.Drawer();
+            InjectDependency();
+            // var icons = GUI.Icons.Load();
+            // var styles = new GUI.Styles();
         }
-        else
+
+        private void InjectDependency()
         {
-            _gestureDetector.SampleOrCancel();
-            if (_gestureDetector.CheckAndClear())
-                _isShowingGUI = true;
+            _behaviourListeners.Add(new Log.Watch());
         }
-    }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-    {
-        if (_config.ClearOnSceneLoad)
-            Clear();
-    }
+        private void OnEnable()
+        {
+            foreach (var l in _behaviourListeners)
+                l.OnEnable();
+        }
 
-    private void Clear()
-    {
-        _logStash.Clear();
+        private void OnDestroy()
+        {
+            foreach (var l in _behaviourListeners)
+                l.OnDisable();
+            _config.SaveToPrefs();
+        }
+
+        private void Update()
+        {
+            foreach (var l in _behaviourListeners)
+                l.Update();
+            DetectGestureOrUpdateGUI();
+        }
+
+        private void DetectGestureOrUpdateGUI()
+        {
+            if (_isShowingGUI)
+            {
+                _guiDrawer.OnGUI(_viewToDraw);
+            }
+            else
+            {
+                _gesture.SampleOrCancel();
+                if (_gesture.CheckAndClear())
+                    _isShowingGUI = true;
+            }
+        }
     }
 }
 

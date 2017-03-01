@@ -1,16 +1,15 @@
 using UnityEngine;
-using List = System.Collections.Generic.List<Log.Log>;
+using List = System.Collections.Generic.List<Dashboard.Log.Log>;
 
-namespace GUI
+namespace Dashboard.Log
 {
-    internal class LogDrawer
+    internal class GUIDrawer
     {
-        private readonly Icons _icons;
-        private readonly Styles _styles;
+        private readonly GUI.Icons _icons;
+        private readonly GUI.Styles _styles;
         private float _scrollY;
-        private const int startIndex = 0; // TODO
 
-        public LogDrawer(Icons icons, Styles styles)
+        public GUIDrawer(GUI.Icons icons, GUI.Styles styles)
         {
             _icons = icons;
             _styles = styles;
@@ -59,7 +58,7 @@ namespace GUI
         }
 
         private void DrawRow(
-            Log.Log log,
+            Log log,
             float rowHeight, float cellX, bool showTime, bool showScene,
             GUIStyle style, GUIStyle fontStyle,
             System.Action onClick)
@@ -76,21 +75,23 @@ namespace GUI
             float rightX = Screen.width;
             if (showScene)
             {
-                DrawRightLabel(log.Scene, rowHeight, style, ref rightX);
+                DrawRightLabel(log.Sample.Scene, rowHeight, style, ref rightX);
                 DrawRightIcon(_icons.ShowScene, rowHeight, cellX, style, ref rightX);
             }
             if (showTime)
             {
-                DrawRightLabel(log.Time.ToString("0.000"), rowHeight, style, ref rightX);
+                DrawRightLabel(log.Sample.Time.ToString("0.000"), rowHeight, style, ref rightX);
                 DrawRightIcon(_icons.ShowTime, rowHeight, cellX, style, ref rightX);
             }
         }
 
         public void Draw(
             Rect area, float rowHeight, float cellX,
-            List logs, int selectedLog, Log.Mask logMask,
+            List logs, int selectedLog, Mask logMask,
             bool showTime, bool showScene)
         {
+            const int startIndex = 0; // TODO
+
             UpdateScroll(area);
 
             GUILayout.BeginArea(area, _styles.Back);
@@ -245,3 +246,21 @@ namespace GUI
          */
     }
 }
+
+//         if (selectedLog != null)
+//         {
+//             int newSelectedIndex = currentLog.IndexOf(selectedLog);
+//             if (newSelectedIndex == -1)
+//             {
+//                 Log collapsedSelected = logsDic[selectedLog.condition][selectedLog.stacktrace];
+//     newSelectedIndex = currentLog.IndexOf(collapsedSelected);
+//                 if (newSelectedIndex != -1)
+//                     scrollPosition.y = newSelectedIndex* size.y;
+// }
+//             else
+//             {
+//                 scrollPosition.y = newSelectedIndex* size.y;
+//             }
+//         }
+//     }
+// }

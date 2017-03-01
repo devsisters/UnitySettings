@@ -1,22 +1,46 @@
-namespace Log
+using LogType = UnityEngine.LogType;
+
+namespace Dashboard.Log
 {
-    internal class Log
+    internal struct Sample
     {
-        public readonly UnityEngine.LogType Type;
-        public readonly string Message;
-        public readonly string Stacktrace;
         public readonly float Time;
         public readonly string Scene;
 
-        public Log(
-            UnityEngine.LogType type, string message, string stacktrace,
-            float time, string scene)
+        public Sample(float time, string scene)
+        {
+            Time = time;
+            Scene = scene;
+        }
+    }
+
+    internal struct RawLog
+    {
+        public readonly LogType Type;
+        public readonly string Message;
+        public readonly string Stacktrace;
+
+        public RawLog(LogType type, string message, string stacktrace)
         {
             Type = type;
             Message = message;
             Stacktrace = stacktrace;
-            Time = time;
-            Scene = scene;
+        }
+    }
+
+    internal struct Log
+    {
+        public readonly LogType Type;
+        public readonly string Message;
+        public readonly string Stacktrace;
+        public readonly Sample Sample;
+
+        public Log(LogType type, string message, string stacktrace, Sample sample)
+        {
+            Type = type;
+            Message = message;
+            Stacktrace = stacktrace;
+            Sample = sample;
         }
     }
 }

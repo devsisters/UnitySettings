@@ -1,19 +1,13 @@
-using System.Collections.Generic;
+using Queue = System.Collections.Generic.List<Dashboard.Log.RawLog>;
 using UnityEngine;
 
-namespace Log
+namespace Dashboard.Log
 {
     internal class Broker
     {
         private bool _isConnected = false;
         private bool _isQueueEmpty = true;
-        private readonly List<Log> _queue = new List<Log>(16);
-        private readonly Stash _stash;
-
-        public Broker(Stash stash)
-        {
-            _stash = stash;
-        }
+        private readonly Queue _queue = new Queue(16);
 
         public void Connect()
         {
@@ -41,8 +35,7 @@ namespace Log
 
         private void OnLogMessageReceivedThreaded(string message, string stacktrace, LogType type)
         {
-            // TODO
-            var log = new Log(type, message, stacktrace, 0, "");
+            var log = new RawLog(type, message, stacktrace);
             lock (_queue)
             {
                 _isQueueEmpty = false;
@@ -50,34 +43,24 @@ namespace Log
             }
         }
 
-        public void Update()
+        public void Transfer(Stash stash)
         {
             if (_isQueueEmpty) return;
+            var sample = Sample();
             lock (_queue)
             {
                 foreach (var l in _queue)
-                    _stash.Add(l);
+                    stash.Add(l, sample);
                 _isQueueEmpty = true;
                 _queue.Clear();
             }
         }
+
+        private Sample Sample()
+        {
+            var time = UnityEngine.Time.realtimeSinceStartup;
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            return new Sample(time, scene);
+        }
     }
 }
-
-//         if (selectedLog != null)
-//         {
-//             int newSelectedIndex = currentLog.IndexOf(selectedLog);
-//             if (newSelectedIndex == -1)
-//             {
-//                 Log collapsedSelected = logsDic[selectedLog.condition][selectedLog.stacktrace];
-//     newSelectedIndex = currentLog.IndexOf(collapsedSelected);
-//                 if (newSelectedIndex != -1)
-//                     scrollPosition.y = newSelectedIndex* size.y;
-// }
-//             else
-//             {
-//                 scrollPosition.y = newSelectedIndex* size.y;
-//             }
-//         }
-//     }
-// }
