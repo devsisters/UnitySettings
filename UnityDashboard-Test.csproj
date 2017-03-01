@@ -6,10 +6,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{D2868622-A814-44FF-A5BE-1DA488EB660D}</ProjectGuid>
+    <ProjectGuid>{C0E5CC1F-AACD-4794-A66D-D63D3E0BA3B5}</ProjectGuid>
+    <RootNamespace>Dashboard.Test</RootNamespace>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>UnityDashboard</AssemblyName>
+    <AssemblyName>UnityDashboard-Test</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -32,14 +33,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
-      <HintPath>lib/UnityEngine.dll</HintPath>
+      <HintPath>lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityDashboard">
+      <HintPath>lib\UnityDashboard.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\*.cs" />
-    <Compile Include="src\GUI\*.cs" />
-    <Compile Include="src\Log\*.cs" />
-    <Compile Include="src\Util\*.cs" />
+    <Compile Include="test\*.cs" />
+    <Compile Include="test\Util\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
