@@ -5,6 +5,7 @@ namespace Test
         public static void Main(string[] args)
         {
             new Util.CircleGesture().Test();
+            new Util.StringCache().Test();
         }
     }
 }

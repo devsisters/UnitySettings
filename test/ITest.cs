@@ -13,7 +13,7 @@ namespace Test
         {
             Log.I("[" + _name + "] starts...");
             TestImpl();
-            Log.I("[" + _name + "] done...");
+            Log.I("[" + _name + "] done");
         }
 
         protected abstract void TestImpl();

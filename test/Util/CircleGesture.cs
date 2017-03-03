@@ -69,10 +69,18 @@ namespace Test.Util
                 var y = (float)(radius * Math.Cos(sliceRad * i));
                 test_Sample(x, y, i + 1);
             }
-
             test_Check(true);
             test_Check(false);
-            test_Sample(0, 0, 1);
+
+            var startIndex = 3;
+            for (var i = startIndex; i != slice - 2; ++i)
+            {
+                var x = (float)(radius * Math.Sin(sliceRad * i));
+                var y = (float)(radius * Math.Cos(sliceRad * i));
+                test_Sample(x, y, i + 1 - startIndex);
+            }
+            test_Check(false);
+            test_Check(false);
         }
     }
 }
