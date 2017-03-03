@@ -1,3 +1,4 @@
+using System;
 using Vector2 = UnityEngine.Vector2;
 
 namespace Test.Util
@@ -6,8 +7,7 @@ namespace Test.Util
     {
         public CircleGesture()
             : base("CircleGesture")
-        {
-        }
+        { }
 
         public class TouchProvider : Dashboard.ITouchProvider
         {
@@ -30,20 +30,49 @@ namespace Test.Util
             var touch = new TouchProvider();
             var target = new Dashboard.CircleGesture(touch, 100);
 
-            System.Action<float, float, int> sampleAndCheck = (x, y, cnt) =>
+            Action<float, float, int> test_Sample = (x, y, cnt) =>
             {
                 touch.Next = V2(x, y);
                 target.SampleOrCancel();
                 Assert.Equals(target.TouchCount, cnt);
             };
 
-            sampleAndCheck(0, 0, 1);
-            sampleAndCheck(0, 0, 1);
-            sampleAndCheck(0, 5, 1);
-            sampleAndCheck(0, 10, 2);
-            sampleAndCheck(0, -10, 0);
+            Action<bool> test_Check = shouldTrue =>
+            {
+                var result = target.CheckAndClear();
+                Assert.Equals(result, shouldTrue);
+                if (result) Assert.Equals(target.TouchCount, 0);
+            };
 
-            sampleAndCheck(0, 0, 1);
+            test_Sample(0, 0, 1);
+            test_Sample(0, 0, 1);
+            test_Sample(0, 5, 1);
+            test_Sample(0, 10, 2);
+            test_Sample(0, -10, 0);
+
+            test_Sample(0, 0, 1);
+            test_Sample(0, 10, 2);
+            test_Sample(10, 10, 3);
+            test_Sample(20, 20, 4);
+            test_Check(false);
+
+            test_Sample(20, 20, 4);
+            test_Sample(10, 20, 0);
+            test_Check(false);
+
+            var radius = 60;
+            var slice = 20;
+            var sliceRad = 2 * Math.PI / slice;
+            for (var i = 0; i != slice; ++i)
+            {
+                var x = (float)(radius * Math.Sin(sliceRad * i));
+                var y = (float)(radius * Math.Cos(sliceRad * i));
+                test_Sample(x, y, i + 1);
+            }
+
+            test_Check(true);
+            test_Check(false);
+            test_Sample(0, 0, 1);
         }
     }
 }

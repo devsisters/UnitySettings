@@ -5,6 +5,7 @@ namespace Dashboard
     internal class CircleGesture : IGesture
     {
         private const int _minSqrDistToSample = 100;
+        private const int _minTouchToCheck = 10;
 
         private readonly ITouchProvider _touchProvider;
         private readonly float _leastLength;
@@ -68,7 +69,7 @@ namespace Dashboard
 
         public bool CheckAndClear()
         {
-            if (TouchCount < 10)
+            if (TouchCount < _minTouchToCheck)
                 return false;
 
             if (_touchLength > _leastLength && _touchSum.magnitude < _leastLength / 2)
