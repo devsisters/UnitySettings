@@ -1,4 +1,4 @@
-using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 namespace Dashboard
 {
@@ -7,22 +7,24 @@ namespace Dashboard
         private const int _minSqrDistToSample = 100;
 
         private readonly ITouchProvider _touchProvider;
+        private readonly float _leastLength;
 
-        private int _touchCnt;
+        public int TouchCount { get; private set; }
         private Vector2 _touchSum;
         private float _touchLength;
 
         private Vector2 _lastTouch;
         private Vector2 _lastDelta;
 
-        public CircleGesture(ITouchProvider touchProvider)
+        public CircleGesture(ITouchProvider touchProvider, float leastLength)
         {
             _touchProvider = touchProvider;
+            _leastLength = leastLength;
         }
 
         public void Clear()
         {
-            _touchCnt = 0;
+            TouchCount = 0;
             _touchSum = Vector2.zero;
             _touchLength = 0;
         }
@@ -36,18 +38,18 @@ namespace Dashboard
                 return;
             }
 
-            if (_touchCnt == 0)
+            if (TouchCount == 0)
             {
-                ++_touchCnt;
+                ++TouchCount;
                 _lastTouch = touchPos;
                 return;
             }
 
             var delta = touchPos - _lastTouch;
-            if (delta.sqrMagnitude > _minSqrDistToSample)
+            if (delta.sqrMagnitude < _minSqrDistToSample)
                 return;
 
-            if (_touchCnt >= 2)
+            if (TouchCount >= 2)
             {
                 var dot = Vector2.Dot(delta, _lastDelta);
                 if (dot < 0)
@@ -57,7 +59,7 @@ namespace Dashboard
                 }
             }
 
-            ++_touchCnt;
+            ++TouchCount;
             _touchSum += delta;
             _touchLength += delta.magnitude;
             _lastTouch = touchPos;
@@ -66,11 +68,10 @@ namespace Dashboard
 
         public bool CheckAndClear()
         {
-            if (_touchCnt < 10)
+            if (TouchCount < 10)
                 return false;
 
-            var gestureBase = (Screen.width + Screen.height) / 4;
-            if (_touchLength > gestureBase && _touchSum.magnitude < gestureBase / 2)
+            if (_touchLength > _leastLength && _touchSum.magnitude < _leastLength / 2)
             {
                 Clear();
                 return true;

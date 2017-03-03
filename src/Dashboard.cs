@@ -16,7 +16,8 @@ namespace Dashboard
         {
             _config = Config.LoadFromPrefs();
             _viewToDraw = _config.StartView;
-            _gesture = new CircleGesture(new TouchProvider());
+            var gestureLeastLength = (Screen.width + Screen.height) / 4;
+            _gesture = new CircleGesture(new TouchProvider(), gestureLeastLength);
             _guiDrawer = new GUI.Drawer();
             InjectDependency();
             // var icons = GUI.Icons.Load();
