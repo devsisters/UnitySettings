@@ -1,15 +1,16 @@
 using Queue = System.Collections.Generic.List<Dashboard.Log.RawLog>;
-using UnityEngine;
+using LogType = UnityEngine.LogType;
 
 namespace Dashboard.Log
 {
     internal class Broker
     {
-        private bool _isConnected = false;
+        private bool _isConnected { get { return _provider != null; } }
+        private IProvider _provider;
         private bool _isQueueEmpty = true;
         private readonly Queue _queue = new Queue(16);
 
-        public void Connect()
+        public void Connect(IProvider provider)
         {
             if (_isConnected)
             {
@@ -17,8 +18,8 @@ namespace Dashboard.Log
                 return;
             }
 
-            _isConnected = true;
-            Application.logMessageReceivedThreaded += OnLogMessageReceivedThreaded;
+            _provider = provider;
+            _provider.RegisterThreaded(OnLogMessageReceivedThreaded);
         }
 
         public void Disconnect()
@@ -29,8 +30,8 @@ namespace Dashboard.Log
                 return;
             }
 
-            _isConnected = false;
-            Application.logMessageReceivedThreaded -= OnLogMessageReceivedThreaded;
+            _provider.UnregisterThreaded(OnLogMessageReceivedThreaded);
+            _provider = null;
         }
 
         private void OnLogMessageReceivedThreaded(string message, string stacktrace, LogType type)

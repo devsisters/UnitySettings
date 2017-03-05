@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 namespace Dashboard.Info
@@ -22,3 +23,4 @@ namespace Dashboard.Info
         }
     }
 }
+ */
