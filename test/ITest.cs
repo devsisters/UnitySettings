@@ -11,9 +11,9 @@ namespace Test
 
         public void Test()
         {
-            Log.I("[" + _name + "] starts...");
+            L.I("[" + _name + "] starts...");
             TestImpl();
-            Log.I("[" + _name + "] done");
+            L.I("[" + _name + "] done");
         }
 
         protected abstract void TestImpl();

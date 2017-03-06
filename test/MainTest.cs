@@ -4,6 +4,8 @@ namespace Test
     {
         public static void Main(string[] args)
         {
+            new Log.Mask().Test();
+            new Log.Stash().Test();
             new Util.CircleGesture().Test();
             new Util.StringCache().Test();
         }

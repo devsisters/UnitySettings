@@ -7,6 +7,7 @@ namespace Dashboard.Log
         private struct ByteMask
         {
             private byte _mask;
+
             public bool this[byte bit]
             {
                 get { return (_mask & (1 << bit)) != 0; }
@@ -15,6 +16,16 @@ namespace Dashboard.Log
                     if (value) _mask = (byte)(_mask | (1 << bit));
                     else _mask = (byte)(_mask & ~(1 << bit));
                 }
+            }
+
+            public void All1()
+            {
+                _mask = 0xff;
+            }
+
+            public void All0()
+            {
+                _mask = 0;
             }
         }
 
@@ -40,5 +51,8 @@ namespace Dashboard.Log
                     return false;
             }
         }
+
+        public void AllTrue() { _mask.All1(); }
+        public void AllFalse() { _mask.All0(); }
     }
 }

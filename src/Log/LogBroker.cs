@@ -9,6 +9,12 @@ namespace Dashboard.Log
         private IProvider _provider;
         private bool _isQueueEmpty = true;
         private readonly Queue _queue = new Queue(16);
+        private readonly ISampler _sampler;
+
+        public Broker(ISampler sampler)
+        {
+            _sampler = sampler;
+        }
 
         public void Connect(IProvider provider)
         {
@@ -19,7 +25,7 @@ namespace Dashboard.Log
             }
 
             _provider = provider;
-            _provider.RegisterThreaded(OnLogMessageReceivedThreaded);
+            _provider.RegisterThreaded(OnSubscribe);
         }
 
         public void Disconnect()
@@ -30,11 +36,11 @@ namespace Dashboard.Log
                 return;
             }
 
-            _provider.UnregisterThreaded(OnLogMessageReceivedThreaded);
+            _provider.UnregisterThreaded(OnSubscribe);
             _provider = null;
         }
 
-        private void OnLogMessageReceivedThreaded(string message, string stacktrace, LogType type)
+        private void OnSubscribe(string message, string stacktrace, LogType type)
         {
             var log = new RawLog(type, message, stacktrace);
             lock (_queue)
@@ -47,7 +53,7 @@ namespace Dashboard.Log
         public void Transfer(Stash stash)
         {
             if (_isQueueEmpty) return;
-            var sample = Sample();
+            var sample = _sampler.Sample();
             lock (_queue)
             {
                 foreach (var l in _queue)
@@ -57,11 +63,13 @@ namespace Dashboard.Log
             }
         }
 
-        private Sample Sample()
+        public void Clear()
         {
-            var time = UnityEngine.Time.realtimeSinceStartup;
-            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            return new Sample(time, scene);
+            lock (_queue)
+            {
+                _isQueueEmpty = true;
+                _queue.Clear();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using List = System.Collections.Generic.List<Dashboard.Log.Log>;
+using ReadOnlyList = System.Collections.ObjectModel.ReadOnlyCollection<Dashboard.Log.Log>;
 
 namespace Dashboard.Log
 {
@@ -20,6 +21,33 @@ namespace Dashboard.Log
             var newLog = new Log(raw.Type, msg, stacktrace, sample);
             _logs.Add(newLog);
         }
+
+        public ReadOnlyList All()
+        {
+            return _logs.AsReadOnly();
+        }
+
+        public List Extract(Mask mask)
+        {
+            var ret = new List(_logs.Count / 4);
+            foreach (var log in _logs)
+                if (mask.Check(log.Type))
+                    ret.Add(log);
+            return ret;
+        }
+
+        public List Extract(Mask mask, string search)
+        {
+            search = search.ToLower();
+            var ret = new List(_logs.Count / 4);
+            foreach (var log in _logs)
+            {
+                if (!mask.Check(log.Type)) continue;
+                if (log.Message.ToLower().Contains(search))
+                    ret.Add(log);
+            }
+            return ret;
+        }
     }
 }
 
@@ -36,30 +64,4 @@ namespace Dashboard.Log
 //     clear();
 //     Debug.Log("Memory Usage Reach" + maxSize + " mb So It is Cleared");
 //     return;
-// }
-// public List Extract(Mask mask)
-// {
-//     var ret = new List(_logs.Count / 4);
-//     foreach (var log in _logs)
-//         if (mask.Check(log.Type))
-//             ret.Add(log);
-//     return ret;
-// }
-
-// public List Danger_All()
-// {
-//     return _logs;
-// }
-
-// public List Extract(Mask mask, string search)
-// {
-//     search = search.ToLower();
-//     var ret = new List(_logs.Count / 4);
-//     foreach (var log in _logs)
-//     {
-//         if (!mask.Check(log.Type)) continue;
-//         if (log.Message.ToLower().Contains(search))
-//             ret.Add(log);
-//     }
-//     return ret;
 // }

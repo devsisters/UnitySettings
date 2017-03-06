@@ -2,18 +2,6 @@ using LogType = UnityEngine.LogType;
 
 namespace Dashboard.Log
 {
-    internal struct Sample
-    {
-        public readonly float Time;
-        public readonly string Scene;
-
-        public Sample(float time, string scene)
-        {
-            Time = time;
-            Scene = scene;
-        }
-    }
-
     internal struct RawLog
     {
         public readonly LogType Type;

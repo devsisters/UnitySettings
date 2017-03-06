@@ -1,6 +1,6 @@
 namespace Test
 {
-    internal static class Log
+    internal static class L
     {
         public enum Color
         {

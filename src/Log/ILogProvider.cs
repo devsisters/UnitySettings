@@ -8,7 +8,7 @@ namespace Dashboard.Log
         void UnregisterThreaded(LogCallback listener);
     }
 
-    public class Provider : IProvider
+    internal class Provider : IProvider
     {
         public void RegisterThreaded(LogCallback listener)
         {

@@ -26,7 +26,10 @@ namespace Dashboard
 
         private void InjectDependency()
         {
-            _behaviourListeners.Add(new Log.Watch(new Log.Provider()));
+            var logProvider = new Log.Provider();
+            var logSampler = new Log.Sampler();
+            var logWatch = new Log.Watch(logProvider, logSampler);
+            _behaviourListeners.Add(logWatch);
         }
 
         private void OnEnable()
