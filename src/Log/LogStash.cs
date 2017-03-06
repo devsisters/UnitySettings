@@ -27,7 +27,7 @@ namespace Dashboard.Log
             return _logs.AsReadOnly();
         }
 
-        public List Extract(Mask mask)
+        public List Filter(Mask mask)
         {
             var ret = new List(_logs.Count / 4);
             foreach (var log in _logs)
@@ -36,7 +36,7 @@ namespace Dashboard.Log
             return ret;
         }
 
-        public List Extract(Mask mask, string search)
+        public List Filter(Mask mask, string search)
         {
             search = search.ToLower();
             var ret = new List(_logs.Count / 4);
