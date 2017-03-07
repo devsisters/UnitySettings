@@ -9,7 +9,8 @@ namespace Dashboard
         private string _viewToDraw;
         private IGesture _gesture;
         private GUI.Drawer _guiDrawer;
-        private bool _isShowingGUI;
+        // private bool _isShowingGUI;
+        private bool _isShowingGUI = true;
         private readonly BehaviourListeners _behaviourListeners = new BehaviourListeners(8);
 
         private void Awake()
@@ -20,8 +21,6 @@ namespace Dashboard
             _gesture = new CircleGesture(new TouchProvider(), gestureLeastLength);
             _guiDrawer = new GUI.Drawer();
             InjectDependency();
-            // var icons = GUI.Icons.Load();
-            // var styles = new GUI.Styles();
         }
 
         private void InjectDependency()
@@ -30,6 +29,11 @@ namespace Dashboard
             var logSampler = new Log.Sampler();
             var logWatch = new Log.Watch(logProvider, logSampler);
             _behaviourListeners.Add(logWatch);
+            
+            var icons = GUI.Icons.Load();
+            // var styles = new GUI.Styles();
+            // styles.Init();
+            _guiDrawer.Add("Log", new Log.GUIDrawer(icons, logWatch.Stash));
         }
 
         private void OnEnable()
@@ -49,21 +53,21 @@ namespace Dashboard
         {
             foreach (var l in _behaviourListeners)
                 l.Update();
-            DetectGestureOrUpdateGUI();
+            DetectGesture();
         }
 
-        private void DetectGestureOrUpdateGUI()
+        private void DetectGesture()
         {
-            if (_isShowingGUI)
-            {
-                _guiDrawer.OnGUI(_viewToDraw);
-            }
-            else
-            {
-                _gesture.SampleOrCancel();
-                if (_gesture.CheckAndClear())
-                    _isShowingGUI = true;
-            }
+            if (_isShowingGUI) return;
+            _gesture.SampleOrCancel();
+            if (_gesture.CheckAndClear())
+                _isShowingGUI = true;
+        }
+
+        private void OnGUI()
+        {
+            if (!_isShowingGUI) return;
+            _guiDrawer.OnGUI(_viewToDraw);
         }
     }
 }

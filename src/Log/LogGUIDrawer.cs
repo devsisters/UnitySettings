@@ -1,18 +1,84 @@
 using UnityEngine;
-using List = System.Collections.Generic.List<Dashboard.Log.Log>;
+using List = System.Collections.Generic.IList<Dashboard.Log.Log>;
 
 namespace Dashboard.Log
 {
-    internal class GUIDrawer
+    internal class GUIDrawer : GUI.IDrawer
     {
+        internal class Styles
+        {
+            public readonly GUIStyle Icon;
+            public readonly GUIStyle Back;
+            public readonly GUIStyle EvenLog;
+            public readonly GUIStyle OddLog;
+            public readonly GUIStyle SelectedLog;
+
+            private static Texture2D Solid(Color color)
+            {
+                var tex = new Texture2D(2, 2);
+                for (var x = 0; x != tex.width; ++x)
+                    for (var y = 0; y != tex.height; ++y)
+                        tex.SetPixel(x, y, color);
+                tex.Apply();
+                return tex;
+            }
+
+            private static GUIStyle MakeBaseLogStyle()
+            {
+                var ret = new GUIStyle();
+                ret.clipping = TextClipping.Clip;
+                ret.alignment = TextAnchor.UpperLeft;
+                ret.imagePosition = ImagePosition.ImageLeft;
+                return ret;
+            }
+
+            public Styles()
+            {
+                Icon = new GUIStyle();
+                Icon.border = new RectOffset(0, 0, 0, 0);
+                Icon.alignment = TextAnchor.MiddleCenter;
+                Icon.clipping = TextClipping.Clip;
+                Icon.normal.background = Solid(Color.red);
+
+                Back = new GUIStyle();
+                Back.clipping = TextClipping.Clip;
+
+                EvenLog = MakeBaseLogStyle();
+                EvenLog.normal.background = Solid(Color.red);
+
+                OddLog = MakeBaseLogStyle();
+                OddLog.normal.background = Solid(Color.blue);
+
+                SelectedLog = MakeBaseLogStyle();
+                SelectedLog.normal.background = Solid(Color.red);
+
+                UpdateHeight(32);
+            }
+
+            public void UpdateHeight(float height)
+            {
+                var fontSize = (int)(height / 2);
+                Icon.fontSize = fontSize;
+                Back.fontSize = fontSize;
+                EvenLog.fixedHeight = height;
+                EvenLog.fontSize = fontSize;
+                OddLog.fixedHeight = height;
+                OddLog.fontSize = fontSize;
+                SelectedLog.fixedHeight = height;
+                SelectedLog.fontSize = fontSize;
+            }
+        }
+
         private readonly GUI.Icons _icons;
-        private readonly GUI.Styles _styles;
+        private readonly Styles _styles;
+        private readonly Stash _stash;
         private float _scrollY;
 
-        public GUIDrawer(GUI.Icons icons, GUI.Styles styles)
+        public GUIDrawer(GUI.Icons icons, Stash stash)
         {
             _icons = icons;
-            _styles = styles;
+            _styles = new Styles();
+            _stash = stash;
         }
 
         private void UpdateScroll(Rect area)
@@ -67,7 +133,7 @@ namespace Dashboard.Log
             // _styles.logButtonStyle
             GUILayout.BeginHorizontal(style);
             var content = IconForLogType(log.Type);
-            if (GUILayout.Button(content, _styles.None, GUILayout.Width(cellX), GUILayout.Height(rowHeight)))
+            if (GUILayout.Button(content, _styles.Icon, GUILayout.Width(cellX), GUILayout.Height(rowHeight)))
                 onClick();
             if (GUILayout.Button(log.Message, fontStyle))
                 onClick();
@@ -83,6 +149,8 @@ namespace Dashboard.Log
                 DrawRightLabel(log.Sample.Time.ToString("0.000"), rowHeight, style, ref rightX);
                 DrawRightIcon(_icons.ShowTime, rowHeight, cellX, style, ref rightX);
             }
+
+            GUILayout.EndHorizontal();
         }
 
         public void Draw(
@@ -121,9 +189,10 @@ namespace Dashboard.Log
                 if (!logMask.Check(log.Type)) continue;
                 if (order >= totalVisibleCount) break;
 
-                // var currentLogStyle = ((startIndex + order) % 2 == 0) ? _styles.EvenLog : _styles.OddLog;
-                // var isSelectedLog = i == selectedLog;
-                // if (isSelectedLog) currentLogStyle = _styles.SelectedLog;
+                var currentLogStyle = ((startIndex + order) % 2 == 0) ? _styles.EvenLog : _styles.OddLog;
+                var isSelectedLog = i == selectedLog;
+                if (isSelectedLog) currentLogStyle = _styles.SelectedLog;
+                DrawRow(log, rowHeight, cellX, showTime, showScene, _styles.Icon, currentLogStyle, () => { });
 
                 /*
                 tempContent.text = log.count.ToString();
@@ -139,14 +208,10 @@ namespace Dashboard.Log
 
                 if (scrollerVisible)
                     countRect.x -= size.x * 2;
-                */
 
-                /*
                 if (collapse)
                     GUI.Label(countRect, log.count.ToString(), barStyle);
                 */
-
-                GUILayout.EndHorizontal();
                 order++;
             }
 
@@ -161,7 +226,13 @@ namespace Dashboard.Log
 
             GUILayout.EndScrollView();
             GUILayout.EndArea();
+        }
 
+        public void Draw(UnityEngine.Rect area, float sizeX, float sizeY)
+        {
+            // TODO:
+            var mask = new Mask(); mask.AllTrue();
+            Draw(area, sizeY, sizeX, _stash.All(), 0, mask, true, true);
         }
 
         // buttomRect.x = 0f;

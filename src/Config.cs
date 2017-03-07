@@ -19,7 +19,7 @@ namespace Dashboard
         public static Config LoadFromPrefs()
         {
             var json = PlayerPrefs.GetString(_prefKey);
-            if (string.IsNullOrEmpty(json)) return default(Config);
+            if (string.IsNullOrEmpty(json)) return new Config();
             return JsonUtility.FromJson<Config>(json);
         }
 

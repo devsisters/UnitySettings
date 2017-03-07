@@ -2,14 +2,15 @@ namespace Dashboard.Log
 {
     internal class Watch : IBehaviourListener
     {
+        public readonly Stash Stash;
+
         private readonly IProvider _provider;
-        private readonly Stash _stash;
         private readonly Broker _broker;
 
         public Watch(IProvider provider, ISampler sampler)
         {
             _provider = provider;
-            _stash = new Stash();
+            Stash = new Stash();
             _broker = new Broker(sampler);
         }
 
@@ -25,12 +26,12 @@ namespace Dashboard.Log
 
         public override void Update()
         {
-            _broker.Transfer(_stash);
+            _broker.Transfer(Stash);
         }
 
         private void Clear()
         {
-            _stash.Clear();
+            Stash.Clear();
             _broker.Clear();
         }
     }

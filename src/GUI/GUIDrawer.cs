@@ -10,6 +10,11 @@ namespace Dashboard.GUI
 
         private readonly Drawers _drawers = new Drawers(4);
 
+        public void Add(string key, IDrawer drawer)
+        {
+            _drawers.Add(key, drawer);
+        }
+
         public void OnGUI(string key)
         {
             IDrawer drawer;

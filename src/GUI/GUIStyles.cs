@@ -4,16 +4,14 @@ namespace Dashboard.GUI
 {
     public class Styles
     {
+        public GUIStyle None;
+        public GUIStyle Back;
+
         public GUIStyle Bar;
         public GUIStyle ButtonActive;
 
-        public GUIStyle None;
         public GUIStyle LowerLeftFont;
-        public GUIStyle Back;
-        public GUIStyle EvenLog;
-        public GUIStyle OddLog;
         public GUIStyle LogButton;
-        public GUIStyle SelectedLog;
         public GUIStyle SelectedLogFont;
         public GUIStyle StackLabel;
         public GUIStyle Scroller;
@@ -32,6 +30,11 @@ namespace Dashboard.GUI
 
         void initializeStyle(Vector2 size)
         {
+            Back = new GUIStyle();
+            Back.normal.background = PNGs.SkinEvenLog.ToTex();
+            Back.clipping = TextClipping.Clip;
+            Back.fontSize = (int)(size.y / 2);
+
             int paddingX = (int)(size.x * 0.2f);
             int paddingY = (int)(size.y * 0.2f);
             None = new GUIStyle();
@@ -65,41 +68,12 @@ namespace Dashboard.GUI
             ButtonActive.margin = new RectOffset(1, 1, 1, 1);
             ButtonActive.fontSize = (int)(size.y / 2);
 
-            Back = new GUIStyle();
-            Back.normal.background = PNGs.SkinEvenLog.ToTex();
-            Back.clipping = TextClipping.Clip;
-            Back.fontSize = (int)(size.y / 2);
-
-            EvenLog = new GUIStyle();
-            EvenLog.normal.background = PNGs.SkinEvenLog.ToTex();
-            EvenLog.fixedHeight = size.y;
-            EvenLog.clipping = TextClipping.Clip;
-            EvenLog.alignment = TextAnchor.UpperLeft;
-            EvenLog.imagePosition = ImagePosition.ImageLeft;
-            EvenLog.fontSize = (int)(size.y / 2);
-
-            OddLog = new GUIStyle();
-            OddLog.normal.background = PNGs.SkinOddLog.ToTex();
-            OddLog.fixedHeight = size.y;
-            OddLog.clipping = TextClipping.Clip;
-            OddLog.alignment = TextAnchor.UpperLeft;
-            OddLog.imagePosition = ImagePosition.ImageLeft;
-            OddLog.fontSize = (int)(size.y / 2);
-
             LogButton = new GUIStyle();
             LogButton.fixedHeight = size.y;
             LogButton.clipping = TextClipping.Clip;
             LogButton.alignment = TextAnchor.UpperLeft;
             LogButton.fontSize = (int)(size.y / 2);
             LogButton.padding = new RectOffset(paddingX, paddingX, paddingY, paddingY);
-
-            SelectedLog = new GUIStyle();
-            SelectedLog.normal.background = PNGs.SkinSelected.ToTex();
-            SelectedLog.fixedHeight = size.y;
-            SelectedLog.clipping = TextClipping.Clip;
-            SelectedLog.alignment = TextAnchor.UpperLeft;
-            SelectedLog.normal.textColor = Color.white;
-            SelectedLog.fontSize = (int)(size.y / 2);
 
             SelectedLogFont = new GUIStyle();
             SelectedLogFont.normal.background = PNGs.SkinSelected.ToTex();
