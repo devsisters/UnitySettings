@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Settings
 {
-    [System.Serializable]
     public class Config
     {
         public string StartView = "Log";

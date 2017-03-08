@@ -35,11 +35,12 @@ namespace Settings.GUI
         {
             UpdateScroll(area);
 
+            UnityEngine.GUI.Box(area, "", _bg);
             _scrollY = UnityEngine.GUI.BeginScrollView(
                 area, new Vector2(0, _scrollY),
                 new Rect(0, 0, area.width, count * _height)).y;
 
-            var startIdx = (int)(_scrollY / _height);
+            var startIdx = Mathf.Clamp((int)(_scrollY / _height), 0, count);
             var visibleCount = (int)(area.height / _height) + 2;
             var drawedRows = 0;
             for (var i = startIdx; i < count && drawedRows < visibleCount; ++i, ++drawedRows)

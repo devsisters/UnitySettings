@@ -3,7 +3,7 @@ using Helper = Settings.GUI.Helper;
 
 namespace Settings.Log
 {
-    internal class GUIView : GUI.IView
+    internal partial class GUIView : GUI.IView
     {
         const int fontSize = 32;
         const int rowHeight = 64;
@@ -34,6 +34,7 @@ namespace Settings.Log
             public Styles()
             {
                 BG = new GUIStyle();
+                BG.normal.background = Helper.Solid(0xffffff04);
                 Font = new GUIStyle();
                 Font.fontSize = fontSize;
                 Font.alignment = TextAnchor.MiddleLeft;
@@ -62,10 +63,7 @@ namespace Settings.Log
         private readonly Stash _stash;
 
         private int _selectedLog;
-        private bool _selectedLogDirty;
-        private const float _upDownCoolTimeFirst = 0.3f;
-        private const float _upDownCoolTimeFast = 0.02f;
-        private float _upDownTimeLeft;
+        private bool _keepInSelectedLog;
 
         public GUIView(GUI.Icons icons, Stash stash)
         {
@@ -79,36 +77,6 @@ namespace Settings.Log
         {
             UpdateKeyboard();
         }
-
-        private void UpdateKeyboard()
-        {
-            if (_upDownTimeLeft > 0)
-            {
-                _upDownTimeLeft -= Time.unscaledDeltaTime;
-                return;
-            }
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                _selectedLogDirty = true;
-                _upDownTimeLeft = _upDownCoolTimeFast;
-                --_selectedLog;
-            }
-
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                _selectedLogDirty = true;
-                _upDownTimeLeft = _upDownCoolTimeFast;
-                ++_selectedLog;
-            }
-
-            if (Input.GetKeyDown(KeyCode.UpArrow)
-                || Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                _upDownTimeLeft = _upDownCoolTimeFirst;
-            }
-        }
-
 
         private GUIContent IconForLogType(LogType logType)
         {
@@ -190,11 +158,11 @@ namespace Settings.Log
             // if (i >= logs.Count) break;
             // if (!logMask.Check(log.Type)) continue;
 
-            _selectedLog = Mathf.Clamp(_selectedLog, 0, logs.Count);
-            if (_selectedLogDirty)
+            _selectedLog = Mathf.Clamp(_selectedLog, 0, logs.Count - 1);
+            if (_keepInSelectedLog)
             {
                 _table.SetScrollToKeepIn(area, _selectedLog);
-                _selectedLogDirty = false;
+                _keepInSelectedLog = false;
             }
             _table.Draw(area, logs.Count, (rect, i) =>
                 DrawRow(area, logs[i], i, i == _selectedLog));

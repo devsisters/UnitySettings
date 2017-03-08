@@ -14,19 +14,42 @@ namespace Settings
             }
         }
 
+        private static bool InstallWithoutCreateInstaller()
+        {
+            if (_instance != null)
+                return false;
+
+            _instance = Object.FindObjectOfType<Settings>();
+            var shouldInstantiate = _instance == null;
+            if (shouldInstantiate)
+            {
+                var singleton = new GameObject("Settings (Singleton)");
+                _instance = singleton.AddComponent<Settings>();
+                DontDestroyOnLoad(singleton);
+            }
+
+            InjectDependency(_instance);
+            return shouldInstantiate;
+        }
+
         public static void Install()
         {
-            if (_instance != null) return;
-            var singleton = new GameObject("Settings (Singleton)");
-            _instance = singleton.AddComponent<Settings>();
-            InjectDependency(_instance);
-            DontDestroyOnLoad(singleton);
+            if (!InstallWithoutCreateInstaller()) return;
+            new GameObject("Installer (For Recompile)")
+                .AddComponent<Installer>();
         }
 
         private void Awake()
         {
-            Install();
-            Destroy(gameObject);
+            InstallWithoutCreateInstaller();
+            var isRecompiled = _instance.transform.childCount > 0;
+            if (isRecompiled) Destroy(gameObject);
+            else transform.SetParent(_instance.transform, false);
+        }
+
+        private void OnEnable()
+        {
+            InstallWithoutCreateInstaller();
         }
 
         private static void InjectDependency(Settings settings)
