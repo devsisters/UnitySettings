@@ -1,6 +1,6 @@
 using System.Linq;
-using Lens = Test.Lens<Dashboard.Log.Mask, bool>;
-using Target = Dashboard.Log.Mask;
+using Lens = Test.Lens<Settings.Log.Mask, bool>;
+using Target = Settings.Log.Mask;
 
 namespace Test.Log
 {

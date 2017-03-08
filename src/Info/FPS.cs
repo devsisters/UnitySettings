@@ -1,7 +1,7 @@
 /*
 using UnityEngine;
 
-namespace Dashboard.Info
+namespace Settings.Info
 {
     internal struct FPS
     {

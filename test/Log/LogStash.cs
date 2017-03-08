@@ -1,7 +1,7 @@
 using System.Linq;
 using LogType = UnityEngine.LogType;
-using RawLog = Dashboard.Log.RawLog;
-using Sample = Dashboard.Log.Sample;
+using RawLog = Settings.Log.RawLog;
+using Sample = Settings.Log.Sample;
 
 namespace Test.Log
 {
@@ -19,7 +19,7 @@ namespace Test.Log
             var scene = "scene";
             var sample = new Sample(time, scene);
 
-            var target = new Dashboard.Log.Stash();
+            var target = new Settings.Log.Stash();
             var loop = 5;
             var logTypes = new[] { LogType.Log, LogType.Warning, LogType.Error, };
             for (var i = 0; i != loop; ++i)
@@ -34,21 +34,21 @@ namespace Test.Log
             var allCount = loop * logTypes.Length;
             Assert.Equals(target.All().Count, allCount);
             {
-                var mask = new Dashboard.Log.Mask();
+                var mask = new Settings.Log.Mask();
                 mask.AllTrue();
                 var logs = target.Filter(mask);
                 Assert.Equals(logs.Count, allCount);
             }
 
             {
-                var mask = new Dashboard.Log.Mask();
+                var mask = new Settings.Log.Mask();
                 mask.AllFalse();
                 var logs = target.Filter(mask);
                 Assert.Equals(logs.Count, 0);
             }
 
             {
-                var mask = new Dashboard.Log.Mask();
+                var mask = new Settings.Log.Mask();
                 mask.Warning = true;
                 mask.Assert = true;
                 Assert.Equals(target.Filter(mask).Count, loop * 1);
@@ -57,7 +57,7 @@ namespace Test.Log
             }
 
             {
-                var mask = new Dashboard.Log.Mask();
+                var mask = new Settings.Log.Mask();
                 mask.Log = true;
                 var logs = target.Filter(mask);
                 Assert.Equals(logs.Count, loop);

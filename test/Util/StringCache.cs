@@ -8,7 +8,7 @@ namespace Test.Util
 
         protected override void TestImpl()
         {
-            var target = new Dashboard.Util.StringCache();
+            var target = new Settings.Util.StringCache();
             var orgStr = "some string";
             var tmpStr1 = "some ";
             var tmpStr2 = "string";

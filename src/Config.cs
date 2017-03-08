@@ -13,7 +13,7 @@ namespace Settings
         public string FilterText = string.Empty;
         public float Size = 32;
 
-        private const string _prefKey = "UnityDashboard_Config";
+        private const string _prefKey = "UnitySettings_Config";
 
         public static Config LoadFromPrefs()
         {

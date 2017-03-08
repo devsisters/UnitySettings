@@ -6,11 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C0E5CC1F-AACD-4794-A66D-D63D3E0BA3B5}</ProjectGuid>
-    <RootNamespace>Dashboard.Test</RootNamespace>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{D2868622-A814-44FF-A5BE-1DA488EB660D}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>UnityDashboard-Test</AssemblyName>
+    <AssemblyName>UnitySettings</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -35,15 +34,14 @@
     <Reference Include="UnityEngine">
       <HintPath>lib\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityDashboard">
-      <HintPath>lib\UnityDashboard.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="test\*.cs" />
-    <Compile Include="test\Gesture\*.cs" />
-    <Compile Include="test\Log\*.cs" />
-    <Compile Include="test\Util\*.cs" />
+    <Compile Include="src\*.cs" />
+    <Compile Include="src\Gesture\*.cs" />
+    <Compile Include="src\GUI\*.cs" />
+    <Compile Include="src\Log\*.cs" />
+    <Compile Include="src\Util\*.cs" />
+    <Compile Include="src\Unity\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

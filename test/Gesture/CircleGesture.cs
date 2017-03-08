@@ -9,7 +9,7 @@ namespace Test.Util
             : base("CircleGesture")
         { }
 
-        public class TouchProvider : Dashboard.ITouchProvider
+        public class TouchProvider : Settings.ITouchProvider
         {
             public Vector2 Next;
 
@@ -28,7 +28,7 @@ namespace Test.Util
         protected override void TestImpl()
         {
             var touch = new TouchProvider();
-            var target = new Dashboard.CircleGesture(touch, 100);
+            var target = new Settings.CircleGesture(touch, 100);
 
             Action<float, float, int> test_Sample = (x, y, cnt) =>
             {

@@ -79,13 +79,13 @@ graphScrollerSkin.horizontalScrollbarThumb.fixedHeight = size.x * 2f;
 
 // switch (view)
 // {
-//     case DashboardView.Info:
+//     case SettingsView.Info:
 //         {
 //             var screenRect = new Rect(0, 0, Screen.width, Screen.height);
 //             _infoDrawer.Draw(screenRect, _sizeY * 2, _sizeX * 2);
 //         }
 //         break;
-//     case DashboardView.Logs:
+//     case SettingsView.Logs:
 //         {
 //             var toolbarHeight = _sizeY * 2;
 //             var toolbarRect = new Rect(0, 0,
