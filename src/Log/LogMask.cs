@@ -1,6 +1,6 @@
-using L = UnityEngine.LogType;
+using LogType = UnityEngine.LogType;
 
-namespace Dashboard.Log
+namespace Settings.Log
 {
     public struct Mask
     {
@@ -37,17 +37,17 @@ namespace Dashboard.Log
         public bool Assert { get { return _mask[3]; } set { _mask[3] = value; } }
         public bool Exception { get { return _mask[4]; } set { _mask[4] = value; } }
 
-        public bool Check(L type)
+        public bool Check(LogType type)
         {
             switch (type)
             {
-                case L.Log: return Log;
-                case L.Warning: return Warning;
-                case L.Error: return Error;
-                case L.Assert: return Assert;
-                case L.Exception: return Exception;
+                case LogType.Log: return Log;
+                case LogType.Warning: return Warning;
+                case LogType.Error: return Error;
+                case LogType.Assert: return Assert;
+                case LogType.Exception: return Exception;
                 default:
-                    // something went wrong.
+                    L.SomethingWentWrong();
                     return false;
             }
         }

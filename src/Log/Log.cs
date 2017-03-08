@@ -1,6 +1,6 @@
 using LogType = UnityEngine.LogType;
 
-namespace Dashboard.Log
+namespace Settings.Log
 {
     internal struct RawLog
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Dashboard
+namespace Settings
 {
     internal interface ITouchProvider
     {

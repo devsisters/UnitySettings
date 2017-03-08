@@ -1,31 +1,40 @@
 ﻿using UnityEngine;
-using Drawers = System.Collections.Generic.Dictionary<string, Dashboard.GUI.IDrawer>;
+using View = System.Collections.Generic.Dictionary<string, Settings.GUI.IView>;
 
-namespace Dashboard.GUI
+namespace Settings.GUI
 {
     internal class Drawer
     {
-        private int _sizeX = 32;
-        private int _sizeY = 32;
+        private readonly View _views = new View(4);
 
-        private readonly Drawers _drawers = new Drawers(4);
-
-        public void Add(string key, IDrawer drawer)
+        public void Add(string key, IView view)
         {
-            _drawers.Add(key, drawer);
+            _views.Add(key, view);
+        }
+
+        public void Update(string key)
+        {
+            IView view;
+            if (!_views.TryGetValue(key, out view))
+            {
+                L.SomethingWentWrong();
+                return;
+            }
+
+            view.Update();
         }
 
         public void OnGUI(string key)
         {
-            IDrawer drawer;
-            if (!_drawers.TryGetValue(key, out drawer))
+            IView view;
+            if (!_views.TryGetValue(key, out view))
             {
-                // something went wrong.
+                L.SomethingWentWrong();
                 return;
             }
 
             var screenRect = new Rect(0, 0, Screen.width, Screen.height);
-            drawer.Draw(screenRect, _sizeX, _sizeY);
+            view.Draw(screenRect);
         }
     }
 }
@@ -89,6 +98,6 @@ graphScrollerSkin.horizontalScrollbarThumb.fixedHeight = size.x * 2f;
 //         }
 //         break;
 //     default:
-//         // something went wrong.
+//         L.Som // TODO
 //         break;
 // }

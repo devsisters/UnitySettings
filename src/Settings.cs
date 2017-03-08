@@ -1,9 +1,9 @@
 using UnityEngine;
-using BehaviourListeners = System.Collections.Generic.List<Dashboard.IBehaviourListener>;
+using BehaviourListeners = System.Collections.Generic.List<Settings.IBehaviourListener>;
 
-namespace Dashboard
+namespace Settings
 {
-    public class Dashboard : MonoBehaviour
+    public class Settings : MonoBehaviour
     {
         private Config _config;
         private string _viewToDraw;
@@ -20,20 +20,6 @@ namespace Dashboard
             var gestureLeastLength = (Screen.width + Screen.height) / 4;
             _gesture = new CircleGesture(new TouchProvider(), gestureLeastLength);
             _guiDrawer = new GUI.Drawer();
-            InjectDependency();
-        }
-
-        private void InjectDependency()
-        {
-            var logProvider = new Log.Provider();
-            var logSampler = new Log.Sampler();
-            var logWatch = new Log.Watch(logProvider, logSampler);
-            _behaviourListeners.Add(logWatch);
-            
-            var icons = GUI.Icons.Load();
-            // var styles = new GUI.Styles();
-            // styles.Init();
-            _guiDrawer.Add("Log", new Log.GUIDrawer(icons, logWatch.Stash));
         }
 
         private void OnEnable()
@@ -51,6 +37,9 @@ namespace Dashboard
 
         private void Update()
         {
+            Util.Mouse.UpdatePos();
+            if (_isShowingGUI)
+                _guiDrawer.Update(_viewToDraw);
             foreach (var l in _behaviourListeners)
                 l.Update();
             DetectGesture();
@@ -68,6 +57,17 @@ namespace Dashboard
         {
             if (!_isShowingGUI) return;
             _guiDrawer.OnGUI(_viewToDraw);
+        }
+
+        public void AddBehaviourListener(IBehaviourListener behaviourListener)
+        {
+            _behaviourListeners.Add(behaviourListener);
+            if (enabled) behaviourListener.OnEnable();
+        }
+
+        public void AddGUIView(string key, GUI.IView view)
+        {
+            _guiDrawer.Add(key, view);
         }
     }
 }

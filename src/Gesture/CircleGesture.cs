@@ -1,6 +1,6 @@
 using Vector2 = UnityEngine.Vector2;
 
-namespace Dashboard
+namespace Settings
 {
     internal class CircleGesture : IGesture
     {

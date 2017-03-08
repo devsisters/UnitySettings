@@ -1,4 +1,4 @@
-namespace Dashboard.Log
+namespace Settings.Log
 {
     internal class Watch : IBehaviourListener
     {

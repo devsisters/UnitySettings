@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Dashboard
+namespace Settings
 {
     [System.Serializable]
     public class Config

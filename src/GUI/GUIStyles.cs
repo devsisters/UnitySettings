@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Dashboard.GUI
+namespace Settings.GUI
 {
     public class Styles
     {
@@ -11,8 +11,6 @@ namespace Dashboard.GUI
         public GUIStyle ButtonActive;
 
         public GUIStyle LowerLeftFont;
-        public GUIStyle LogButton;
-        public GUIStyle SelectedLogFont;
         public GUIStyle StackLabel;
         public GUIStyle Scroller;
         public GUIStyle Search;
@@ -67,22 +65,6 @@ namespace Dashboard.GUI
             ButtonActive.alignment = TextAnchor.MiddleCenter;
             ButtonActive.margin = new RectOffset(1, 1, 1, 1);
             ButtonActive.fontSize = (int)(size.y / 2);
-
-            LogButton = new GUIStyle();
-            LogButton.fixedHeight = size.y;
-            LogButton.clipping = TextClipping.Clip;
-            LogButton.alignment = TextAnchor.UpperLeft;
-            LogButton.fontSize = (int)(size.y / 2);
-            LogButton.padding = new RectOffset(paddingX, paddingX, paddingY, paddingY);
-
-            SelectedLogFont = new GUIStyle();
-            SelectedLogFont.normal.background = PNGs.SkinSelected.ToTex();
-            SelectedLogFont.fixedHeight = size.y;
-            SelectedLogFont.clipping = TextClipping.Clip;
-            SelectedLogFont.alignment = TextAnchor.UpperLeft;
-            SelectedLogFont.normal.textColor = Color.white;
-            SelectedLogFont.fontSize = (int)(size.y / 2);
-            SelectedLogFont.padding = new RectOffset(paddingX, paddingX, paddingY, paddingY);
 
             StackLabel = new GUIStyle();
             StackLabel.wordWrap = true;

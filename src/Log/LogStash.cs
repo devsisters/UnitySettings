@@ -1,7 +1,7 @@
-using List = System.Collections.Generic.List<Dashboard.Log.Log>;
-using ReadOnlyList = System.Collections.ObjectModel.ReadOnlyCollection<Dashboard.Log.Log>;
+using List = System.Collections.Generic.List<Settings.Log.Log>;
+using ReadOnlyList = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Log.Log>;
 
-namespace Dashboard.Log
+namespace Settings.Log
 {
     internal class Stash
     {

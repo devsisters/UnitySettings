@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Dashboard.GUI
+namespace Settings.GUI
 {
     internal class ToolbarDrawer
     {
@@ -83,10 +83,10 @@ namespace Dashboard.GUI
 
         private void UpdateScroll(Rect area)
         {
-            Vector2 downPos;
-            if (!Util.Mouse.DownPos(out downPos)) return;
-            downPos = new Vector2(downPos.x, Screen.height - downPos.y);
-            if (!area.Contains(downPos)) return;
+            Vector2 curPos;
+            if (!Util.Mouse.CurPos(out curPos)) return;
+            curPos = new Vector2(curPos.x, Screen.height - curPos.y);
+            if (!area.Contains(curPos)) return;
 
             Vector2 delta;
             if (!Util.Mouse.Delta(out delta)) return;

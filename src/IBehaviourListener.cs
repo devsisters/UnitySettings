@@ -1,6 +1,6 @@
-namespace Dashboard
+namespace Settings
 {
-    internal class IBehaviourListener
+    public class IBehaviourListener
     {
         public virtual void OnEnable() { }
         public virtual void OnDisable() { }

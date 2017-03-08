@@ -1,4 +1,4 @@
-namespace Dashboard
+namespace Settings
 {
     internal interface IGesture
     {

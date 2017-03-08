@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Dashboard.GUI
+namespace Settings.GUI
 {
     public class Icons
     {

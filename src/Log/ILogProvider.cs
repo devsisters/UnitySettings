@@ -1,6 +1,6 @@
 using LogCallback = UnityEngine.Application.LogCallback;
 
-namespace Dashboard.Log
+namespace Settings.Log
 {
     public interface IProvider
     {

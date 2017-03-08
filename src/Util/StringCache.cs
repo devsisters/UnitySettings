@@ -1,18 +1,16 @@
 using Cache = System.Collections.Generic.Dictionary<int, string>;
 
-namespace Dashboard.Util
+namespace Settings.Util
 {
     internal class StringCache
     {
         private readonly Cache _cache = new Cache(128);
 
-        // public int Count { get { return _cache.Count; } }
-
         public string Cache(string queryStr)
         {
             if (queryStr == null)
             {
-                // something went wrong.
+                L.SomethingWentWrong();
                 return string.Empty;
             }
 

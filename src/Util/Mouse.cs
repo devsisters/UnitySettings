@@ -1,10 +1,41 @@
 using UnityEngine;
 
-namespace Dashboard.Util
+namespace Settings.Util
 {
     internal static class Mouse
     {
-        public static bool DownPos(out Vector2 result)
+        private static int _curMouseFrame = -1;
+        private static Vector2 _curMousePos;
+        private static int _lastMouseFrame = -1;
+        private static Vector2 _lastMousePos;
+
+        public static bool UpdatePos()
+        {
+            if (Input.touchSupported)
+                return false;
+
+            var curFrame = Time.frameCount;
+            if (_curMouseFrame == curFrame)
+                return true;
+
+            _lastMouseFrame = _curMouseFrame;
+            _lastMousePos = _curMousePos;
+
+            if (Input.GetMouseButton(0))
+            {
+                _curMouseFrame = curFrame;
+                _curMousePos = Input.mousePosition;
+                return true;
+            }
+            else
+            {
+                _curMouseFrame = -1;
+                _curMousePos = Input.mousePosition;
+                return false;
+            }
+        }
+
+        public static bool CurPos(out Vector2 result)
         {
             if (Input.touchSupported)
             {
@@ -18,9 +49,9 @@ namespace Dashboard.Util
             }
             else
             {
-                if (Input.GetMouseButtonDown(0))
+                if (UpdatePos())
                 {
-                    result = Input.mousePosition;
+                    result = _curMousePos;
                     return true;
                 }
             }
@@ -41,9 +72,11 @@ namespace Dashboard.Util
             }
             else
             {
-                if (Input.GetMouseButton(0))
+                if (UpdatePos())
                 {
-                    result = Input.mouseScrollDelta;
+                    if (_lastMouseFrame != -1)
+                        result = _curMousePos - _lastMousePos;
+                    else result = Vector2.zero;
                     return true;
                 }
             }

@@ -1,7 +1,7 @@
-using Queue = System.Collections.Generic.List<Dashboard.Log.RawLog>;
+using Queue = System.Collections.Generic.List<Settings.Log.RawLog>;
 using LogType = UnityEngine.LogType;
 
-namespace Dashboard.Log
+namespace Settings.Log
 {
     internal class Broker
     {
@@ -20,7 +20,7 @@ namespace Dashboard.Log
         {
             if (_isConnected)
             {
-                // something went wrong.
+                L.SomethingWentWrong();
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Dashboard.Log
         {
             if (!_isConnected)
             {
-                // something went wrong.
+                L.SomethingWentWrong();
                 return;
             }
 
