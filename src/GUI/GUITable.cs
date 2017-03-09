@@ -5,38 +5,34 @@ namespace Settings.GUI
 {
     public class Table
     {
-        private float _scrollY;
+        private readonly ScrollView _scroll;
+        private float _scrollY
+        {
+            get { return _scroll.ScrollY; }
+            set { _scroll.ScrollY = value; }
+        }
+
         private readonly float _height;
         private readonly GUIStyle _bg;
 
         public Table(float height, float initScrollY, GUIStyle bg)
         {
-            _scrollY = initScrollY;
+            _scroll = new ScrollView(new Vector2(0, initScrollY), false, true);
             _height = height;
             _bg = bg;
         }
 
-        private void UpdateScroll(Rect area)
+        public void Update()
         {
-            Vector2 curPos;
-            if (!Util.Mouse.CurPos(out curPos)) return;
-            curPos = new Vector2(curPos.x, Screen.height - curPos.y);
-            if (!area.Contains(curPos)) return;
-
-            Vector2 delta;
-            if (!Util.Mouse.Delta(out delta)) return;
-            if (delta.y == 0) return;
-            _scrollY += delta.y;
+            _scroll.Update();
         }
 
-        public void Draw(Rect area, int count, Action<Rect, int> drawer)
+        public void OnGUI(Rect area, int count, Action<Rect, int> drawer)
         {
-            UpdateScroll(area);
-
             UnityEngine.GUI.Box(area, "", _bg);
-            _scrollY = UnityEngine.GUI.BeginScrollView(
-                area, new Vector2(0, _scrollY),
-                new Rect(0, 0, area.width, count * _height)).y;
+
+            var viewRect = new Rect(0, 0, area.width, count * _height);
+            _scroll.Begin(area, viewRect);
 
             var startIdx = Mathf.Clamp((int)(_scrollY / _height), 0, count);
             var visibleCount = (int)(area.height / _height) + 2;
@@ -49,7 +45,7 @@ namespace Settings.GUI
                 GUILayout.EndArea();
             }
 
-            UnityEngine.GUI.EndScrollView();
+            _scroll.End();
         }
 
         public void SetScrollToKeepIn(Rect area, int idx)

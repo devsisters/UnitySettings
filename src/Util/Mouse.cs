@@ -6,10 +6,12 @@ namespace Settings.Util
     {
         private static bool _curMousePresent;
         private static Vector2 _curMousePos;
+        private static bool _lastMousePresent;
         private static Vector2 _lastMousePos;
 
-        public static bool RefreshPos()
+        public static void RefreshPos()
         {
+            _lastMousePresent = _curMousePresent;
             _lastMousePos = _curMousePos;
 
             if (Input.touchSupported)
@@ -19,7 +21,7 @@ namespace Settings.Util
                 {
                     _curMousePresent = true;
                     _curMousePos = touches[0].position;
-                    return true;
+                    return;
                 }
             }
             else
@@ -28,13 +30,12 @@ namespace Settings.Util
                 {
                     _curMousePresent = true;
                     _curMousePos = Input.mousePosition;
-                    return true;
+                    return;
                 }
             }
 
             _curMousePresent = false;
             _curMousePos = default(Vector2);
-            return false;
         }
 
         public static bool CurPos(out Vector2 result)
@@ -43,19 +44,18 @@ namespace Settings.Util
             return _curMousePresent;
         }
 
-        // TODO: why scale 4?
         public static bool Delta(out Vector2 result)
         {
-            if (!RefreshPos())
+            if (_curMousePresent && _lastMousePresent)
             {
-                result = default(Vector2);
+                result = _curMousePos - _lastMousePos;
+                return true;
+            }
+            else
+            {
+                result = Vector2.zero;
                 return false;
             }
-
-            if (_curMousePresent)
-                result = (_curMousePos - _lastMousePos);
-            else result = Vector2.zero;
-            return true;
         }
     }
 }

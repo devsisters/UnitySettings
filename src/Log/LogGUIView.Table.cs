@@ -16,7 +16,7 @@ namespace Settings.Log
         }
 
         private static readonly GUIContent _tempContent = new GUIContent();
-        private static void DrawIconAndLabelFromRightToLeft(
+        private static void OnGUIIconAndLabelFromRightToLeft(
             GUIContent icon, string text,
             GUIStyle iconStyle, GUIStyle fontStyle,
             ref float x)
@@ -36,7 +36,7 @@ namespace Settings.Log
             }
         }
 
-        private void DrawRow(Rect area, Log log, int index, bool isSelected)
+        private void OnGUILogRow(Rect area, Log log, int index, bool isSelected)
         {
             const int rightPadding = 10;
 
@@ -61,7 +61,7 @@ namespace Settings.Log
             // draw sample datas
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
-                    DrawIconAndLabelFromRightToLeft(icon, text, _styles.Icon, fontStyle, ref rightX);
+                    OnGUIIconAndLabelFromRightToLeft(icon, text, _styles.Icon, fontStyle, ref rightX);
                 if (_showScene) drawIconAndLabel(_icons.ShowScene, log.Sample.Scene);
                 if (_showTime) drawIconAndLabel(_icons.ShowTime, log.Sample.TimeToDisplay);
             }
@@ -76,7 +76,7 @@ namespace Settings.Log
             }
         }
 
-        private void DrawTable(Rect area, ReadOnlyCollection<Log> logs)
+        private void OnGUITable(Rect area, ReadOnlyCollection<Log> logs)
         {
             if (_keepInSelectedLog)
             {
@@ -84,8 +84,8 @@ namespace Settings.Log
                 _keepInSelectedLog = false;
             }
 
-            _table.Draw(area, logs.Count, (rect, i) =>
-                DrawRow(area, logs[i], i, i == _selectedLog));
+            _table.OnGUI(area, logs.Count, (rect, i) =>
+                OnGUILogRow(area, logs[i], i, i == _selectedLog));
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Settings.GUI
             }
 
             var screenRect = new Rect(0, 0, Screen.width, Screen.height);
-            view.Draw(screenRect);
+            view.OnGUI(screenRect);
         }
     }
 }

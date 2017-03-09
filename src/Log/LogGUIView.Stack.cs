@@ -4,8 +4,6 @@ namespace Settings.Log
 {
     internal partial class GUIView
     {
-        private Vector2 _stackScroll;
-
         private void DrawStackEmpty(Rect area)
         {
             UnityEngine.GUI.Box(area, "", _styles.StackBG);
@@ -23,16 +21,16 @@ namespace Settings.Log
 
             // draw stack
             {
+                if (_isSelectedLogDirty)
+                    _stackScroll.Scroll.Set(0, 0);
                 var stackH = h - sampleH;
-                GUILayout.BeginArea(new Rect(x, y, w, stackH));
-                _stackScroll = GUILayout.BeginScrollView(_stackScroll);
+                _stackScroll.BeginLayout(new Rect(x, y, w, stackH));
                 GUILayout.Space(stackSpace);
                 GUILayout.Label(log.Message, _styles.Font);
                 GUILayout.Space(stackSpace);
                 GUILayout.Label(log.Stacktrace, _styles.StackFont);
                 GUILayout.Space(stackSpace);
-                GUILayout.EndScrollView();
-                GUILayout.EndArea();
+                _stackScroll.EndLayout();
                 y += stackH;
             }
 

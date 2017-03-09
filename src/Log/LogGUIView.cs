@@ -12,9 +12,12 @@ namespace Settings.Log
         private readonly GUI.Icons _icons;
         private readonly Styles _styles;
         private readonly GUI.Table _table;
+        private GUI.ScrollView _stackScroll;
         private readonly Stash _stash;
 
         private int _selectedLog = -1;
+        private int _lastSelectedLog = -1;
+        private bool _isSelectedLogDirty { get { return _selectedLog != _lastSelectedLog; } }
         private bool _keepInSelectedLog;
 
         public GUIView(GUI.Icons icons, Stash stash)
@@ -22,15 +25,18 @@ namespace Settings.Log
             _icons = icons;
             _styles = new Styles();
             _table = new GUI.Table(_rowHeight, 0, _styles.TableBG);
+            _stackScroll = new GUI.ScrollView(Vector2.zero, true, true);
             _stash = stash;
         }
 
         public override void Update()
         {
             UpdateKeyboard();
+            _table.Update();
+            _stackScroll.Update();
         }
 
-        public override void Draw(Rect area)
+        public override void OnGUI(Rect area)
         {
             // TODO: filter, collapse
             var logs = _stash.All();
@@ -47,7 +53,7 @@ namespace Settings.Log
             {
                 var tableH = h * 0.75f;
                 var tableArea = new Rect(x, y, w, tableH);
-                DrawTable(tableArea, logs);
+                OnGUITable(tableArea, logs);
                 y += tableH;
             }
 
@@ -58,6 +64,8 @@ namespace Settings.Log
                 else DrawStackEmpty(stackArea);
                 y += stackH;
             }
+
+            _lastSelectedLog = _selectedLog;
         }
     }
 }
