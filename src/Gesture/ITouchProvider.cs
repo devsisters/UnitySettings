@@ -16,7 +16,10 @@ namespace Settings
             {
                 if (Input.touches.Length != 1) return false;
                 var touch = Input.touches[0];
-                if (touch.phase != TouchPhase.Moved) return false;
+                var touchPhasee = touch.phase;
+                if (touchPhasee == TouchPhase.Ended
+                    || touchPhasee == TouchPhase.Canceled)
+                    return false;
                 result = touch.position;
                 return true;
             }

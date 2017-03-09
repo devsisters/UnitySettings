@@ -50,15 +50,23 @@ namespace Settings.Log
             var x = area.x; var y = area.y;
             var w = area.width; var h = area.height;
 
+            const int toolbarH = 40;
+            var tableH = (h - toolbarH) * 0.75f;
+            var stackH = (h - toolbarH) * 0.25f;
+
             {
-                var tableH = h * 0.75f;
+                var toolbarArea = new Rect(x, y, w, toolbarH);
+                OnGUIToolbar(toolbarArea);
+                y += toolbarH;
+            }
+
+            {
                 var tableArea = new Rect(x, y, w, tableH);
                 OnGUITable(tableArea, logs);
                 y += tableH;
             }
 
             {
-                var stackH = h * 0.25f;
                 var stackArea = new Rect(x, y, w, stackH);
                 if (_selectedLog >= 0) DrawStack(stackArea, logs[_selectedLog]);
                 else DrawStackEmpty(stackArea);

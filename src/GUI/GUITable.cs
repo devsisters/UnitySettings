@@ -27,7 +27,7 @@ namespace Settings.GUI
             _scroll.Update();
         }
 
-        public void OnGUI(Rect area, int count, Action<Rect, int> drawer)
+        public void OnGUI(Rect area, int count, Action<int> drawer)
         {
             UnityEngine.GUI.Box(area, "", _bg);
 
@@ -41,7 +41,7 @@ namespace Settings.GUI
             {
                 var rowArea = new Rect(0, i * _height, area.width, _height);
                 GUILayout.BeginArea(rowArea);
-                drawer(rowArea, i);
+                drawer(i);
                 GUILayout.EndArea();
             }
 

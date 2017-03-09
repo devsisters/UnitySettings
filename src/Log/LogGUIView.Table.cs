@@ -36,7 +36,7 @@ namespace Settings.Log
             }
         }
 
-        private void OnGUILogRow(Rect area, Log log, int index, bool isSelected)
+        private void OnGUILogRow(float width, Log log, int index, bool isSelected)
         {
             const int rightPadding = 10;
 
@@ -54,10 +54,11 @@ namespace Settings.Log
             }
 
             // TODO: wrong touch focus when scroll down.
-            if (UnityEngine.GUI.Button(area, "", backStyle))
+            var rect = new Rect(0, 0, width, _rowHeight);
+            if (UnityEngine.GUI.Button(rect, "", backStyle))
                 _selectedLog = index;
 
-            var rightX = area.width - rightPadding;
+            var rightX = width - rightPadding;
             // draw sample datas
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
@@ -84,8 +85,8 @@ namespace Settings.Log
                 _keepInSelectedLog = false;
             }
 
-            _table.OnGUI(area, logs.Count, (rect, i) =>
-                OnGUILogRow(area, logs[i], i, i == _selectedLog));
+            _table.OnGUI(area, logs.Count,
+                i => OnGUILogRow(area.width, logs[i], i, i == _selectedLog));
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Settings.Log
 {
     internal partial class GUIView : GUI.IView
     {
-        internal class Styles
+        private class Styles
         {
             public readonly GUIStyle Font;
             public readonly GUIStyle Icon;
@@ -18,6 +18,9 @@ namespace Settings.Log
 
             public readonly GUIStyle StackBG;
             public readonly GUIStyle StackFont;
+
+            public readonly GUIStyle ToolbarBG;
+            public readonly GUIStyle ToolbarButton;
 
             private static GUIStyle MakeBaseLogStyle()
             {
@@ -60,6 +63,14 @@ namespace Settings.Log
                 StackFont = new GUIStyle();
                 StackFont.fontSize = 28;
                 StackFont.normal.textColor = Helper.UintToColor(0x424242ff);
+
+                ToolbarBG = new GUIStyle();
+                ToolbarBG.normal.background = Helper.Solid(0xbdbdbdf0);
+                ToolbarButton = new GUIStyle();
+                ToolbarButton.margin = new RectOffset(2, 2, 2, 2);
+                ToolbarButton.alignment = TextAnchor.MiddleCenter;
+                ToolbarButton.normal.background = Helper.Solid(0x9e9e9ef0);
+                ToolbarButton.hover.background = Helper.Solid(0x757575f0);
             }
         }
     }
