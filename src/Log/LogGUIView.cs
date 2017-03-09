@@ -1,76 +1,28 @@
 using UnityEngine;
-using Helper = Settings.GUI.Helper;
 
 namespace Settings.Log
 {
     internal partial class GUIView : GUI.IView
     {
-        const int fontSize = 32;
-        const int rowHeight = 64;
-        const int iconWidth = 40;
-        const bool showTime = true;
-        const bool showScene = true;
-
-        internal class Styles
-        {
-            public readonly GUIStyle BG;
-            public readonly GUIStyle Font;
-            public readonly GUIStyle Icon;
-
-            public readonly GUIStyle EvenLog;
-            public readonly GUIStyle OddLog;
-            public readonly GUIStyle SelectedLog;
-            public readonly GUIStyle SelectedLogFont;
-
-            private static GUIStyle MakeBaseLogStyle()
-            {
-                var ret = new GUIStyle();
-                ret.clipping = TextClipping.Clip;
-                ret.alignment = TextAnchor.UpperLeft;
-                ret.imagePosition = ImagePosition.ImageLeft;
-                return ret;
-            }
-
-            public Styles()
-            {
-                BG = new GUIStyle();
-                BG.normal.background = Helper.Solid(0xffffff04);
-                Font = new GUIStyle();
-                Font.fontSize = fontSize;
-                Font.alignment = TextAnchor.MiddleLeft;
-                Font.clipping = TextClipping.Clip;
-                Icon = new GUIStyle();
-                Icon.alignment = TextAnchor.MiddleCenter;
-
-                EvenLog = MakeBaseLogStyle();
-                EvenLog.normal.background = Helper.Solid(0xeeeeeeff);
-                OddLog = MakeBaseLogStyle();
-                OddLog.normal.background = Helper.Solid(0xe0e0e0ff);
-
-                SelectedLog = MakeBaseLogStyle();
-                SelectedLog.normal.background = Helper.Solid(0x0d47a1ff);
-                SelectedLogFont = new GUIStyle();
-                SelectedLogFont.fontSize = fontSize;
-                SelectedLogFont.alignment = TextAnchor.MiddleLeft;
-                SelectedLogFont.clipping = TextClipping.Clip;
-                SelectedLogFont.normal.textColor = Color.white;
-            }
-        }
+        private const int _iconWidth = 40;
+        private const int _rowHeight = 64;
+        private const bool _showTime = false; // TODO
+        private const bool _showScene = false; // TODO
 
         private readonly GUI.Icons _icons;
         private readonly Styles _styles;
         private readonly GUI.Table _table;
         private readonly Stash _stash;
 
-        private int _selectedLog;
+        private int _selectedLog = -1;
         private bool _keepInSelectedLog;
 
         public GUIView(GUI.Icons icons, Stash stash)
         {
             _icons = icons;
             _styles = new Styles();
+            _table = new GUI.Table(_rowHeight, 0, _styles.TableBG);
             _stash = stash;
-            _table = new GUI.Table(rowHeight, 0, _styles.BG);
         }
 
         public override void Update()
@@ -78,136 +30,34 @@ namespace Settings.Log
             UpdateKeyboard();
         }
 
-        private GUIContent IconForLogType(LogType logType)
+        public override void Draw(Rect area)
         {
-            switch (logType)
+            // TODO: filter, collapse
+            var logs = _stash.All();
+            // var logMask = new Mask();
+            // logMask.AllTrue();
+            // if (!logMask.Check(log.Type)) continue;
+
+            if (logs.Count == 0) _selectedLog = -1;
+            else _selectedLog = Mathf.Clamp(_selectedLog, 0, logs.Count - 1);
+
+            var x = area.x; var y = area.y;
+            var w = area.width; var h = area.height;
+
             {
-                case LogType.Log: return _icons.Log;
-                case LogType.Warning: return _icons.Warning;
-                default: return _icons.Error;
+                var tableH = h * 0.75f;
+                var tableArea = new Rect(x, y, w, tableH);
+                DrawTable(tableArea, logs);
+                y += tableH;
             }
-        }
 
-        public override void Draw(UnityEngine.Rect area)
-        {
-            DrawTable(area);
-            /*
-            tempContent.text = log.count.ToString();
-            float w = 0f;
-            if (collapse)
-                w = barStyle.CalcSize(tempContent).x + 3;
-            countRect.x = Screen.width - w;
-            countRect.y = size.y * i;
-            if (beforeHeight > 0)
-                countRect.y += 8;//i will check later why
-            countRect.width = w;
-            countRect.height = size.y;
-
-            if (scrollerVisible)
-                countRect.x -= size.x * 2;
-
-            if (collapse)
-                GUI.Label(countRect, log.count.ToString(), barStyle);
-            */
+            {
+                var stackH = h * 0.25f;
+                var stackArea = new Rect(x, y, w, stackH);
+                if (_selectedLog >= 0) DrawStack(stackArea, logs[_selectedLog]);
+                else DrawStackEmpty(stackArea);
+                y += stackH;
+            }
         }
     }
-
-    // buttomRect.x = 0f;
-    // buttomRect.y = Screen.height - size.y;
-    // buttomRect.width = Screen.width;
-    // buttomRect.height = size.y;
-    /*
-    void drawStack()
-    {
-        stackRectTopLeft.x = 0f;
-        stackRect.x = 0f;
-        stackRectTopLeft.y = Screen.height * 0.75f;
-        stackRect.y = Screen.height * 0.75f;
-        stackRect.width = Screen.width;
-        stackRect.height = Screen.height * 0.25f - size.y;
-
-
-        if (selectedLog != null)
-        {
-            Vector2 drag = getDrag();
-            if (drag.y != 0 && stackRect.Contains(new Vector2(downPos.x, Screen.height - downPos.y)))
-            {
-                scrollPosition2.y += drag.y - oldDrag2;
-            }
-            oldDrag2 = drag.y;
-
-
-
-            GUILayout.BeginArea(stackRect, backStyle);
-            scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2);
-            Sample selectedSample = null;
-            try
-            {
-                selectedSample = samples[selectedLog.sampleId];
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogException(e);
-            }
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(selectedLog.condition, stackLabelStyle);
-            GUILayout.EndHorizontal();
-            GUILayout.Space(size.y * 0.25f);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label(selectedLog.stacktrace, stackLabelStyle);
-            GUILayout.EndHorizontal();
-            GUILayout.Space(size.y);
-            GUILayout.EndScrollView();
-            GUILayout.EndArea();
-
-
-            GUILayout.BeginArea(buttomRect, backStyle);
-            GUILayout.BeginHorizontal();
-
-            GUILayout.Box(showTimeContent, nonStyle, GUILayout.Width(size.x), GUILayout.Height(size.y));
-            GUILayout.Label(selectedSample.time.ToString("0.000"), nonStyle);
-            GUILayout.Space(size.x);
-
-            GUILayout.Box(showSceneContent, nonStyle, GUILayout.Width(size.x), GUILayout.Height(size.y));
-            GUILayout.Label(scenes[selectedSample.loadedScene], nonStyle);
-            GUILayout.Space(size.x);
-
-            GUILayout.Box(showMemoryContent, nonStyle, GUILayout.Width(size.x), GUILayout.Height(size.y));
-            GUILayout.Label(selectedSample.memory.ToString("0.000"), nonStyle);
-            GUILayout.Space(size.x);
-
-            GUILayout.Box(showFpsContent, nonStyle, GUILayout.Width(size.x), GUILayout.Height(size.y));
-            GUILayout.Label(selectedSample.FormatFpsToDisplay(), nonStyle);
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
-        else
-        {
-            GUILayout.BeginArea(stackRect, backStyle);
-            GUILayout.EndArea();
-            GUILayout.BeginArea(buttomRect, backStyle);
-            GUILayout.EndArea();
-        }
-    }
-     */
 }
-
-//         if (selectedLog != null)
-//         {
-//             int newSelectedIndex = currentLog.IndexOf(selectedLog);
-//             if (newSelectedIndex == -1)
-//             {
-//                 Log collapsedSelected = logsDic[selectedLog.condition][selectedLog.stacktrace];
-//     newSelectedIndex = currentLog.IndexOf(collapsedSelected);
-//                 if (newSelectedIndex != -1)
-//                     scrollPosition.y = newSelectedIndex* size.y;
-// }
-//             else
-//             {
-//                 scrollPosition.y = newSelectedIndex* size.y;
-//             }
-//         }
-//     }
-// }

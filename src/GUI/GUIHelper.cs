@@ -4,6 +4,16 @@ namespace Settings.GUI
 {
     public static class Helper
     {
+        public static Color32 UintToColor(uint color)
+        {
+            Color32 c;
+            c.r = (byte)((color >> 24) & 0xFF);
+            c.g = (byte)((color >> 16) & 0xFF);
+            c.b = (byte)((color >> 8) & 0xFF);
+            c.a = (byte)((color) & 0xFF);
+            return c;
+        }
+
         public static Texture2D Solid(Color color)
         {
             var tex = new Texture2D(1, 1);
@@ -13,13 +23,7 @@ namespace Settings.GUI
 
         public static Texture2D Solid(uint color)
         {
-            Color32 c;
-            c.r = (byte)((color >> 24) & 0xFF);
-            c.g = (byte)((color >> 16) & 0xFF);
-            c.b = (byte)((color >> 8) & 0xFF);
-            c.a = (byte)((color) & 0xFF);
-            return Solid(c);
+            return Solid(UintToColor(color));
         }
-
     }
 }

@@ -4,6 +4,7 @@ namespace Settings.Log
     {
         public readonly float Time;
         public readonly string Scene;
+        public string TimeToDisplay { get { return Time.ToString("0.000"); } }
 
         public Sample(float time, string scene)
         {

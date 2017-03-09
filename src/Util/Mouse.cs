@@ -40,8 +40,7 @@ namespace Settings.Util
             if (Input.touchSupported)
             {
                 var touches = Input.touches;
-                if (touches.Length == 1
-                    && touches[0].phase == TouchPhase.Began)
+                if (touches.Length == 1)
                 {
                     result = touches[0].position;
                     return true;

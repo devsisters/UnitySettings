@@ -1,9 +1,20 @@
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Settings.Log
 {
     internal partial class GUIView : GUI.IView
     {
+        private GUIContent IconForLogType(LogType logType)
+        {
+            switch (logType)
+            {
+                case LogType.Log: return _icons.Log;
+                case LogType.Warning: return _icons.Warning;
+                default: return _icons.Error;
+            }
+        }
+
         private static readonly GUIContent _tempContent = new GUIContent();
         private static void DrawIconAndLabelFromRightToLeft(
             GUIContent icon, string text,
@@ -14,19 +25,21 @@ namespace Settings.Log
                 _tempContent.text = text;
                 var w = fontStyle.CalcSize(_tempContent).x;
                 x -= w;
-                var r = new Rect(x, 0, w, rowHeight);
+                var r = new Rect(x, 0, w, _rowHeight);
                 UnityEngine.GUI.Label(r, _tempContent, fontStyle);
             }
 
             {
-                x -= iconWidth;
-                var r = new Rect(x, 0, iconWidth, rowHeight);
+                x -= _iconWidth;
+                var r = new Rect(x, 0, _iconWidth, _rowHeight);
                 UnityEngine.GUI.Box(r, icon, iconStyle);
             }
         }
 
         private void DrawRow(Rect area, Log log, int index, bool isSelected)
         {
+            const int rightPadding = 10;
+
             GUIStyle backStyle = null;
             GUIStyle fontStyle = null;
             if (isSelected)
@@ -44,43 +57,33 @@ namespace Settings.Log
             if (UnityEngine.GUI.Button(area, "", backStyle))
                 _selectedLog = index;
 
-            var rightX = area.width;
+            var rightX = area.width - rightPadding;
             // draw sample datas
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
                     DrawIconAndLabelFromRightToLeft(icon, text, _styles.Icon, fontStyle, ref rightX);
-                if (showScene) drawIconAndLabel(_icons.ShowScene, log.Sample.Scene);
-                if (showTime) drawIconAndLabel(_icons.ShowTime, log.Sample.Time.ToString("0.000"));
+                if (_showScene) drawIconAndLabel(_icons.ShowScene, log.Sample.Scene);
+                if (_showTime) drawIconAndLabel(_icons.ShowTime, log.Sample.TimeToDisplay);
             }
 
             // draw message
             {
-                var content = IconForLogType(log.Type);
-                var iconRect = new Rect(0, 0, iconWidth, rowHeight);
-                UnityEngine.GUI.Box(iconRect, content, _styles.Icon);
-                var labelRect = new Rect(iconWidth, 0, rightX - iconWidth, rowHeight);
+                var icon = IconForLogType(log.Type);
+                var iconRect = new Rect(0, 0, _iconWidth, _rowHeight);
+                UnityEngine.GUI.Box(iconRect, icon, _styles.Icon);
+                var labelRect = new Rect(_iconWidth, 0, rightX - _iconWidth, _rowHeight);
                 UnityEngine.GUI.Label(labelRect, log.Message, fontStyle);
             }
         }
 
-        private void DrawTable(Rect area)
+        private void DrawTable(Rect area, ReadOnlyCollection<Log> logs)
         {
-            // TODO:
-            var logMask = new Mask();
-            logMask.AllTrue();
-            var logs = _stash.All();
-
-            // TODO
-            // var logCount = logs.Count;
-            // if (i >= logs.Count) break;
-            // if (!logMask.Check(log.Type)) continue;
-
-            _selectedLog = Mathf.Clamp(_selectedLog, 0, logs.Count - 1);
             if (_keepInSelectedLog)
             {
                 _table.SetScrollToKeepIn(area, _selectedLog);
                 _keepInSelectedLog = false;
             }
+
             _table.Draw(area, logs.Count, (rect, i) =>
                 DrawRow(area, logs[i], i, i == _selectedLog));
         }
