@@ -60,7 +60,9 @@ namespace Settings
             var logSampler = new Log.Sampler();
             var logWatch = new Log.Watch(logProvider, logSampler);
             settings.AddBehaviourListener(logWatch);
-            settings.AddGUIView("Log", new Log.GUIView(icons, logWatch.Stash));
+            var logGUIViewConfig = new Log.GUIView.Config(); // TODO
+            var logGUIView = new Log.GUIView(logGUIViewConfig, icons, logWatch.Stash);
+            settings.AddGUIView("Log", logGUIView);
         }
     }
 }

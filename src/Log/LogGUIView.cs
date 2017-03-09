@@ -18,15 +18,21 @@ namespace Settings.Log
         private bool _isSelectedLogDirty { get { return _selectedLog != _lastSelectedLog; } }
         private bool _keepInSelectedLog;
 
-        private bool _collapse = false; // TODO
-        private bool _showTime = false; // TODO
-        private bool _showScene = false; // TODO
-        private bool _showLog = true; // TODO
-        private bool _showWarning = true; // TODO
-        private bool _showError = true; // TODO
-
-        public GUIView(GUI.Icons icons, Stash stash)
+        public class Config
         {
+            public bool Collapse = false; // TODO
+            public bool ShowTime = false;
+            public bool ShowScene = false;
+            public bool ShowLog = true; // TODO
+            public bool ShowWarning = true; // TODO
+            public bool ShowError = true; // TODO
+        }
+
+        private readonly Config _config;
+
+        public GUIView(Config config, GUI.Icons icons, Stash stash)
+        {
+            _config = config;
             _icons = icons;
             _styles = new Styles();
             _table = new GUI.Table(_rowHeight, 0, _styles.TableBG);

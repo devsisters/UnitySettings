@@ -50,18 +50,3 @@ namespace Settings.Log
         }
     }
 }
-
-// if (newLogAdded)
-// {
-//     calculateStartIndex();
-//     int totalCount = currentLog.Count;
-//     int totalVisibleCount = (int)(Screen.height * 0.75f / size.y);
-//     if (startIndex >= (totalCount - totalVisibleCount))
-//         scrollPosition.y += size.y;
-// }
-// if (TotalMemUsage > maxSize)
-// {
-//     clear();
-//     Debug.Log("Memory Usage Reach" + maxSize + " mb So It is Cleared");
-//     return;
-// }

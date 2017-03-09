@@ -22,20 +22,30 @@ namespace Settings.Log
 
         private void OnGUIToolbar(Rect area)
         {
-            // TODO
             const int padding = 2;
             _toolbarTempWidth = GUILayout.MinWidth(64);
             _toolbarTempHeight = GUILayout.Height(area.height - padding * 2);
+
             GUILayout.BeginArea(area, _styles.ToolbarBG);
             GUILayout.BeginHorizontal();
-            if (DrawToolbarButton(_icons.Clear)) Debug.Log("Clear");
-            if (DrawToolbarToggle(_icons.Collapse, ref _collapse)) Debug.Log("Collapse");
-            if (DrawToolbarToggle(_icons.ShowTime, ref _showTime)) Debug.Log("Time");
-            if (DrawToolbarToggle(_icons.ShowScene, ref _showScene)) Debug.Log("Scene");
+
+            var c = _config;
+
+            // draw actions
+            if (DrawToolbarButton(_icons.Clear)) Debug.Log("Clear"); // TODO
+            DrawToolbarToggle(_icons.Collapse, ref c.Collapse);
+
+            // draw show sample
+            DrawToolbarToggle(_icons.ShowTime, ref c.ShowTime);
+            DrawToolbarToggle(_icons.ShowScene, ref c.ShowScene);
+
             GUILayout.FlexibleSpace();
-            if (DrawToolbarToggle(_icons.Log, ref _showLog)) Debug.Log("Log");
-            if (DrawToolbarToggle(_icons.Warning, ref _showWarning)) Debug.Log("Warning");
-            if (DrawToolbarToggle(_icons.Error, ref _showError)) Debug.Log("Error");
+
+            // draw log mask
+            DrawToolbarToggle(_icons.Log, ref c.ShowLog);
+            DrawToolbarToggle(_icons.Warning, ref c.ShowWarning);
+            DrawToolbarToggle(_icons.Error, ref c.ShowError);
+
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

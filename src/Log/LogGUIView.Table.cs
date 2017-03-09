@@ -63,8 +63,8 @@ namespace Settings.Log
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
                     OnGUIIconAndLabelFromRightToLeft(icon, text, _styles.Icon, fontStyle, ref rightX);
-                if (_showScene) drawIconAndLabel(_icons.ShowScene, log.Sample.Scene);
-                if (_showTime) drawIconAndLabel(_icons.ShowTime, log.Sample.TimeToDisplay);
+                if (_config.ShowScene) drawIconAndLabel(_icons.ShowScene, log.Sample.Scene);
+                if (_config.ShowTime) drawIconAndLabel(_icons.ShowTime, log.Sample.TimeToDisplay);
             }
 
             // draw message
