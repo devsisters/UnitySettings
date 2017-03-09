@@ -40,6 +40,7 @@
     <Compile Include="src\Gesture\*.cs" />
     <Compile Include="src\GUI\*.cs" />
     <Compile Include="src\Log\*.cs" />
+    <Compile Include="src\Log\GUI\*.cs" />
     <Compile Include="src\Util\*.cs" />
     <Compile Include="src\Unity\*.cs" />
   </ItemGroup>
