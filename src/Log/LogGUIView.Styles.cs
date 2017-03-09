@@ -21,6 +21,7 @@ namespace Settings.Log
 
             public readonly GUIStyle ToolbarBG;
             public readonly GUIStyle ToolbarButton;
+            public readonly GUIStyle ToolbarButtonOn;
 
             private static GUIStyle MakeBaseLogStyle()
             {
@@ -71,6 +72,9 @@ namespace Settings.Log
                 ToolbarButton.alignment = TextAnchor.MiddleCenter;
                 ToolbarButton.normal.background = Helper.Solid(0x9e9e9ef0);
                 ToolbarButton.hover.background = Helper.Solid(0x757575f0);
+                ToolbarButtonOn = new GUIStyle(ToolbarButton);
+                ToolbarButtonOn.normal.background = Helper.Solid(0x616161f0);
+                ToolbarButtonOn.hover.background = Helper.Solid(0x424242f0);
             }
         }
     }

@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 namespace Settings.GUI
@@ -120,9 +121,11 @@ namespace Settings.GUI
             GUILayout.EndHorizontal();
             */
 
+/*
             GUILayout.EndScrollView();
             GUILayout.EndArea();
         }
     }
 }
+*/
 

@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 namespace Settings.GUI
@@ -91,3 +92,4 @@ namespace Settings.GUI
         }
     }
 }
+*/

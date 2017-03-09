@@ -6,8 +6,6 @@ namespace Settings.Log
     {
         private const int _iconWidth = 40;
         private const int _rowHeight = 64;
-        private const bool _showTime = true; // TODO
-        private const bool _showScene = true; // TODO
 
         private readonly GUI.Icons _icons;
         private readonly Styles _styles;
@@ -19,6 +17,13 @@ namespace Settings.Log
         private int _lastSelectedLog = -1;
         private bool _isSelectedLogDirty { get { return _selectedLog != _lastSelectedLog; } }
         private bool _keepInSelectedLog;
+
+        private bool _collapse = false; // TODO
+        private bool _showTime = false; // TODO
+        private bool _showScene = false; // TODO
+        private bool _showLog = true; // TODO
+        private bool _showWarning = true; // TODO
+        private bool _showError = true; // TODO
 
         public GUIView(GUI.Icons icons, Stash stash)
         {
