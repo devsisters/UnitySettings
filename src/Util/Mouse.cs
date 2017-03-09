@@ -4,84 +4,58 @@ namespace Settings.Util
 {
     internal static class Mouse
     {
-        private static int _curMouseFrame = -1;
+        private static bool _curMousePresent;
         private static Vector2 _curMousePos;
-        private static int _lastMouseFrame = -1;
         private static Vector2 _lastMousePos;
 
-        public static bool UpdatePos()
+        public static bool RefreshPos()
         {
-            if (Input.touchSupported)
-                return false;
-
-            var curFrame = Time.frameCount;
-            if (_curMouseFrame == curFrame)
-                return true;
-
-            _lastMouseFrame = _curMouseFrame;
             _lastMousePos = _curMousePos;
 
-            if (Input.GetMouseButton(0))
-            {
-                _curMouseFrame = curFrame;
-                _curMousePos = Input.mousePosition;
-                return true;
-            }
-            else
-            {
-                _curMouseFrame = -1;
-                _curMousePos = Input.mousePosition;
-                return false;
-            }
-        }
-
-        public static bool CurPos(out Vector2 result)
-        {
             if (Input.touchSupported)
             {
                 var touches = Input.touches;
                 if (touches.Length == 1)
                 {
-                    result = touches[0].position;
+                    _curMousePresent = true;
+                    _curMousePos = touches[0].position;
                     return true;
                 }
             }
             else
             {
-                if (UpdatePos())
+                if (Input.GetMouseButton(0))
                 {
-                    result = _curMousePos;
+                    _curMousePresent = true;
+                    _curMousePos = Input.mousePosition;
                     return true;
                 }
             }
 
-            result = default(Vector2);
+            _curMousePresent = false;
+            _curMousePos = default(Vector2);
             return false;
         }
 
+        public static bool CurPos(out Vector2 result)
+        {
+            result = _curMousePos;
+            return _curMousePresent;
+        }
+
+        // TODO: why scale 4?
         public static bool Delta(out Vector2 result)
         {
-            if (Input.touchSupported)
+            if (!RefreshPos())
             {
-                if (Input.touches.Length == 1)
-                {
-                    result = Input.touches[0].deltaPosition;
-                    return true;
-                }
-            }
-            else
-            {
-                if (UpdatePos())
-                {
-                    if (_lastMouseFrame != -1)
-                        result = _curMousePos - _lastMousePos;
-                    else result = Vector2.zero;
-                    return true;
-                }
+                result = default(Vector2);
+                return false;
             }
 
-            result = default(Vector2);
-            return false;
+            if (_curMousePresent)
+                result = (_curMousePos - _lastMousePos);
+            else result = Vector2.zero;
+            return true;
         }
     }
 }

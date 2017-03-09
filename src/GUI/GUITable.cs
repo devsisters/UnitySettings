@@ -26,9 +26,7 @@ namespace Settings.GUI
             Vector2 delta;
             if (!Util.Mouse.Delta(out delta)) return;
             if (delta.y == 0) return;
-
-            // TODO: why scale 4?
-            _scrollY += delta.y / 4;
+            _scrollY += delta.y;
         }
 
         public void Draw(Rect area, int count, Action<Rect, int> drawer)

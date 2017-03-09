@@ -48,7 +48,6 @@ namespace Settings
         private void Update()
         {
             Init();
-            Util.Mouse.UpdatePos();
             if (_isShowingGUI)
                 _guiDrawer.Update(_viewToDraw);
             foreach (var l in _behaviourListeners)
@@ -58,6 +57,7 @@ namespace Settings
 
         private void DetectGesture()
         {
+            Util.Mouse.RefreshPos();
             if (_isShowingGUI) return;
             _gesture.SampleOrCancel();
             if (_gesture.CheckAndClear())

@@ -6,8 +6,8 @@ namespace Settings.Log
     {
         private const int _iconWidth = 40;
         private const int _rowHeight = 64;
-        private const bool _showTime = false; // TODO
-        private const bool _showScene = false; // TODO
+        private const bool _showTime = true; // TODO
+        private const bool _showScene = true; // TODO
 
         private readonly GUI.Icons _icons;
         private readonly Styles _styles;

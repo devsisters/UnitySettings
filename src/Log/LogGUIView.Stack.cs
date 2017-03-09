@@ -14,24 +14,6 @@ namespace Settings.Log
         private void DrawStack(Rect area, Log log)
         {
             DrawStackEmpty(area);
-            //     Vector2 drag = getDrag();
-            //     if (drag.y != 0 && stackRect.Contains(new Vector2(downPos.x, Screen.height - downPos.y)))
-            //     {
-            //         scrollPosition2.y += drag.y - oldDrag2;
-            //     }
-            //     oldDrag2 = drag.y;
-
-            //     GUILayout.BeginArea(stackRect, backStyle);
-            //     scrollPosition2 = GUILayout.BeginScrollView(scrollPosition2);
-            //     Sample selectedSample = null;
-            //     try
-            //     {
-            //         selectedSample = samples[selectedLog.sampleId];
-            //     }
-            //     catch (System.Exception e)
-            //     {
-            //         Debug.LogException(e);
-            //     }
 
             const int sampleH = 40;
             const int stackPadding = 12;
