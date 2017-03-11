@@ -48,11 +48,15 @@ namespace Settings
         private void Update()
         {
             Init();
-            Util.Mouse.RefreshPos();
+            if (Input.GetKeyDown(KeyCode.Escape))
+                _isShowingGUI = false;
             if (_isShowingGUI)
+            {
+                Util.Mouse.RefreshPos();
                 _guiDrawer.Update(_viewToDraw);
+            }
             foreach (var l in _behaviourListeners)
-                l.Update();
+                l.Update(_isShowingGUI);
             DetectGesture();
         }
 

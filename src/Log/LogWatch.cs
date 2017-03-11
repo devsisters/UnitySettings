@@ -24,7 +24,7 @@ namespace Settings.Log
             _broker.Disconnect();
         }
 
-        public override void Update()
+        public override void Update(bool isShowingGUI)
         {
             _broker.Transfer(Stash);
         }

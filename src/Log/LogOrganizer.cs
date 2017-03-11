@@ -82,14 +82,14 @@ namespace Settings.Log
 
         public ReadOnlyCollapsedLogs FilterCollapsed(Mask mask)
         {
-            if (_lastMask == mask)
+            if (_lastCollapsedMask == mask)
                 return _lastCollapsedLogsReadOnly;
 
-            _lastMask = mask;
+            _lastCollapsedMask = mask;
             _lastCollapsedIndex.Clear();
             _lastCollapsedLogs.Clear();
 
-            if (_lastMask.IsAllFalse)
+            if (_lastCollapsedMask.IsAllFalse)
                 return _lastCollapsedLogsReadOnly;
 
             foreach (var log in _stash.All())
