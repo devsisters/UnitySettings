@@ -15,7 +15,7 @@ For preventing invent-a-wheel again and again, we decided to collect all the gen
 * Or you will plugin in your own code in github repository.
 
 ## What Features, For Example?
-We will ship general purpose runtime debugging features!
+We will ship plenty of general purpose runtime debugging features!
 * Extensible CLI parser/executer
 * LUA repl for UnityEngine.dll
 * Device information
