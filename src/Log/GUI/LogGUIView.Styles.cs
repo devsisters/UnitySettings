@@ -5,23 +5,23 @@ namespace Settings.Log
 {
     internal partial class GUIView : GUI.IView
     {
-        private class Styles
+        private static class Styles
         {
-            public readonly GUIStyle Font;
-            public readonly GUIStyle Icon;
+            public static readonly GUIStyle Font;
+            public static readonly GUIStyle Icon;
 
-            public readonly GUIStyle TableBG;
-            public readonly GUIStyle EvenLog;
-            public readonly GUIStyle OddLog;
-            public readonly GUIStyle SelectedLog;
-            public readonly GUIStyle SelectedLogFont;
+            public static readonly GUIStyle TableBG;
+            public static readonly GUIStyle EvenLog;
+            public static readonly GUIStyle OddLog;
+            public static readonly GUIStyle SelectedLog;
+            public static readonly GUIStyle SelectedLogFont;
 
-            public readonly GUIStyle StackBG;
-            public readonly GUIStyle StackFont;
+            public static readonly GUIStyle StackBG;
+            public static readonly GUIStyle StackFont;
 
-            public readonly GUIStyle ToolbarBG;
-            public readonly GUIStyle ToolbarButton;
-            public readonly GUIStyle ToolbarButtonOn;
+            public static readonly GUIStyle ToolbarBG;
+            public static readonly GUIStyle ToolbarButton;
+            public static readonly GUIStyle ToolbarButtonOn;
 
             private static GUIStyle MakeBaseLogStyle()
             {
@@ -32,7 +32,7 @@ namespace Settings.Log
                 return ret;
             }
 
-            public Styles()
+            static Styles()
             {
                 const int fontSize = 32;
 

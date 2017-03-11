@@ -43,16 +43,15 @@ namespace Settings.Log
             GUIStyle fontStyle = null;
             if (isSelected)
             {
-                backStyle = _styles.SelectedLog;
-                fontStyle = _styles.SelectedLogFont;
+                backStyle = Styles.SelectedLog;
+                fontStyle = Styles.SelectedLogFont;
             }
             else
             {
-                backStyle = (index % 2 == 0) ? _styles.EvenLog : _styles.OddLog;
-                fontStyle = _styles.Font;
+                backStyle = (index % 2 == 0) ? Styles.EvenLog : Styles.OddLog;
+                fontStyle = Styles.Font;
             }
 
-            // TODO: wrong touch focus when scroll down.
             var rect = new Rect(0, 0, width, _rowHeight);
             if (UnityEngine.GUI.Button(rect, "", backStyle))
                 _selectedLog = index;
@@ -62,7 +61,7 @@ namespace Settings.Log
             if (log.Sample.HasValue)
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
-                    OnGUIIconAndLabelFromRightToLeft(icon, text, _styles.Icon, fontStyle, ref rightX);
+                    OnGUIIconAndLabelFromRightToLeft(icon, text, Styles.Icon, fontStyle, ref rightX);
                 var sample = log.Sample.Value;
                 if (_config.ShowScene) drawIconAndLabel(_icons.ShowScene, sample.Scene);
                 if (_config.ShowTime) drawIconAndLabel(_icons.ShowTime, sample.TimeToDisplay);
@@ -78,7 +77,7 @@ namespace Settings.Log
             {
                 var icon = IconForLogType(log.Type);
                 var iconRect = new Rect(0, 0, _iconWidth, _rowHeight);
-                UnityEngine.GUI.Box(iconRect, icon, _styles.Icon);
+                UnityEngine.GUI.Box(iconRect, icon, Styles.Icon);
                 var labelRect = new Rect(_iconWidth, 0, rightX - _iconWidth, _rowHeight);
                 UnityEngine.GUI.Label(labelRect, log.Message, fontStyle);
             }

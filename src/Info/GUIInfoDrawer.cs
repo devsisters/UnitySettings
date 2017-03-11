@@ -7,12 +7,12 @@ namespace Settings.GUI
     {
         private Vector2 _scrollPos;
         private Icons _icons;
-        private Styles _styles;
+        private Styles Styles;
 
         public InfoDrawer(Icons icons, Styles styles)
         {
             _icons = icons;
-            _styles = styles;
+            Styles = styles;
         }
 
         private struct RowDrawer
@@ -64,7 +64,7 @@ namespace Settings.GUI
             var maxTextureSize = SystemInfo.maxTextureSize.ToString();
             var systemMemorySize = SystemInfo.systemMemorySize.ToString();
 
-            GUILayout.BeginArea(area, _styles.Back);
+            GUILayout.BeginArea(area, Styles.Back);
 
             Vector2 drag;
             if (Util.Mouse.Delta(out drag))
@@ -74,7 +74,7 @@ namespace Settings.GUI
             GUILayout.Space(rowHeight);
 
             var i = _icons;
-            var d = new RowDrawer(_styles.None, rowHeight, marginX);
+            var d = new RowDrawer(Styles.None, rowHeight, marginX);
             d.Draw(i.BuildFrom, buildDate);
             d.Draw(i.SystemInfo, deviceModel, deviceType, deviceName);
             d.Draw(i.GraphicsInfo, graphicsDeviceName, graphicsMemorySize, maxTextureSize);

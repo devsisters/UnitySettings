@@ -8,7 +8,6 @@ namespace Settings.Log
         private const int _rowHeight = 64;
 
         private readonly GUI.Icons _icons;
-        private readonly Styles _styles;
         private readonly GUI.Table _table;
         private GUI.ScrollView _stackScroll;
         private readonly Organizer _organizer;
@@ -32,11 +31,14 @@ namespace Settings.Log
         private readonly Config _config;
 
         public GUIView(Config config, GUI.Icons icons, Organizer organizer)
+            : base("Log", icons.Log)
         {
             _config = config;
             _icons = icons;
-            _styles = new Styles();
-            _table = new GUI.Table(_rowHeight, 0, _styles.TableBG);
+            _table = new GUI.Table(
+                GUI.Table.Direction.Vertical,
+                _rowHeight, 0,
+                Styles.TableBG);
             _stackScroll = new GUI.ScrollView(Vector2.zero, true, true);
             _organizer = organizer;
         }
@@ -64,7 +66,7 @@ namespace Settings.Log
             {
                 var x = area.x; var y = area.y;
                 var w = area.width; var h = area.height;
-                const int toolbarH = 40;
+                const int toolbarH = 60;
                 var tableH = (h - toolbarH) * 0.75f;
                 var stackH = (h - toolbarH) * 0.25f;
                 toolbarArea = new Rect(x, y, w, toolbarH);

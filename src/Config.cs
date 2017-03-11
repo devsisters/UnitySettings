@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 namespace Settings
@@ -29,3 +30,4 @@ namespace Settings
         }
     }
 }
+*/

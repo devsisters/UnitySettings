@@ -9,12 +9,12 @@ namespace Settings.Log
 
         private bool DrawToolbarButton(GUIContent icon)
         {
-            return GUILayout.Button(icon, _styles.ToolbarButton, _toolbarTempWidth, _toolbarTempHeight);
+            return GUILayout.Button(icon, Styles.ToolbarButton, _toolbarTempWidth, _toolbarTempHeight);
         }
 
         private bool DrawToolbarToggle(GUIContent icon, bool value)
         {
-            var style = value ? _styles.ToolbarButtonOn : _styles.ToolbarButton;
+            var style = value ? Styles.ToolbarButtonOn : Styles.ToolbarButton;
             var clicked = GUILayout.Button(icon, style, _toolbarTempWidth, _toolbarTempHeight);
             if (clicked) value = !value;
             return value;
@@ -31,7 +31,7 @@ namespace Settings.Log
             _toolbarTempWidth = GUILayout.MinWidth(64);
             _toolbarTempHeight = GUILayout.Height(area.height - padding * 2);
 
-            GUILayout.BeginArea(area, _styles.ToolbarBG);
+            GUILayout.BeginArea(area, Styles.ToolbarBG);
             GUILayout.BeginHorizontal();
 
             var c = _config;

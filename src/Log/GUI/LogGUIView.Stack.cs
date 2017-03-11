@@ -6,7 +6,7 @@ namespace Settings.Log
     {
         private void DrawStackEmpty(Rect area)
         {
-            UnityEngine.GUI.Box(area, "", _styles.StackBG);
+            UnityEngine.GUI.Box(area, "", Styles.StackBG);
         }
 
         private void DrawStack(Rect area, AbstractLog log)
@@ -30,9 +30,9 @@ namespace Settings.Log
                     _stackScroll.Scroll.Set(0, 0);
                 _stackScroll.BeginLayout(new Rect(x, y, w, stackH));
                 GUILayout.Space(stackSpace);
-                GUILayout.Label(log.Message, _styles.Font);
+                GUILayout.Label(log.Message, Styles.Font);
                 GUILayout.Space(stackSpace);
-                GUILayout.Label(log.Stacktrace, _styles.StackFont);
+                GUILayout.Label(log.Stacktrace, Styles.StackFont);
                 GUILayout.Space(stackSpace);
                 _stackScroll.EndLayout();
                 y += stackH;
@@ -43,8 +43,8 @@ namespace Settings.Log
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, label) =>
                 {
-                    GUILayout.Box(icon, _styles.Icon, GUILayout.Width(_iconWidth), GUILayout.Height(sampleH));
-                    GUILayout.Label(label, _styles.Font);
+                    GUILayout.Box(icon, Styles.Icon, GUILayout.Width(_iconWidth), GUILayout.Height(sampleH));
+                    GUILayout.Label(label, Styles.Font);
                     GUILayout.Space(stackSpace);
                 };
 

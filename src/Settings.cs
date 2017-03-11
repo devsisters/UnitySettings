@@ -5,10 +5,10 @@ namespace Settings
 {
     public class Settings : MonoBehaviour
     {
-        private bool _isInited { get { return _config != null; } }
+        // private bool _isInited { get { return _config != null; } }
+        private bool _isInited { get { return _guiDrawer != null; } }
 
-        private Config _config;
-        private string _viewToDraw;
+        // private Config _config;
         private GUI.Drawer _guiDrawer;
         // TODO
         // private bool _isShowingGUI;
@@ -24,8 +24,7 @@ namespace Settings
         private void Init()
         {
             if (_isInited) return;
-            _config = Config.LoadFromPrefs();
-            _viewToDraw = _config.StartView;
+            // _config = Config.LoadFromPrefs();
             _guiDrawer = new GUI.Drawer();
             var gestureLeastLength = (Screen.width + Screen.height) / 4;
             _gesture = new CircleGesture(new TouchProvider(), gestureLeastLength);
@@ -42,7 +41,7 @@ namespace Settings
         {
             foreach (var l in _behaviourListeners)
                 l.OnDisable();
-            _config.SaveToPrefs();
+            // _config.SaveToPrefs();
         }
 
         private void Update()
@@ -53,7 +52,7 @@ namespace Settings
             if (_isShowingGUI)
             {
                 Util.Mouse.RefreshPos();
-                _guiDrawer.Update(_viewToDraw);
+                _guiDrawer.Update();
             }
             foreach (var l in _behaviourListeners)
                 l.Update(_isShowingGUI);
@@ -72,7 +71,7 @@ namespace Settings
         {
             Init();
             if (!_isShowingGUI) return;
-            _guiDrawer.OnGUI(_viewToDraw);
+            _guiDrawer.OnGUI();
         }
 
         public void AddBehaviourListener(IBehaviourListener behaviourListener)

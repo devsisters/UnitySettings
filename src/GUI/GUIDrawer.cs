@@ -1,103 +1,75 @@
 ﻿using UnityEngine;
 using View = System.Collections.Generic.Dictionary<string, Settings.GUI.IView>;
+using ViewList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, Settings.GUI.IView>>;
 
 namespace Settings.GUI
 {
-    internal class Drawer
+    internal partial class Drawer
     {
+        const int _toolbarH = 60;
+
+        private class Styles
+        {
+            public static readonly GUIStyle ToolbarBG;
+
+            static Styles()
+            {
+                ToolbarBG = new GUIStyle();
+                ToolbarBG.normal.background = Helper.Solid(0xbdbdbdf0);
+            }
+        }
+
         private readonly View _views = new View(4);
+        private ViewList _viewList;
+
+        private string _curViewKey;
+        private IView _curView;
+        private readonly Table _toolbarTable;
+
+        public Drawer()
+        {
+            _toolbarTable = new GUI.Table(
+                GUI.Table.Direction.Horizontal,
+                _toolbarH, 0,
+                Styles.ToolbarBG);
+        }
 
         public void Add(string key, IView view)
         {
             _views.Add(key, view);
+            _viewList = null;
+
+            if (_curViewKey == null)
+            {
+                _curViewKey = key;
+                _curView = view;
+            }
+            else if (_curViewKey == key)
+            {
+                _curView = view;
+            }
         }
 
-        public void Update(string key)
+        public void Update()
         {
-            IView view;
-            if (!_views.TryGetValue(key, out view))
-            {
-                L.SomethingWentWrong();
-                return;
-            }
-
-            view.Update();
+            if (_curView != null)
+                _curView.Update();
         }
 
-        public void OnGUI(string key)
+        public void OnGUI()
         {
-            IView view;
-            if (!_views.TryGetValue(key, out view))
-            {
-                L.SomethingWentWrong();
-                return;
-            }
+            // layout
+            var y = 0;
+            var w = Screen.width;
+            var h = Screen.height;
 
-            var screenRect = new Rect(0, 0, Screen.width, Screen.height);
-            view.OnGUI(screenRect);
+            var toolbarArea = new Rect(0, y, w, _toolbarH);
+            y += _toolbarH;
+            var viewArea = new Rect(0, y, w, h);
+
+            // draw
+            OnGUIToolbar(toolbarArea);
+            if (_curView != null) _curView.OnGUI(viewArea);
         }
     }
 }
-
-// logDate = System.DateTime.Now.ToString();
-// float toolbarOldDrag = 0;
-// float oldDrag;
-// float oldDrag2;
-// float oldDrag3;
-
-/*
-public void INit(){
-GUISkin skin = PNGs.reporterScrollerSkin;
-
-toolbarScrollerSkin = (GUISkin)GameObject.Instantiate(skin);
-toolbarScrollerSkin.verticalScrollbar.fixedWidth = 0f;
-toolbarScrollerSkin.horizontalScrollbar.fixedHeight = 0f;
-toolbarScrollerSkin.verticalScrollbarThumb.fixedWidth = 0f;
-toolbarScrollerSkin.horizontalScrollbarThumb.fixedHeight = 0f;
-
-logScrollerSkin = (GUISkin)GameObject.Instantiate(skin);
-logScrollerSkin.verticalScrollbar.fixedWidth = size.x * 2f;
-logScrollerSkin.horizontalScrollbar.fixedHeight = 0f;
-logScrollerSkin.verticalScrollbarThumb.fixedWidth = size.x * 2f;
-logScrollerSkin.horizontalScrollbarThumb.fixedHeight = 0f;
-
-graphScrollerSkin = (GUISkin)GameObject.Instantiate(skin);
-graphScrollerSkin.verticalScrollbar.fixedWidth = 0f;
-graphScrollerSkin.horizontalScrollbar.fixedHeight = size.x * 2f;
-graphScrollerSkin.verticalScrollbarThumb.fixedWidth = 0f;
-graphScrollerSkin.horizontalScrollbarThumb.fixedHeight = size.x * 2f;
-*/
-
-// private readonly InfoDrawer _infoDrawer;
-// private readonly ToolbarDrawer _toolbarDrawer;
-// private readonly LogDrawer _logDrawer;
-// private readonly Log.Stash _logStash;
-// _infoDrawer = new InfoDrawer(icons, styles);
-// _toolbarDrawer = new ToolbarDrawer(icons, styles);
-// _logDrawer = new LogDrawer(icons, styles);
-// _logStash = logStash;
-
-// switch (view)
-// {
-//     case SettingsView.Info:
-//         {
-//             var screenRect = new Rect(0, 0, Screen.width, Screen.height);
-//             _infoDrawer.Draw(screenRect, _sizeY * 2, _sizeX * 2);
-//         }
-//         break;
-//     case SettingsView.Logs:
-//         {
-//             var toolbarHeight = _sizeY * 2;
-//             var toolbarRect = new Rect(0, 0,
-//                 Screen.width, toolbarHeight);
-//             _toolbarDrawer.Draw(toolbarRect, _sizeX * 2);
-//             var logRect = new Rect(0, toolbarHeight,
-//                 Screen.width, Screen.height * 0.75f - toolbarHeight);
-//             // TODO
-//             _logDrawer.Draw(logRect, _sizeY, _sizeX, _logStash.Danger_All(), 0, default(Log.Mask), false, false);
-//         }
-//         break;
-//     default:
-//         L.Som // TODO
-//         break;
-// }

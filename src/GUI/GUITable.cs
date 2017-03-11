@@ -5,21 +5,55 @@ namespace Settings.GUI
 {
     public class Table
     {
-        private readonly ScrollView _scroll;
-        private float _scrollY
-        {
-            get { return _scroll.ScrollY; }
-            set { _scroll.ScrollY = value; }
-        }
+        public enum Direction { Horizontal, Vertical, }
 
-        private readonly float _height;
+        private readonly Direction _dir;
+        private readonly ScrollView _scroll;
+        private readonly float _rowSize;
         private readonly GUIStyle _bg;
 
-        public Table(float height, float initScrollY, GUIStyle bg)
+        private bool _isHorizontal { get { return _dir == Direction.Horizontal; } }
+        private bool _isVertical { get { return _dir == Direction.Vertical; } }
+        private float _scrollAmount
         {
-            _scroll = new ScrollView(new Vector2(0, initScrollY), false, true);
-            _height = height;
+            get { return ScrollSide(_scroll.Scroll); }
+            set
+            {
+                if (_isHorizontal) _scroll.ScrollX = value;
+                else _scroll.ScrollY = value;
+            }
+        }
+
+        public Table(Direction dir, float rowSize, float initScroll, GUIStyle bg)
+        {
+            _dir = dir;
+            _rowSize = rowSize;
             _bg = bg;
+            _scroll = new ScrollView(Align(0, initScroll), _isHorizontal, _isVertical);
+        }
+
+        private Vector2 Align(float fixedSide, float scrollSide)
+        {
+            if (_isHorizontal) return new Vector2(scrollSide, fixedSide);
+            else return new Vector2(fixedSide, scrollSide);
+        }
+
+        private float FixedSide(Rect rect)
+        {
+            if (_isHorizontal) return rect.height;
+            else return rect.width;
+        }
+
+        private float ScrollSide(Vector2 v)
+        {
+            if (_isHorizontal) return v.x;
+            else return v.y;
+        }
+
+        private float ScrollSide(Rect rect)
+        {
+            if (_isHorizontal) return rect.width;
+            else return rect.height;
         }
 
         public void Update()
@@ -31,15 +65,21 @@ namespace Settings.GUI
         {
             UnityEngine.GUI.Box(area, "", _bg);
 
-            var viewRect = new Rect(0, 0, area.width, count * _height);
+            var fixedSide = FixedSide(area);
+            var scrollSide = ScrollSide(area);
+
+            var viewSize = Align(fixedSide, count * _rowSize);
+            var viewRect = new Rect(0, 0, viewSize.x, viewSize.y);
             _scroll.Begin(area, viewRect);
 
-            var startIdx = Mathf.Clamp((int)(_scrollY / _height), 0, count);
-            var visibleCount = (int)(area.height / _height) + 2;
+            var startIdx = Mathf.Clamp((int)(_scrollAmount / _rowSize), 0, count);
+            var visibleCount = (int)(scrollSide / _rowSize) + 2;
+            var rowSize = Align(fixedSide, _rowSize);
             var drawedRows = 0;
             for (var i = startIdx; i < count && drawedRows < visibleCount; ++i, ++drawedRows)
             {
-                var rowArea = new Rect(0, i * _height, area.width, _height);
+                var rowPos = Align(0, i * _rowSize);
+                var rowArea = new Rect(rowPos.x, rowPos.y, rowSize.x, rowSize.y);
                 GUILayout.BeginArea(rowArea);
                 drawer(i);
                 GUILayout.EndArea();
@@ -50,9 +90,9 @@ namespace Settings.GUI
 
         public void SetScrollToKeepIn(Rect area, int idx)
         {
-            var scrollMax = idx * _height;
-            var scrollMin = scrollMax + _height - area.height;
-            _scrollY = Mathf.Clamp(_scrollY, scrollMin, scrollMax);
+            var scrollMax = idx * _rowSize;
+            var scrollMin = scrollMax + _rowSize - ScrollSide(area);
+            _scrollAmount = Mathf.Clamp(_scrollAmount, scrollMin, scrollMax);
         }
     }
 }
