@@ -12,12 +12,17 @@ namespace Settings.Log
             return GUILayout.Button(icon, _styles.ToolbarButton, _toolbarTempWidth, _toolbarTempHeight);
         }
 
-        private bool DrawToolbarToggle(GUIContent icon, ref bool value)
+        private bool DrawToolbarToggle(GUIContent icon, bool value)
         {
             var style = value ? _styles.ToolbarButtonOn : _styles.ToolbarButton;
             var clicked = GUILayout.Button(icon, style, _toolbarTempWidth, _toolbarTempHeight);
             if (clicked) value = !value;
-            return clicked;
+            return value;
+        }
+
+        private void DrawToolbarToggle(GUIContent icon, ref bool value)
+        {
+            value = DrawToolbarToggle(icon, value);
         }
 
         private void OnGUIToolbar(Rect area)
@@ -32,7 +37,7 @@ namespace Settings.Log
             var c = _config;
 
             // draw actions
-            if (DrawToolbarButton(_icons.Clear)) Debug.Log("Clear"); // TODO
+            if (DrawToolbarButton(_icons.Clear)) _isClickedClear.On();
             DrawToolbarToggle(_icons.Collapse, ref c.Collapse);
 
             // draw show sample
@@ -42,9 +47,9 @@ namespace Settings.Log
             GUILayout.FlexibleSpace();
 
             // draw log mask
-            DrawToolbarToggle(_icons.Log, ref c.ShowLog);
-            DrawToolbarToggle(_icons.Warning, ref c.ShowWarning);
-            DrawToolbarToggle(_icons.Error, ref c.ShowError);
+            c.Filter.Log = DrawToolbarToggle(_icons.Log, c.Filter.Log);
+            c.Filter.Warning = DrawToolbarToggle(_icons.Warning, c.Filter.Warning);
+            c.Filter.Error = DrawToolbarToggle(_icons.Error, c.Filter.Error);
 
             GUILayout.EndHorizontal();
             GUILayout.EndArea();

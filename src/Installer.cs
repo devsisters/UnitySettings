@@ -56,13 +56,18 @@ namespace Settings
         {
             var icons = GUI.Icons.Load();
 
-            var logProvider = new Log.Provider();
-            var logSampler = new Log.Sampler();
-            var logWatch = new Log.Watch(logProvider, logSampler);
-            settings.AddBehaviourListener(logWatch);
-            var logGUIViewConfig = new Log.GUIView.Config(); // TODO
-            var logGUIView = new Log.GUIView(logGUIViewConfig, icons, logWatch.Stash);
-            settings.AddGUIView("Log", logGUIView);
+            // inject log
+            {
+                var provider = new Log.Provider();
+                var sampler = new Log.Sampler();
+                var watch = new Log.Watch(provider, sampler);
+                settings.AddBehaviourListener(watch);
+
+                var viewConfig = new Log.GUIView.Config(); // TODO
+                var organizer = watch.Stash.Organizer;
+                var view = new Log.GUIView(viewConfig, icons, organizer);
+                settings.AddGUIView("Log", view);
+            }
         }
     }
 }

@@ -1,17 +1,29 @@
-using List = System.Collections.Generic.List<Settings.Log.Log>;
-using ReadOnlyList = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Log.Log>;
+using Logs = System.Collections.Generic.List<Settings.Log.Log>;
+using ReadOnlyLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Log.Log>;
 
 namespace Settings.Log
 {
     internal class Stash
     {
-        private readonly List _logs = new List(128);
-        private readonly Util.StringCache _strCache = new Util.StringCache();
+        private readonly Logs _logs;
+        private readonly ReadOnlyLogs _logsReadOnly;
+        private readonly Util.StringCache _strCache;
+
+        public readonly Organizer Organizer;
+
+        public Stash()
+        {
+            _logs = new Logs(256);
+            _logsReadOnly = _logs.AsReadOnly();
+            _strCache = new Util.StringCache();
+            Organizer = new Organizer(this);
+        }
 
         public void Clear()
         {
             _logs.Clear();
             _strCache.Clear();
+            Organizer.Clear();
         }
 
         public void Add(RawLog raw, Sample sample)
@@ -20,33 +32,12 @@ namespace Settings.Log
             var stacktrace = _strCache.Cache(raw.Stacktrace);
             var newLog = new Log(raw.Type, msg, stacktrace, sample);
             _logs.Add(newLog);
+            Organizer.Internal_AddToCache(newLog);
         }
 
-        public ReadOnlyList All()
+        public ReadOnlyLogs All()
         {
-            return _logs.AsReadOnly();
-        }
-
-        public List Filter(Mask mask)
-        {
-            var ret = new List(_logs.Count / 4);
-            foreach (var log in _logs)
-                if (mask.Check(log.Type))
-                    ret.Add(log);
-            return ret;
-        }
-
-        public List Filter(Mask mask, string search)
-        {
-            search = search.ToLower();
-            var ret = new List(_logs.Count / 4);
-            foreach (var log in _logs)
-            {
-                if (!mask.Check(log.Type)) continue;
-                if (log.Message.ToLower().Contains(search))
-                    ret.Add(log);
-            }
-            return ret;
+            return _logsReadOnly;
         }
     }
 }
