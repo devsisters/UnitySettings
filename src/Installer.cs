@@ -54,7 +54,7 @@ namespace Settings
 
         private static void InjectDependency(Settings settings)
         {
-            var icons = GUI.Icons.Load();
+            var icons = settings.Icons;
 
             // inject log
             {

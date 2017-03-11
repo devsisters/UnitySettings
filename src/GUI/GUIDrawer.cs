@@ -34,10 +34,15 @@ namespace Settings.GUI
 
         private string _curViewKey;
         private IView _curView;
+
+        private Icons _icons;
         private readonly Table _toolbarTable;
 
-        public Drawer()
+        public System.Action OnClose;
+
+        public Drawer(Icons icons)
         {
+            _icons = icons;
             _toolbarTable = new GUI.Table(
                 GUI.Table.Direction.Horizontal,
                 _toolbarH, 0,
@@ -68,6 +73,12 @@ namespace Settings.GUI
 
         public void OnGUI()
         {
+            if (_icons == null)
+            {
+                L.SomethingWentWrong();
+                return;
+            }
+
             // layout
             var y = 0;
             var w = Screen.width;

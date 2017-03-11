@@ -5,12 +5,12 @@ namespace Settings.GUI
 {
     internal partial class Drawer
     {
-        private static Rect _tempToolbarRect;
+        private static Rect _toolbarIconRect = new Rect(0, 0, _toolbarH, _toolbarH);
 
         private bool DrawToolbarToggle(GUIContent icon, bool value)
         {
             var style = value ? Styles.ToolbarButtonOn : Styles.ToolbarButton;
-            var clicked = UnityEngine.GUI.Button(_tempToolbarRect, icon, style);
+            var clicked = UnityEngine.GUI.Button(_toolbarIconRect, icon, style);
             if (clicked) value = !value;
             return value;
         }
@@ -18,8 +18,16 @@ namespace Settings.GUI
         private void OnGUIToolbar(Rect area)
         {
             if (_viewList == null) _viewList = new ViewList(_views);
-            _tempToolbarRect = new Rect(0, 0, _toolbarH, _toolbarH);
-            _toolbarTable.OnGUI(area, _viewList.Count, OnGUIToolbarIcon);
+
+            // draw views
+            var viewArea = new Rect(area); viewArea.width -= _toolbarH;
+            _toolbarIconRect = new Rect(0, 0, _toolbarH, _toolbarH);
+            _toolbarTable.OnGUI(viewArea, _viewList.Count, OnGUIToolbarIcon);
+
+            // draw close
+            var closeRect = new Rect(area.xMax - _toolbarH, area.y, _toolbarH, area.height);
+            if (UnityEngine.GUI.Button(closeRect, _icons.Close, Styles.ToolbarButton))
+                OnClose();
         }
 
         private void OnGUIToolbarIcon(int i)

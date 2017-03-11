@@ -9,6 +9,8 @@ namespace Settings
         private bool _isInited { get { return _guiDrawer != null; } }
 
         // private Config _config;
+        private GUI.Icons _icons;
+        public GUI.Icons Icons { get { Init(); return _icons; } }
         private GUI.Drawer _guiDrawer;
         // TODO
         // private bool _isShowingGUI;
@@ -25,7 +27,9 @@ namespace Settings
         {
             if (_isInited) return;
             // _config = Config.LoadFromPrefs();
-            _guiDrawer = new GUI.Drawer();
+            _icons = GUI.Icons.Load();
+            _guiDrawer = new GUI.Drawer(_icons);
+            _guiDrawer.OnClose += () => _isShowingGUI = false;
             var gestureLeastLength = (Screen.width + Screen.height) / 4;
             _gesture = new CircleGesture(new TouchProvider(), gestureLeastLength);
         }
