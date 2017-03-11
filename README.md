@@ -1,5 +1,5 @@
 # UnitySettings
-Extensible setting menu (like android) for Unity.
+Runtime debugging menu (like setting on Android) for Unity.
 
 ## About this plugin
 Every single Unity projects have *lots of* debugging purpose features.
