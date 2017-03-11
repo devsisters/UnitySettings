@@ -7,6 +7,14 @@ namespace Settings.GUI
     {
         private static Rect _tempToolbarRect;
 
+        private bool DrawToolbarToggle(GUIContent icon, bool value)
+        {
+            var style = value ? Styles.ToolbarButtonOn : Styles.ToolbarButton;
+            var clicked = UnityEngine.GUI.Button(_tempToolbarRect, icon, style);
+            if (clicked) value = !value;
+            return value;
+        }
+
         private void OnGUIToolbar(Rect area)
         {
             if (_viewList == null) _viewList = new ViewList(_views);
@@ -21,7 +29,7 @@ namespace Settings.GUI
             var view = kv.Value;
 
             var icon = view.ToolbarIcon;
-            if (UnityEngine.GUI.Button(_tempToolbarRect, icon))
+            if (DrawToolbarToggle(icon, view == _curView))
             {
                 _curViewKey = key;
                 _curView = view;

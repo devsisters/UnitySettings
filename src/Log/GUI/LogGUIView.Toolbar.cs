@@ -4,8 +4,8 @@ namespace Settings.Log
 {
     internal partial class GUIView : GUI.IView
     {
-        private GUILayoutOption _toolbarTempWidth;
-        private GUILayoutOption _toolbarTempHeight;
+        private static GUILayoutOption _toolbarTempWidth;
+        private static GUILayoutOption _toolbarTempHeight;
 
         private bool DrawToolbarButton(GUIContent icon)
         {
