@@ -42,8 +42,8 @@
   <ItemGroup>
     <Compile Include="test\*.cs" />
     <Compile Include="test\Gesture\*.cs" />
-    <Compile Include="test\Log\*.cs" />
     <Compile Include="test\Util\*.cs" />
+    <Compile Include="test\Extension\Log\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

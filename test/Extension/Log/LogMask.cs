@@ -21,10 +21,10 @@ namespace Test.Log
 
             var target = new Target();
 
-            target.AllTrue();
+            target.SetAllTrue();
             Assert.True(all.All(l => l.From(target)));
 
-            target.AllFalse();
+            target.SetAllFalse();
             Assert.False(all.Any(l => l.From(target)));
 
             all.ToList().ForEach(l => target = TestFlag(l, target));

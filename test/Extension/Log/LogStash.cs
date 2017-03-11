@@ -20,6 +20,8 @@ namespace Test.Log
             var sample = new Sample(time, scene);
 
             var target = new Settings.Log.Stash();
+            var organizer = target.Organizer;
+
             var loop = 5;
             var logTypes = new[] { LogType.Log, LogType.Warning, LogType.Error, };
             for (var i = 0; i != loop; ++i)
@@ -35,15 +37,15 @@ namespace Test.Log
             Assert.Equals(target.All().Count, allCount);
             {
                 var mask = new Settings.Log.Mask();
-                mask.AllTrue();
-                var logs = target.Filter(mask);
+                mask.SetAllTrue();
+                var logs = organizer.Filter(mask);
                 Assert.Equals(logs.Count, allCount);
             }
 
             {
                 var mask = new Settings.Log.Mask();
-                mask.AllFalse();
-                var logs = target.Filter(mask);
+                mask.SetAllFalse();
+                var logs = organizer.Filter(mask);
                 Assert.Equals(logs.Count, 0);
             }
 
@@ -51,15 +53,15 @@ namespace Test.Log
                 var mask = new Settings.Log.Mask();
                 mask.Warning = true;
                 mask.Assert = true;
-                Assert.Equals(target.Filter(mask).Count, loop * 1);
+                Assert.Equals(organizer.Filter(mask).Count, loop * 1);
                 mask.Log = true;
-                Assert.Equals(target.Filter(mask).Count, loop * 2);
+                Assert.Equals(organizer.Filter(mask).Count, loop * 2);
             }
 
             {
                 var mask = new Settings.Log.Mask();
                 mask.Log = true;
-                var logs = target.Filter(mask);
+                var logs = organizer.Filter(mask);
                 Assert.Equals(logs.Count, loop);
                 var firstLog = logs[0];
                 Assert.Equals(firstLog.Type, logTypes[0]);
