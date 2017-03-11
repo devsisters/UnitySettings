@@ -23,7 +23,7 @@ namespace Settings.Log
 
         public class Config
         {
-            public bool Collapse = false; // TODO
+            public bool Collapse = false;
             public bool ShowTime = false;
             public bool ShowScene = false;
             public Mask Filter = Mask.AllTrue;
@@ -50,42 +50,50 @@ namespace Settings.Log
                 OnClickClear();
         }
 
+        private void ClampSelectedLog(int logCount)
+        {
+            if (logCount == 0) _selectedLog = -1;
+            else _selectedLog = Mathf.Clamp(_selectedLog, 0, logCount - 1);
+        }
+
         public override void OnGUI(Rect area)
         {
-            var logs = _organizer.Filter(_config.Filter);
-            // var logMask = new Mask();
-            // logMask.AllTrue();
-            // if (!logMask.Check(log.Type)) continue;
-
-            if (logs.Count == 0) _selectedLog = -1;
-            else _selectedLog = Mathf.Clamp(_selectedLog, 0, logs.Count - 1);
-
-            var x = area.x; var y = area.y;
-            var w = area.width; var h = area.height;
-
-            const int toolbarH = 40;
-            var tableH = (h - toolbarH) * 0.75f;
-            var stackH = (h - toolbarH) * 0.25f;
+            // layout
+            Rect toolbarArea, tableArea, stackArea;
 
             {
-                var toolbarArea = new Rect(x, y, w, toolbarH);
-                OnGUIToolbar(toolbarArea);
+                var x = area.x; var y = area.y;
+                var w = area.width; var h = area.height;
+                const int toolbarH = 40;
+                var tableH = (h - toolbarH) * 0.75f;
+                var stackH = (h - toolbarH) * 0.25f;
+                toolbarArea = new Rect(x, y, w, toolbarH);
                 y += toolbarH;
-            }
-
-            {
-                var tableArea = new Rect(x, y, w, tableH);
-                OnGUITable(tableArea, logs);
+                tableArea = new Rect(x, y, w, tableH);
                 y += tableH;
-            }
-
-            {
-                var stackArea = new Rect(x, y, w, stackH);
-                if (_selectedLog >= 0) DrawStack(stackArea, logs[_selectedLog]);
-                else DrawStackEmpty(stackArea);
+                stackArea = new Rect(x, y, w, stackH);
                 y += stackH;
             }
 
+            // filter
+            AbstractLogs logs = null;
+            if (_config.Collapse)
+            {
+                var rawLogs = _organizer.FilterCollapsed(_config.Filter);
+                logs = new AbstractLogs(rawLogs);
+            }
+            else
+            {
+                var rawLogs = _organizer.Filter(_config.Filter);
+                logs = new AbstractLogs(rawLogs);
+            }
+
+            // draw
+            OnGUIToolbar(toolbarArea);
+            ClampSelectedLog(logs.Count);
+            OnGUITable(tableArea, logs);
+            if (_selectedLog >= 0) DrawStack(stackArea, logs[_selectedLog]);
+            else DrawStackEmpty(stackArea);
             _lastSelectedLog = _selectedLog;
         }
     }

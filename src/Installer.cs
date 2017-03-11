@@ -64,8 +64,10 @@ namespace Settings
                 settings.AddBehaviourListener(watch);
 
                 var viewConfig = new Log.GUIView.Config(); // TODO
-                var organizer = watch.Stash.Organizer;
+                var stash = watch.Stash;
+                var organizer = stash.Organizer;
                 var view = new Log.GUIView(viewConfig, icons, organizer);
+                view.OnClickClear += () => stash.Clear();
                 settings.AddGUIView("Log", view);
             }
         }

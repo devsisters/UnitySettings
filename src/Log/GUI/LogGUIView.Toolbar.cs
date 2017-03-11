@@ -41,8 +41,11 @@ namespace Settings.Log
             DrawToolbarToggle(_icons.Collapse, ref c.Collapse);
 
             // draw show sample
-            DrawToolbarToggle(_icons.ShowTime, ref c.ShowTime);
-            DrawToolbarToggle(_icons.ShowScene, ref c.ShowScene);
+            if (!c.Collapse)
+            {
+                DrawToolbarToggle(_icons.ShowTime, ref c.ShowTime);
+                DrawToolbarToggle(_icons.ShowScene, ref c.ShowScene);
+            }
 
             GUILayout.FlexibleSpace();
 

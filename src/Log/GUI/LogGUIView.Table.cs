@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Settings.Log
@@ -36,7 +35,7 @@ namespace Settings.Log
             }
         }
 
-        private void OnGUILogRow(float width, Log log, int index, bool isSelected)
+        private void OnGUILogRow(float width, AbstractLog log, int index, bool isSelected)
         {
             const int rightPadding = 10;
 
@@ -60,11 +59,19 @@ namespace Settings.Log
 
             var rightX = width - rightPadding;
             // draw sample datas
+            if (log.Sample.HasValue)
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
                     OnGUIIconAndLabelFromRightToLeft(icon, text, _styles.Icon, fontStyle, ref rightX);
-                if (_config.ShowScene) drawIconAndLabel(_icons.ShowScene, log.Sample.Scene);
-                if (_config.ShowTime) drawIconAndLabel(_icons.ShowTime, log.Sample.TimeToDisplay);
+                var sample = log.Sample.Value;
+                if (_config.ShowScene) drawIconAndLabel(_icons.ShowScene, sample.Scene);
+                if (_config.ShowTime) drawIconAndLabel(_icons.ShowTime, sample.TimeToDisplay);
+            }
+
+            // draw count
+            if (log.Count.HasValue)
+            {
+                // TODO
             }
 
             // draw message
@@ -77,7 +84,7 @@ namespace Settings.Log
             }
         }
 
-        private void OnGUITable(Rect area, ReadOnlyCollection<Log> logs)
+        private void OnGUITable(Rect area, AbstractLogs logs)
         {
             if (_keepInSelectedLog)
             {
