@@ -1,6 +1,6 @@
 using LogType = UnityEngine.LogType;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal struct RawLog
     {

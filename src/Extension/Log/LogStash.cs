@@ -1,7 +1,7 @@
-using Logs = System.Collections.Generic.List<Settings.Log.Log>;
-using ReadOnlyLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Log.Log>;
+using Logs = System.Collections.Generic.List<Settings.Extension.Log.Log>;
+using ReadOnlyLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Extension.Log.Log>;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal class Stash
     {

@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
 using LogType = UnityEngine.LogType;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal struct AbstractLog
     {

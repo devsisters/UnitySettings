@@ -1,6 +1,6 @@
 using LogType = UnityEngine.LogType;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     public struct Mask
     {

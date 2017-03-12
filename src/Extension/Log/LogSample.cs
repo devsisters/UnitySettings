@@ -1,4 +1,4 @@
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal struct Sample
     {

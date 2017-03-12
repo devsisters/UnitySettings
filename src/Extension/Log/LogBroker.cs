@@ -1,7 +1,7 @@
-using Queue = System.Collections.Generic.List<Settings.Log.RawLog>;
+using Queue = System.Collections.Generic.List<Settings.Extension.Log.RawLog>;
 using LogType = UnityEngine.LogType;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal class Broker
     {

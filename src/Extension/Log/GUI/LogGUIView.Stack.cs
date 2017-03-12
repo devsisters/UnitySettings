@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal partial class GUIView
     {

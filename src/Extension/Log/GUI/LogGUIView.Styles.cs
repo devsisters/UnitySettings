@@ -1,7 +1,7 @@
 using UnityEngine;
 using Helper = Settings.GUI.Helper;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal partial class GUIView : GUI.IView
     {

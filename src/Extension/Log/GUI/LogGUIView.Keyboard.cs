@@ -1,7 +1,7 @@
 using UnityEngine;
 using K = UnityEngine.KeyCode;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal partial class GUIView : GUI.IView
     {

@@ -1,10 +1,10 @@
-using Logs = System.Collections.Generic.List<Settings.Log.Log>;
-using ReadOnlyLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Log.Log>;
+using Logs = System.Collections.Generic.List<Settings.Extension.Log.Log>;
+using ReadOnlyLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Extension.Log.Log>;
 using CollapsedIndex = System.Collections.Generic.Dictionary<int, int>;
-using CollapsedLogs = System.Collections.Generic.List<Settings.Log.LogAndCount>;
-using ReadOnlyCollapsedLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Log.LogAndCount>;
+using CollapsedLogs = System.Collections.Generic.List<Settings.Extension.Log.LogAndCount>;
+using ReadOnlyCollapsedLogs = System.Collections.ObjectModel.ReadOnlyCollection<Settings.Extension.Log.LogAndCount>;
 
-namespace Settings.Log
+namespace Settings.Extension.Log
 {
     internal class Organizer
     {
