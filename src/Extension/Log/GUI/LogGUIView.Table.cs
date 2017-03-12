@@ -15,24 +15,23 @@ namespace Settings.Log
         }
 
         private static readonly GUIContent _tempContent = new GUIContent();
-        private static void OnGUIIconAndLabelFromRightToLeft(
-            GUIContent icon, string text,
-            GUIStyle iconStyle, GUIStyle fontStyle,
-            ref float x)
-        {
-            {
-                _tempContent.text = text;
-                var w = fontStyle.CalcSize(_tempContent).x;
-                x -= w;
-                var r = new Rect(x, 0, w, _rowHeight);
-                UnityEngine.GUI.Label(r, _tempContent, fontStyle);
-            }
 
-            {
-                x -= _iconWidth;
-                var r = new Rect(x, 0, _iconWidth, _rowHeight);
-                UnityEngine.GUI.Box(r, icon, iconStyle);
-            }
+        private static Rect OnGUILogRowRightToLeft(string text, GUIStyle fontStyle, ref float x)
+        {
+            _tempContent.text = text;
+            var w = fontStyle.CalcSize(_tempContent).x;
+            x -= w;
+            var r = new Rect(x, 0, w, _rowHeight);
+            UnityEngine.GUI.Label(r, _tempContent, fontStyle);
+            return r;
+        }
+
+        private static Rect OnGUILogRowRightToLeft(GUIContent icon, GUIStyle iconStyle, ref float x)
+        {
+            x -= _iconWidth;
+            var r = new Rect(x, 0, _iconWidth, _rowHeight);
+            UnityEngine.GUI.Box(r, icon, iconStyle);
+            return r;
         }
 
         private void OnGUILogRow(float width, AbstractLog log, int index, bool isSelected)
@@ -61,7 +60,10 @@ namespace Settings.Log
             if (log.Sample.HasValue)
             {
                 System.Action<GUIContent, string> drawIconAndLabel = (icon, text) =>
-                    OnGUIIconAndLabelFromRightToLeft(icon, text, Styles.Icon, fontStyle, ref rightX);
+                {
+                    OnGUILogRowRightToLeft(text, fontStyle, ref rightX);
+                    OnGUILogRowRightToLeft(icon, Styles.Icon, ref rightX);
+                };
                 var sample = log.Sample.Value;
                 if (_config.ShowScene) drawIconAndLabel(_icons.ShowScene, sample.Scene);
                 if (_config.ShowTime) drawIconAndLabel(_icons.ShowTime, sample.TimeToDisplay);
@@ -70,7 +72,9 @@ namespace Settings.Log
             // draw count
             if (log.Count.HasValue)
             {
-                // TODO
+                var count = log.Count.Value;
+                if (count != 0)
+                    OnGUILogRowRightToLeft(count.ToString(), Styles.CollapsedCountFont, ref rightX);
             }
 
             // draw message

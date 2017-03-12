@@ -15,6 +15,7 @@ namespace Settings.Log
             public static readonly GUIStyle OddLog;
             public static readonly GUIStyle SelectedLog;
             public static readonly GUIStyle SelectedLogFont;
+            public static readonly GUIStyle CollapsedCountFont;
 
             public static readonly GUIStyle StackBG;
             public static readonly GUIStyle StackFont;
@@ -58,6 +59,12 @@ namespace Settings.Log
                 SelectedLogFont.alignment = TextAnchor.MiddleLeft;
                 SelectedLogFont.clipping = TextClipping.Clip;
                 SelectedLogFont.normal.textColor = Color.white;
+
+                CollapsedCountFont = new GUIStyle();
+                CollapsedCountFont.alignment = TextAnchor.MiddleCenter;
+                CollapsedCountFont.fontSize = fontSize;
+                CollapsedCountFont.normal.background = Helper.Solid(0x75757570);
+                CollapsedCountFont.fixedWidth = fontSize * 2;
 
                 StackBG = new GUIStyle();
                 StackBG.normal.background = Helper.Solid(0x9e9e9ef0);

@@ -52,7 +52,10 @@ namespace Settings.Log
             // draw log mask
             c.Filter.Log = DrawToolbarToggle(_icons.Log, c.Filter.Log);
             c.Filter.Warning = DrawToolbarToggle(_icons.Warning, c.Filter.Warning);
-            c.Filter.Error = DrawToolbarToggle(_icons.Error, c.Filter.Error);
+            var showError = DrawToolbarToggle(_icons.Error, c.Filter.Error);
+            c.Filter.Error = showError;
+            c.Filter.Exception = showError;
+            c.Filter.Assert = showError;
 
             GUILayout.EndHorizontal();
             GUILayout.EndArea();

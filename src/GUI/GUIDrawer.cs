@@ -85,7 +85,7 @@ namespace Settings.GUI
             var h = Screen.height;
 
             var toolbarArea = new Rect(0, y, w, _toolbarH);
-            y += _toolbarH;
+            y += _toolbarH; h -= _toolbarH;
             var viewArea = new Rect(0, y, w, h);
 
             // draw

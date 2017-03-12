@@ -100,6 +100,8 @@ namespace Settings.Log
         public void Clear()
         {
             _lastLogs.Clear();
+            _lastCollapsedIndex.Clear();
+            _lastCollapsedLogs.Clear();
         }
     }
 }
