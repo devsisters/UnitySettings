@@ -1,13 +1,15 @@
 using System.Linq;
 using LogType = UnityEngine.LogType;
-using RawLog = Settings.Log.RawLog;
-using Sample = Settings.Log.Sample;
+using Stash = Settings.Extension.Log.Stash;
+using RawLog = Settings.Extension.Log.RawLog;
+using Sample = Settings.Extension.Log.Sample;
+using Mask = Settings.Extension.Log.Mask;
 
-namespace Test.Log
+namespace Test.Extension.Log
 {
-    public class Stash : ITest
+    public class StashTest : ITest
     {
-        public Stash()
+        public StashTest()
             : base("LogStash")
         { }
 
@@ -19,7 +21,7 @@ namespace Test.Log
             var scene = "scene";
             var sample = new Sample(time, scene);
 
-            var target = new Settings.Log.Stash();
+            var target = new Stash();
             var organizer = target.Organizer;
 
             var loop = 5;
@@ -36,21 +38,21 @@ namespace Test.Log
             var allCount = loop * logTypes.Length;
             Assert.Equals(target.All().Count, allCount);
             {
-                var mask = new Settings.Log.Mask();
+                var mask = new Mask();
                 mask.SetAllTrue();
                 var logs = organizer.Filter(mask);
                 Assert.Equals(logs.Count, allCount);
             }
 
             {
-                var mask = new Settings.Log.Mask();
+                var mask = new Mask();
                 mask.SetAllFalse();
                 var logs = organizer.Filter(mask);
                 Assert.Equals(logs.Count, 0);
             }
 
             {
-                var mask = new Settings.Log.Mask();
+                var mask = new Mask();
                 mask.Warning = true;
                 mask.Assert = true;
                 Assert.Equals(organizer.Filter(mask).Count, loop * 1);
@@ -59,7 +61,7 @@ namespace Test.Log
             }
 
             {
-                var mask = new Settings.Log.Mask();
+                var mask = new Mask();
                 mask.Log = true;
                 var logs = organizer.Filter(mask);
                 Assert.Equals(logs.Count, loop);

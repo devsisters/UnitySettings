@@ -4,10 +4,10 @@ namespace Test
     {
         public static void Main(string[] args)
         {
-            new Log.Mask().Test();
-            new Log.Stash().Test();
             new Util.CircleGesture().Test();
             new Util.StringCache().Test();
+            new Extension.Log.MaskTest().Test();
+            new Extension.Log.StashTest().Test();
         }
     }
 }
