@@ -1,4 +1,5 @@
 using UnityEngine;
+using SystemInfo = Settings.Extension.SystemInfo;
 using Log = Settings.Extension.Log;
 
 namespace Settings
@@ -57,7 +58,13 @@ namespace Settings
         {
             var icons = settings.Icons;
 
-            // inject log
+            // inject SystemInfo
+            {
+                var view = new SystemInfo.GUIView(icons);
+                settings.AddGUIView("SystemInfo", view);
+            }
+
+            // inject Log
             {
                 var provider = new Log.Provider();
                 var sampler = new Log.Sampler();

@@ -30,9 +30,9 @@ namespace Settings.Extension.Log
                     _stackScroll.Scroll.Set(0, 0);
                 _stackScroll.BeginLayout(new Rect(x, y, w, stackH));
                 GUILayout.Space(stackSpace);
-                GUILayout.Label(log.Message, Styles.Font);
+                GUILayout.TextArea(log.Message, Styles.Font);
                 GUILayout.Space(stackSpace);
-                GUILayout.Label(log.Stacktrace, Styles.StackFont);
+                GUILayout.TextArea(log.Stacktrace, Styles.StackFont);
                 GUILayout.Space(stackSpace);
                 _stackScroll.EndLayout();
                 y += stackH;
