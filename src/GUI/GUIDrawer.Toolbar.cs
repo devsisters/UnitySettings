@@ -1,5 +1,4 @@
 using UnityEngine;
-using ViewList = System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<string, Settings.GUI.IView>>;
 
 namespace Settings.GUI
 {
@@ -17,7 +16,7 @@ namespace Settings.GUI
 
         private void OnGUIToolbar(Rect area)
         {
-            if (_viewList == null) _viewList = new ViewList(_views);
+            ResetViewList();
 
             // draw views
             var viewArea = new Rect(area); viewArea.width -= _toolbarH;

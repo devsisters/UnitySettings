@@ -23,22 +23,7 @@ namespace Settings.Extension.SystemInfo
         public override void Update()
         {
             _scroll.Update();
-            UpdateKeyboard();
-        }
-
-        private void UpdateKeyboard()
-        {
-            var dir = 0;
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) dir = -1;
-            if (Input.GetKeyDown(KeyCode.RightArrow)) dir = 1;
-            if (dir == 0) return;
-            var keys = new List<string>(_pages.Keys);
-            var curIndex = keys.FindIndex(x => x == _curPage);
-            if (curIndex != -1)
-            {
-                curIndex = (curIndex + dir + keys.Count) % keys.Count;
-                _curPage = keys[curIndex];
-            }
+            UpdateKeyboardPages();
         }
 
         public override void OnGUI(Rect area)

@@ -31,6 +31,11 @@ namespace Settings.GUI
 
         private readonly View _views = new View(4);
         private ViewList _viewList;
+        private void ResetViewList()
+        {
+            if (_viewList != null) return;
+            _viewList = new ViewList(_views);
+        }
 
         private string _curViewKey;
         private IView _curView;
@@ -67,6 +72,7 @@ namespace Settings.GUI
 
         public void Update()
         {
+            UpdateKeyboard();
             if (_curView != null)
                 _curView.Update();
         }
