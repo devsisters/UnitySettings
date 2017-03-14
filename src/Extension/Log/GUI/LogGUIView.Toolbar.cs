@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView : GUI.IView
+    internal partial class GUIView
     {
         private static GUILayoutOption _toolbarTempWidth;
         private static GUILayoutOption _toolbarTempHeight;
