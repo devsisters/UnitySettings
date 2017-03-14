@@ -37,12 +37,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\*.cs" />
+    <Compile Include="src\Core\*.cs" />
     <Compile Include="src\Gesture\*.cs" />
     <Compile Include="src\GUI\*.cs" />
     <Compile Include="src\Util\*.cs" />
     <Compile Include="src\Unity\*.cs" />
     <Compile Include="src\Extension\Log\*.cs" />
     <Compile Include="src\Extension\Log\GUI\*.cs" />
+    <Compile Include="src\Extension\SystemInfo\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
