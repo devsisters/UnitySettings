@@ -7,7 +7,7 @@ namespace Settings.Extension.SystemInfo
     {
         private enum RowType
         {
-            Header, Header2, Row,
+            Header, Row,
         }
 
         private struct RowDef
@@ -29,28 +29,24 @@ namespace Settings.Extension.SystemInfo
             private readonly List<RowDef> _rows;
             public RowBuilder(List<RowDef> rows) { _rows = rows; }
             public void Header(string title) { _rows.Add(new RowDef(RowType.Header, title, null)); }
-            public void Header2(string title) { _rows.Add(new RowDef(RowType.Header2, title, null)); }
             public void Row(string title, object desc) { _rows.Add(new RowDef(RowType.Row, title, desc.ToString())); }
             public void Row(string title, object desc, object descDetail) { _rows.Add(new RowDef(RowType.Row, title, DescAndDetail(desc, descDetail))); }
             public static string DescAndDetail(object desc, object descDetail) { return desc + " (" + descDetail + ")"; }
         }
 
-        private void OnGUIRow(RowDef rowDef)
+        private static GUILayoutOption _minTitleWidth = GUILayout.MinWidth(240);
+
+        private static void OnGUIRow(RowDef rowDef)
         {
             switch (rowDef.Type)
             {
                 case RowType.Header:
-                    GUILayout.Space(12);
                     GUILayout.Label(rowDef.Col1, Styles.HeaderFont);
-                    GUILayout.Space(4);
-                    break;
-                case RowType.Header2:
-                    GUILayout.TextArea(rowDef.Col1, Styles.Header2Font);
                     break;
                 case RowType.Row:
                     GUILayout.BeginHorizontal();
-                    GUILayout.TextArea(rowDef.Col1, Styles.Font, _minTitleWidth);
-                    GUILayout.TextArea(rowDef.Col2, Styles.Font);
+                    GUILayout.Label(rowDef.Col1, Styles.RowTitleFont, _minTitleWidth);
+                    GUILayout.Label(rowDef.Col2, Styles.RowFont);
                     GUILayout.FlexibleSpace();
                     GUILayout.EndHorizontal();
                     break;
