@@ -1,3 +1,4 @@
+*.meta
 bin
 obj
 .vscode
