@@ -5,16 +5,13 @@ namespace Settings.Extension.SystemInfo
 {
     public partial class GUIView : GUI.IView
     {
-        private readonly GUI.Icons _icons;
         private readonly GUI.ScrollView _scroll;
-
         private string _curPage;
         private readonly Dictionary<string, List<RowDef>> _pages;
 
-        public GUIView(GUI.Icons icons)
-            : base("SystemInfo", icons.SystemInfo)
+        public GUIView()
+            : base("SystemInfo", Icons.Icon)
         {
-            _icons = icons;
             _scroll = new GUI.ScrollView(Vector2.zero, true, true);
             _pages = new Dictionary<string, List<RowDef>>(8);
             AddAllPages();

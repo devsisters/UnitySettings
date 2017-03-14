@@ -2,62 +2,28 @@ using UnityEngine;
 
 namespace Settings.GUI
 {
-    public class Icons
+    public static class Icons
     {
-        public readonly GUIContent Clear;
-        public readonly GUIContent Collapse;
-        public readonly GUIContent ClearOnNewScene;
-        public readonly GUIContent ShowTime;
-        public readonly GUIContent ShowScene;
-        public readonly GUIContent User;
-        public readonly GUIContent ShowMemory;
-        public readonly GUIContent Software;
-        public readonly GUIContent Date;
-        public readonly GUIContent ShowFps;
-        public readonly GUIContent Info;
-        public readonly GUIContent Search;
-        public readonly GUIContent Close;
+        public static readonly GUIContent Close;
 
-        public readonly GUIContent BuildFrom;
-        public readonly GUIContent SystemInfo;
-        public readonly GUIContent GraphicsInfo;
-        public readonly GUIContent Back;
+        private static GUIContent I(byte[] texData) { return new GUIContent(texData.ToTex()); }
 
-        public readonly GUIContent Log;
-        public readonly GUIContent Warning;
-        public readonly GUIContent Error;
-
-        public static Icons Load()
+        static Icons()
         {
-            return new Icons();
-        }
-
-        private static GUIContent I(byte[] tex, string tooltip)
-        {
-            return new GUIContent("", tex.ToTex(), tooltip);
-        }
-
-        private Icons()
-        {
-            Clear = I(PNGs.Clear, "Clear logs");
-            Collapse = I(PNGs.Collapse, "Collapse logs");
-            ClearOnNewScene = I(PNGs.Clear, "Clear logs on new scene loaded");
-            ShowTime = I(PNGs.Time, "Show Hide Time");
-            ShowScene = I(PNGs.Unity, "Show Hide Scene");
-            Software = I(PNGs.Software, "Software");
-            Info = I(PNGs.Info, "Information about application");
-            Search = I(PNGs.Search, "Search for logs");
-            Close = I(PNGs.Close, "Hide logs");
-            User = I(PNGs.User, "User");
-
-            BuildFrom = I(PNGs.BuildFrom, "Build From");
-            SystemInfo = I(PNGs.SystemInfo, "System Info");
-            GraphicsInfo = I(PNGs.GraphicsInfo, "Graphics Info");
-            Back = I(PNGs.Back, "Back");
-
-            Log = I(PNGs.Log, "show or hide logs");
-            Warning = I(PNGs.Warning, "show or hide warnings");
-            Error = I(PNGs.Error, "show or hide errors");
+            Close = I(new byte[] {
+137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,
+0,0,0,64,0,0,0,64,2,3,0,0,0,215,7,153,
+77,0,0,0,12,80,76,84,69,0,0,0,22,0,0,202,
+2,2,246,209,209,82,55,179,42,0,0,0,2,116,82,78,
+83,5,194,126,142,154,225,0,0,0,109,73,68,65,84,120,
+1,197,211,1,7,192,32,20,4,224,65,176,95,23,12,250,
+127,193,193,254,95,240,214,65,66,238,88,99,135,241,62,166,
+122,245,142,111,146,174,145,188,134,130,145,186,132,132,41,249,
+29,148,25,234,175,112,7,139,104,10,26,63,18,2,8,5,
+44,136,2,122,213,77,1,8,80,192,127,218,22,248,85,252,
+78,253,105,125,199,124,215,253,205,237,191,143,115,134,188,130,
+100,193,79,148,159,202,253,60,163,210,252,198,191,111,36,178,
+0,0,0,0,73,69,78,68,174,66,96,130, });
         }
     }
 }

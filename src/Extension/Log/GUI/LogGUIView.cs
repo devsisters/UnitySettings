@@ -7,7 +7,6 @@ namespace Settings.Extension.Log
         private const int _iconWidth = 40;
         private const int _rowHeight = 64;
 
-        private readonly GUI.Icons _icons;
         private readonly GUI.Table _table;
         private GUI.ScrollView _stackScroll;
         private readonly Organizer _organizer;
@@ -30,11 +29,10 @@ namespace Settings.Extension.Log
 
         private readonly Config _config;
 
-        public GUIView(Config config, GUI.Icons icons, Organizer organizer)
-            : base("Log", icons.Log)
+        public GUIView(Config config, Organizer organizer)
+            : base("Log", Icons.Log)
         {
             _config = config;
-            _icons = icons;
             _table = new GUI.Table(
                 GUI.Table.Direction.Vertical,
                 _rowHeight, 0,

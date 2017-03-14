@@ -4,7 +4,7 @@ namespace Settings
     {
         public static void SomethingWentWrong()
         {
-            // TODO
+            UnityEngine.Debug.LogError("SomethingWentWrong");
         }
     }
 }

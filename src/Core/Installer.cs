@@ -56,11 +56,9 @@ namespace Settings
 
         private static void InjectDependency(Settings settings)
         {
-            var icons = settings.Icons;
-
             // inject SystemInfo
             {
-                var view = new SystemInfo.GUIView(icons);
+                var view = new SystemInfo.GUIView();
                 settings.AddGUIView("SystemInfo", view);
             }
 
@@ -74,7 +72,7 @@ namespace Settings
                 var viewConfig = new Log.GUIView.Config(); // TODO
                 var stash = watch.Stash;
                 var organizer = stash.Organizer;
-                var view = new Log.GUIView(viewConfig, icons, organizer);
+                var view = new Log.GUIView(viewConfig, organizer);
                 view.OnClickClear += () => stash.Clear();
                 settings.AddGUIView("Log", view);
             }

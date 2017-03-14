@@ -25,5 +25,13 @@ namespace Settings.GUI
         {
             return Solid(UintToColor(color));
         }
+
+        public static Texture2D ToTex(this byte[] thiz)
+        {
+            var ret = new Texture2D(2, 2);
+            if (!ret.LoadImage(thiz, true))
+                L.SomethingWentWrong();
+            return ret;
+        }
     }
 }

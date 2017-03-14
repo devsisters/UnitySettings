@@ -1,5 +1,5 @@
 using UnityEngine;
-using Helper = Settings.GUI.Helper;
+using Settings.GUI;
 
 namespace Settings.Extension.SystemInfo
 {

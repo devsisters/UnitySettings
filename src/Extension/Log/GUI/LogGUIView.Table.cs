@@ -4,16 +4,6 @@ namespace Settings.Extension.Log
 {
     internal partial class GUIView
     {
-        private GUIContent IconForLogType(LogType logType)
-        {
-            switch (logType)
-            {
-                case LogType.Log: return _icons.Log;
-                case LogType.Warning: return _icons.Warning;
-                default: return _icons.Error;
-            }
-        }
-
         private static readonly GUIContent _tempContent = new GUIContent();
 
         private static Rect OnGUILogRowRightToLeft(string text, GUIStyle fontStyle, ref float x)
@@ -65,8 +55,8 @@ namespace Settings.Extension.Log
                     OnGUILogRowRightToLeft(icon, Styles.Icon, ref rightX);
                 };
                 var sample = log.Sample.Value;
-                if (_config.ShowScene) drawIconAndLabel(_icons.ShowScene, sample.Scene);
-                if (_config.ShowTime) drawIconAndLabel(_icons.ShowTime, sample.TimeToDisplay);
+                if (_config.ShowScene) drawIconAndLabel(Icons.ShowScene, sample.Scene);
+                if (_config.ShowTime) drawIconAndLabel(Icons.ShowTime, sample.TimeToDisplay);
             }
 
             // draw count
@@ -79,7 +69,7 @@ namespace Settings.Extension.Log
 
             // draw message
             {
-                var icon = IconForLogType(log.Type);
+                var icon = Icons.ForLogType(log.Type);
                 var iconRect = new Rect(0, 0, _iconWidth, _rowHeight);
                 UnityEngine.GUI.Box(iconRect, icon, Styles.Icon);
                 var labelRect = new Rect(_iconWidth, 0, rightX - _iconWidth, _rowHeight);

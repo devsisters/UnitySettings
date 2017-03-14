@@ -25,7 +25,7 @@ namespace Settings.GUI
 
             // draw close
             var closeRect = new Rect(area.xMax - _toolbarH, area.y, _toolbarH, area.height);
-            if (UnityEngine.GUI.Button(closeRect, _icons.Close, Styles.ToolbarButton))
+            if (UnityEngine.GUI.Button(closeRect, Icons.Close, Styles.ToolbarButton))
                 OnClose();
         }
 

@@ -37,22 +37,22 @@ namespace Settings.Extension.Log
             var c = _config;
 
             // draw actions
-            if (DrawToolbarButton(_icons.Clear)) _isClickedClear.On();
-            DrawToolbarToggle(_icons.Collapse, ref c.Collapse);
+            if (DrawToolbarButton(Icons.Clear)) _isClickedClear.On();
+            DrawToolbarToggle(Icons.Collapse, ref c.Collapse);
 
             // draw show sample
             if (!c.Collapse)
             {
-                DrawToolbarToggle(_icons.ShowTime, ref c.ShowTime);
-                DrawToolbarToggle(_icons.ShowScene, ref c.ShowScene);
+                DrawToolbarToggle(Icons.ShowTime, ref c.ShowTime);
+                DrawToolbarToggle(Icons.ShowScene, ref c.ShowScene);
             }
 
             GUILayout.FlexibleSpace();
 
             // draw log mask
-            c.Filter.Log = DrawToolbarToggle(_icons.Log, c.Filter.Log);
-            c.Filter.Warning = DrawToolbarToggle(_icons.Warning, c.Filter.Warning);
-            var showError = DrawToolbarToggle(_icons.Error, c.Filter.Error);
+            c.Filter.Log = DrawToolbarToggle(Icons.Log, c.Filter.Log);
+            c.Filter.Warning = DrawToolbarToggle(Icons.Warning, c.Filter.Warning);
+            var showError = DrawToolbarToggle(Icons.Error, c.Filter.Error);
             c.Filter.Error = showError;
             c.Filter.Exception = showError;
             c.Filter.Assert = showError;

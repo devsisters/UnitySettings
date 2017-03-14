@@ -51,8 +51,8 @@ namespace Settings.Extension.Log
                 GUILayout.BeginArea(new Rect(x, y, w, sampleH));
                 GUILayout.BeginHorizontal();
                 var sample = log.Sample.Value;
-                drawIconAndLabel(_icons.ShowTime, sample.TimeToDisplay);
-                drawIconAndLabel(_icons.ShowScene, sample.Scene);
+                drawIconAndLabel(Icons.ShowTime, sample.TimeToDisplay);
+                drawIconAndLabel(Icons.ShowScene, sample.Scene);
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
                 GUILayout.EndArea();
