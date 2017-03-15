@@ -70,10 +70,17 @@ namespace Settings.Extension.Log
             UpDownSelectedLogWithCurKey(coolTimeFast);
         }
 
+        private void UpdateKeyboardCollapse()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                _config.Collapse = !_config.Collapse;
+        }
+
         private void UpdateKeyboard()
         {
             UpdateKeyboardAction();
             UpdateKeyboardStay();
+            UpdateKeyboardCollapse();
         }
     }
 }
