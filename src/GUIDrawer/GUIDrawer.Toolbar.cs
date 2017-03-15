@@ -16,12 +16,10 @@ namespace Settings.GUI
 
         private void OnGUIToolbar(Rect area)
         {
-            ResetViewList();
-
             // draw views
             var viewArea = new Rect(area); viewArea.width -= _toolbarH;
             _toolbarIconRect = new Rect(0, 0, _toolbarH, _toolbarH);
-            _toolbarTable.OnGUI(viewArea, _viewList.Count, OnGUIToolbarIcon);
+            _toolbarTable.OnGUI(viewArea, _views.Count, OnGUIToolbarIcon);
 
             // draw close
             var closeRect = new Rect(area.xMax - _toolbarH, area.y, _toolbarH, area.height);
@@ -31,16 +29,10 @@ namespace Settings.GUI
 
         private void OnGUIToolbarIcon(int i)
         {
-            var kv = _viewList[i];
-            var key = kv.Key;
-            var view = kv.Value;
-
+            var view = _views[i];
             var icon = view.ToolbarIcon;
             if (DrawToolbarToggle(icon, view == _curView))
-            {
-                _curViewKey = key;
                 _curView = view;
-            }
         }
     }
 }

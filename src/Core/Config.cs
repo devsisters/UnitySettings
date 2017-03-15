@@ -1,20 +1,20 @@
-/*
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Settings
 {
     public class Config
     {
-        public string StartView = "Log";
-        public bool Collapse = false;
-        public bool ClearOnSceneLoad = false;
-        public bool ShowTime = false;
-        public bool ShowScene = false;
-        public Log.Mask LogMask;
-        public string FilterText = string.Empty;
-        public float Size = 32;
-
         private const string _prefKey = "UnitySettings_Config";
+
+        private struct ViewConfig
+        {
+            public string View;
+            public string Data;
+        }
+
+        public string StartView;
+        private List<ViewConfig> _viewConfigs = new List<ViewConfig>();
 
         public static Config LoadFromPrefs()
         {
@@ -30,4 +30,3 @@ namespace Settings
         }
     }
 }
-*/

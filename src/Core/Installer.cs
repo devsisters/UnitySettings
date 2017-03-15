@@ -59,7 +59,7 @@ namespace Settings
             // inject SystemInfo
             {
                 var view = new SystemInfo.View();
-                settings.AddView("SystemInfo", view);
+                settings.AddView(view);
             }
 
             // inject Log
@@ -74,7 +74,7 @@ namespace Settings
                 var organizer = stash.Organizer;
                 var view = new Log.View(viewConfig, organizer);
                 view.OnClickClear += () => stash.Clear();
-                settings.AddView("Log", view);
+                settings.AddView(view);
             }
         }
     }

@@ -23,12 +23,8 @@ namespace Settings.GUI
         private void UpdateKeyboard()
         {
             var i = GetAlphaNumKeyDown();
-            if (i == -1) return;
-            ResetViewList();
-            if (i >= _viewList.Count) return;
-            var kv = _viewList[i];
-            _curViewKey = kv.Key;
-            _curView = kv.Value;
+            if (i == -1 || i >= _views.Count) return;
+            _curView = _views[i];
         }
     }
 }
