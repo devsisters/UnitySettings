@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Settings.Extension.SystemInfo
 {
-    public partial class GUIView : GUI.IView
+    public partial class View
     {
         private RowBuilder AddPage(string title)
         {

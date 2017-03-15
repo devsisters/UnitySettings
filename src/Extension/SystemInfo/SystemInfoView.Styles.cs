@@ -3,7 +3,7 @@ using Settings.GUI;
 
 namespace Settings.Extension.SystemInfo
 {
-    public partial class GUIView
+    public partial class View
     {
         private static class Styles
         {

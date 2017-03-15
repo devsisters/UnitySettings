@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView : GUI.IView
+    internal partial class View : GUI.IView
     {
         private const int _iconWidth = 40;
         private const int _rowHeight = 64;
@@ -29,7 +29,7 @@ namespace Settings.Extension.Log
 
         private readonly Config _config;
 
-        public GUIView(Config config, Organizer organizer)
+        public View(Config config, Organizer organizer)
             : base("Log", Icons.Log)
         {
             _config = config;

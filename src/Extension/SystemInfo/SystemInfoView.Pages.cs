@@ -3,7 +3,7 @@ using A = UnityEngine.Application;
 
 namespace Settings.Extension.SystemInfo
 {
-    public partial class GUIView : GUI.IView
+    public partial class View
     {
         private void AddAllPages()
         {

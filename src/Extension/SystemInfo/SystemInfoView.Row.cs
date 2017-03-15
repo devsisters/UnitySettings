@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Settings.Extension.SystemInfo
 {
-    public partial class GUIView
+    public partial class View
     {
         private enum RowType
         {

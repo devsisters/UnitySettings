@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView
+    internal partial class View
     {
         private static readonly GUIContent _tempContent = new GUIContent();
 

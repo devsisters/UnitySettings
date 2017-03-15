@@ -82,7 +82,7 @@ namespace Settings
             if (enabled) behaviourListener.OnEnable();
         }
 
-        public void AddGUIView(string key, GUI.IView view)
+        public void AddView(string key, GUI.IView view)
         {
             Init();
             _guiDrawer.Add(key, view);

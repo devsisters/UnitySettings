@@ -3,7 +3,7 @@ using Settings.GUI;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView
+    internal partial class View
     {
         private static class Icons
         {

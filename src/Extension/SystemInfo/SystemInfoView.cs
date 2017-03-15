@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Settings.Extension.SystemInfo
 {
-    public partial class GUIView : GUI.IView
+    public partial class View : GUI.IView
     {
         private readonly GUI.ScrollView _scroll;
         private string _curPage;
         private readonly Dictionary<string, List<RowDef>> _pages;
 
-        public GUIView()
+        public View()
             : base("SystemInfo", Icons.Icon)
         {
             _scroll = new GUI.ScrollView(Vector2.zero, true, true);

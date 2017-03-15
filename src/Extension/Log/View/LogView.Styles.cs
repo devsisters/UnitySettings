@@ -3,7 +3,7 @@ using Helper = Settings.GUI.Helper;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView
+    internal partial class View
     {
         private static class Styles
         {

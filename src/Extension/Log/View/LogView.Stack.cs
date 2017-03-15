@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView
+    internal partial class View
     {
         private void DrawStackEmpty(Rect area)
         {

@@ -58,8 +58,8 @@ namespace Settings
         {
             // inject SystemInfo
             {
-                var view = new SystemInfo.GUIView();
-                settings.AddGUIView("SystemInfo", view);
+                var view = new SystemInfo.View();
+                settings.AddView("SystemInfo", view);
             }
 
             // inject Log
@@ -69,12 +69,12 @@ namespace Settings
                 var watch = new Log.Watch(provider, sampler);
                 settings.AddBehaviourListener(watch);
 
-                var viewConfig = new Log.GUIView.Config(); // TODO
+                var viewConfig = new Log.View.Config(); // TODO
                 var stash = watch.Stash;
                 var organizer = stash.Organizer;
-                var view = new Log.GUIView(viewConfig, organizer);
+                var view = new Log.View(viewConfig, organizer);
                 view.OnClickClear += () => stash.Clear();
-                settings.AddGUIView("Log", view);
+                settings.AddView("Log", view);
             }
         }
     }

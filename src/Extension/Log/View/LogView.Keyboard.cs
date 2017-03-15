@@ -3,7 +3,7 @@ using K = UnityEngine.KeyCode;
 
 namespace Settings.Extension.Log
 {
-    internal partial class GUIView
+    internal partial class View
     {
         private float _upDownTimeLeft;
         private K _curUpDownKey;
