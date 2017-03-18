@@ -14,19 +14,10 @@
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -40,10 +31,11 @@
     <Compile Include="src\Core\*.cs" />
     <Compile Include="src\Gesture\*.cs" />
     <Compile Include="src\GUI\*.cs" />
+    <Compile Include="src\GUIDrawer\*.cs" />
     <Compile Include="src\Util\*.cs" />
     <Compile Include="src\Unity\*.cs" />
     <Compile Include="src\Extension\Log\*.cs" />
-    <Compile Include="src\Extension\Log\GUI\*.cs" />
+    <Compile Include="src\Extension\Log\View\*.cs" />
     <Compile Include="src\Extension\SystemInfo\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

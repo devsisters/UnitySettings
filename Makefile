@@ -1,5 +1,5 @@
 build:
-	xbuild UnitySettings.csproj /verbosity:minimal
+	xbuild UnitySettings.csproj /verbosity:minimal /p:Configuration=Release
 	cp bin/Debug/UnitySettings.dll lib
 	cp bin/Debug/UnitySettings.dll.mdb lib
 
