@@ -36,6 +36,7 @@ namespace Settings
 
         public static void Install()
         {
+            if (!Application.isPlaying) return;
             if (!InstallWithoutCreateInstaller()) return;
             new GameObject("Installer (For Recompile)")
                 .AddComponent<Installer>();
