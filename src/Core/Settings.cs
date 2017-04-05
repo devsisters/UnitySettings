@@ -70,7 +70,10 @@ namespace Settings
         {
             Init();
             if (!_isShowingGUI) return;
+            var orgDepth = UnityEngine.GUI.depth;
+            UnityEngine.GUI.depth = -1000;
             _guiDrawer.OnGUI();
+            UnityEngine.GUI.depth = orgDepth;
         }
 
         public void AddBehaviourListener(IBehaviourListener behaviourListener)

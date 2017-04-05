@@ -50,6 +50,9 @@ namespace Settings.GUI
             OnGUIToolbar(toolbarArea);
             if (_curView != null)
                 _curView.OnGUI(viewArea);
+
+            // touch block
+            UnityEngine.GUI.Button(new Rect(0, 0, w, h), "", new GUIStyle());
         }
     }
 }
