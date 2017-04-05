@@ -10,9 +10,7 @@ namespace Settings
 
         // private Config _config;
         private GUI.Drawer _guiDrawer;
-        // TODO
-        // private bool _isShowingGUI;
-        private bool _isShowingGUI = true;
+        private bool _isShowingGUI;
         private IGesture _gesture;
         private readonly BehaviourListeners _behaviourListeners = new BehaviourListeners(8);
 
