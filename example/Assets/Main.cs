@@ -5,8 +5,6 @@ public class Main : MonoBehaviour
     void Start()
     {
         Settings.Installer.Install();
-        // Invoke("LogSame", 0.1f);
-        // Invoke("Log", 0.1f);
     }
 
     void OnEnable()
