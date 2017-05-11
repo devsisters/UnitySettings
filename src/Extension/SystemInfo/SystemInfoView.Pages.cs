@@ -34,7 +34,7 @@ namespace Settings.Extension.SystemInfo
 
             {
                 var b = AddPage("Application");
-                b.Header(RowBuilder.DescAndDetail(A.productName, A.bundleIdentifier));
+                b.Header(RowBuilder.DescAndDetail(A.productName, A.identifier));
                 b.Row("Ver", A.version + " / " + A.unityVersion);
                 b.Row("Company Name", A.companyName);
                 b.Row("Platform", A.platform);
