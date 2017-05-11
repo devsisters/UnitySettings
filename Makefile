@@ -7,6 +7,6 @@ unit:
 	mono --debug bin/test/UnitySettings-Test.exe
 
 copy_unity_dll:
-	cp /Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll lib/UnityEngine.dll
+	cp /Applications/Unity/Unity.app/Contents/Managed/UnityEngine.dll libs/UnityEngine.dll
 
 all: build unit

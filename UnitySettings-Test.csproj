@@ -26,10 +26,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
-      <HintPath>lib\UnityEngine.dll</HintPath>
+      <HintPath>libs\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnitySettings">
-      <HintPath>lib\UnitySettings.dll</HintPath>
+      <HintPath>bin\UnitySettings.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
