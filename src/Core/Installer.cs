@@ -4,6 +4,7 @@ using Log = Settings.Extension.Log;
 
 namespace Settings
 {
+    [AddComponentMenu("Settings/Settings.Installer")]
     public class Installer : MonoBehaviour
     {
         private static Settings _instance;

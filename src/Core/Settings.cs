@@ -3,6 +3,7 @@ using BehaviourListeners = System.Collections.Generic.List<Settings.IBehaviourLi
 
 namespace Settings
 {
+    [AddComponentMenu("Settings/Settings.Settings")]
     public class Settings : MonoBehaviour
     {
         // private bool _isInited { get { return _config != null; } }
