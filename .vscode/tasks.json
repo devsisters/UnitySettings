@@ -1,0 +1,5 @@
+{
+    "command": "make",
+    "isShellCommand": true,
+    "args": ["build"]
+}

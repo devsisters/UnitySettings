@@ -1,5 +1,4 @@
 obj
-.vscode
 
 bin/*
 !bin/UnitySettings.dll
