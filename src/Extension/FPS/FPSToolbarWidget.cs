@@ -15,8 +15,8 @@ namespace Settings.Extension.FPS
         {
             var target = Application.targetFrameRate;
             if (target != -1) return target;
-            if (Application.isEditor) return 60;
-            else if (Application.isMobilePlatform) return 30;
+            if (Application.isMobilePlatform) return 30;
+            else if (Application.isEditor) return 60;
             else return 60;
         }
 
