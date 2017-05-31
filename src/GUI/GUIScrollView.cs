@@ -25,7 +25,10 @@ namespace Settings.GUI
 
         private readonly bool _horizontal;
         private readonly bool _vertical;
+
         private Rect _lastArea;
+        private bool _isTouchFocused;
+        private int _lastTouchUpdateFrame;
 
         public ScrollView(Vector2 initScroll, bool horizontal, bool vertical)
         {
@@ -72,15 +75,29 @@ namespace Settings.GUI
 
         private void UpdateTouch()
         {
-            // check collision
-            Vector2 curPos;
-            if (!Util.Mouse.CurPos(out curPos)) return;
-            curPos = new Vector2(curPos.x, Screen.height - curPos.y);
-            if (!_lastArea.Contains(curPos)) return;
+            // check touch discontinued
+            if (_lastTouchUpdateFrame < Time.frameCount - 10 /* magic number */)
+                _isTouchFocused = false;
+            _lastTouchUpdateFrame = Time.frameCount;
+
+            // check focus
+            if (!_isTouchFocused && Util.Mouse.IsDown)
+            {
+                Vector2 curPos;
+                if (!Util.Mouse.CurPos(out curPos)) return;
+                curPos = new Vector2(curPos.x, Screen.height - curPos.y);
+                if (!_lastArea.Contains(curPos)) return;
+                _isTouchFocused = true;
+                return;
+            }
+
+            if (!_isTouchFocused)
+                return;
 
             // check delta
             Vector2 delta;
-            if (!Util.Mouse.Delta(out delta)) return;
+            if (!Util.Mouse.Delta(out delta))
+                _isTouchFocused = false;
 
             // update scroll
             if (_horizontal && delta.x != 0)
