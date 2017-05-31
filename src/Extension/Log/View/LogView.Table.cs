@@ -69,11 +69,16 @@ namespace Settings.Extension.Log
 
             // draw message
             {
+                var msg = log.Message;
+                msg = msg.Split('\n')[0];
+                if (msg.Length > 256 /* magic number */)
+                    msg = msg.Substring(0, 256);
+
                 var icon = Icons.ForLogType(log.Type);
                 var iconRect = new Rect(0, 0, _iconWidth, _rowHeight);
                 UnityEngine.GUI.Box(iconRect, icon, Styles.Icon);
                 var labelRect = new Rect(_iconWidth, 0, rightX - _iconWidth, _rowHeight);
-                UnityEngine.GUI.Label(labelRect, log.Message, fontStyle);
+                UnityEngine.GUI.Label(labelRect, msg, fontStyle);
             }
         }
 
