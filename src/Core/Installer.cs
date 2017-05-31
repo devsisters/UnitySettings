@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using SystemInfo = Settings.Extension.SystemInfo;
 using Log = Settings.Extension.Log;
 using Scene = Settings.Extension.Scene;
@@ -8,6 +10,8 @@ namespace Settings
     [AddComponentMenu("Settings/Settings.Installer")]
     public class Installer : MonoBehaviour
     {
+        [NonSerialized]
+        private bool _isInited = false;
         public bool EnableGesture = true;
         public KeyCode KeyboardShortcutForShow = KeyCode.BackQuote;
 
@@ -35,8 +39,6 @@ namespace Settings
                 DontDestroyOnLoad(singleton);
             }
 
-            InjectDependency(_instance);
-
             // for readability
             var isInstantiated = shouldInstantiate;
             return isInstantiated;
@@ -50,12 +52,15 @@ namespace Settings
             if (installer == null) new GameObject().AddComponent<Installer>();
         }
 
-        private void Awake()
+        private void Init()
         {
+            if (_isInited) return;
+            _isInited = true;
+
             var isInstantiated = InstantiateSettings();
 
             // if there's another Installer already, just destroy.
-            if (transform.parent != _instance.transform.parent
+            if (transform.parent != _instance.transform
                 && _instance.transform.childCount > 0)
             {
                 Destroy(gameObject);
@@ -74,6 +79,18 @@ namespace Settings
                 _instance.EnableGesture = EnableGesture;
                 _instance.KeyboardShortcutForShow = KeyboardShortcutForShow;
             }
+
+            InjectDependency(_instance);
+        }
+
+        private void Awake()
+        {
+            Init();
+        }
+
+        private void OnEnable()
+        {
+            Init();
         }
 
         private static void InjectDependency(Settings settings)

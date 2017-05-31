@@ -11,7 +11,6 @@ namespace Settings
 
         private bool _isInited { get { return _guiDrawer != null; } }
         private GUI.Drawer _guiDrawer;
-        [SerializeField, HideInInspector]
         private bool _isShowingGUI;
         private IGesture _gesture;
         private readonly BehaviourListeners _behaviourListeners = new BehaviourListeners(8);
