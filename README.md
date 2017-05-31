@@ -14,17 +14,20 @@ For preventing invent-a-wheel again and again, we decided to collect all the gen
 * You will simply add your own view by few API call.
 * Or you will plugin in your own code in github repository.
 
+## Current Status
+* Device information
+* Build information
+* Log viewer
+* Scene changer
+
 ## What Features, For Example?
 We will ship plenty of general purpose runtime debugging features!
 * Extensible CLI parser/executer
 * LUA repl for UnityEngine.dll
-* Device information
-* Build information
 * Account information
-* Log viewer
 * Touch infomation, with visualization
 * Network monitering tool/simulator
-* Scene changer/monitering tool
+* Scene flow monitering tool
 * PlayerPrefs modifier/viewer
 * Sound controller
 
