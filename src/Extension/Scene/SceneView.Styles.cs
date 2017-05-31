@@ -8,6 +8,7 @@ namespace Settings.Extension.Scene
         {
             public static readonly GUIStyle Button;
             public static readonly GUIStyle ButtonSelected;
+            public static readonly GUIStyle ButtonFocusOverlay;
 
             static Styles()
             {
@@ -15,6 +16,8 @@ namespace Settings.Extension.Scene
                 Button.alignment = TextAnchor.MiddleCenter;
                 ButtonSelected = new GUIStyle(GUI.Styles.ButtonGraySelected);
                 ButtonSelected.alignment = TextAnchor.MiddleCenter;
+                ButtonFocusOverlay = new GUIStyle();
+                ButtonFocusOverlay.normal.background = GUI.Helper.Solid(0xffff0060);
             }
         }
     }
