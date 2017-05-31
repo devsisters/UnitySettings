@@ -51,6 +51,12 @@ namespace Settings.Extension.SystemInfo
                 b.Row("Sandbox Type", A.sandboxType);
                 b.Row("BG Loading Priority", A.backgroundLoadingPriority);
                 b.Row("Cloud Project Id", A.cloudProjectId);
+
+                b.Row("Target Frame Rate", () => A.targetFrameRate);
+                b.Row("Internet Reachability", () => A.internetReachability);
+                b.Row("Genuine", () => A.genuine);
+                b.Row("Genuine Check Available", () => A.genuineCheckAvailable);
+                b.Row("Streamed Bytes", () => A.streamedBytes);
             }
 
             {
@@ -71,12 +77,6 @@ namespace Settings.Extension.SystemInfo
             }
 
             // skip
-            // changes over time
-            // b.Row("", A.internetReachability);
-            // b.Row("", A.genuine);
-            // b.Row("", A.genuineCheckAvailable);
-            // b.Row("", A.targetFrameRate);
-            // b.Row("", A.streamedBytes);
             // web player
             // b.Row("", A.srcValue);
             // b.Row("", A.absoluteURL);
