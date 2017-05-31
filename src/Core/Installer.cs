@@ -8,6 +8,9 @@ namespace Settings
     [AddComponentMenu("Settings/Settings.Installer")]
     public class Installer : MonoBehaviour
     {
+        public bool EnableGesture = true;
+        public KeyCode KeyboardShortcutForShow = KeyCode.BackQuote;
+
         private static Settings _instance;
         public static Settings Instance
         {
@@ -18,7 +21,7 @@ namespace Settings
             }
         }
 
-        private static bool InstallWithoutCreateInstaller()
+        private static bool InstantiateSettings()
         {
             if (_instance != null)
                 return false;
@@ -33,28 +36,44 @@ namespace Settings
             }
 
             InjectDependency(_instance);
-            return shouldInstantiate;
+
+            // for readability
+            var isInstantiated = shouldInstantiate;
+            return isInstantiated;
         }
 
         public static void Install()
         {
             if (!Application.isPlaying) return;
-            if (!InstallWithoutCreateInstaller()) return;
-            new GameObject("Installer (For Recompile)")
-                .AddComponent<Installer>();
+            if (!InstantiateSettings()) return;
+            var installer = Object.FindObjectOfType<Installer>();
+            if (installer == null) new GameObject().AddComponent<Installer>();
         }
 
         private void Awake()
         {
-            InstallWithoutCreateInstaller();
-            var isRecompiled = _instance.transform.childCount > 0;
-            if (isRecompiled) Destroy(gameObject);
-            else transform.SetParent(_instance.transform, false);
-        }
+            var isInstantiated = InstantiateSettings();
 
-        private void OnEnable()
-        {
-            InstallWithoutCreateInstaller();
+            // if there's another Installer already, just destroy.
+            if (transform.parent != _instance.transform.parent
+                && _instance.transform.childCount > 0)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            gameObject.name = "Installer (For Recompile)";
+
+            // change parent to Settings.
+            if (transform.parent != _instance.transform.parent)
+                transform.SetParent(_instance.transform, false);
+
+            // initialize settings
+            if (isInstantiated)
+            {
+                _instance.EnableGesture = EnableGesture;
+                _instance.KeyboardShortcutForShow = KeyboardShortcutForShow;
+            }
         }
 
         private static void InjectDependency(Settings settings)
