@@ -34,10 +34,11 @@
     <Compile Include="src\GUIDrawer\*.cs" />
     <Compile Include="src\Util\*.cs" />
     <Compile Include="src\Unity\*.cs" />
+    <Compile Include="src\Extension\SystemInfo\*.cs" />
     <Compile Include="src\Extension\Log\*.cs" />
     <Compile Include="src\Extension\Log\Log\*.cs" />
     <Compile Include="src\Extension\Log\View\*.cs" />
-    <Compile Include="src\Extension\SystemInfo\*.cs" />
+    <Compile Include="src\Extension\Scene\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

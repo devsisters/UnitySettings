@@ -51,7 +51,7 @@ namespace Settings
                 _isShowingGUI = false;
             if (_isShowingGUI)
             {
-                Util.Mouse.RefreshPos();
+                Util.Mouse.Refresh();
                 _guiDrawer.Update();
             }
             foreach (var l in _behaviourListeners)

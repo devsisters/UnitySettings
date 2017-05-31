@@ -25,7 +25,7 @@ namespace Settings.Extension.SystemInfo
 
         public override void OnGUI(Rect area)
         {
-            UnityEngine.GUI.Box(area, "", Styles.BG);
+            UnityEngine.GUI.Box(area, "", GUI.Styles.BG);
             _scroll.BeginLayout(area);
             OnGUIPageSelect();
             OnGUICurPage();

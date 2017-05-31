@@ -5,7 +5,8 @@ namespace Settings.Extension.Log
     internal partial class View : GUI.IView
     {
         private const int _iconWidth = 40;
-        private const int _rowHeight = 64;
+        private const int _rowHeight = 80;
+        private const int _toolbarHeight = 80;
 
         private readonly GUI.Table _table;
         private GUI.ScrollView _stackScroll;
@@ -36,7 +37,7 @@ namespace Settings.Extension.Log
             _table = new GUI.Table(
                 GUI.Table.Direction.Vertical,
                 _rowHeight, 0,
-                Styles.TableBG);
+                GUI.Styles.BG);
             _stackScroll = new GUI.ScrollView(Vector2.zero, true, true);
             _organizer = organizer;
         }
@@ -64,11 +65,10 @@ namespace Settings.Extension.Log
             {
                 var x = area.x; var y = area.y;
                 var w = area.width; var h = area.height;
-                const int toolbarH = 60;
-                var tableH = (h - toolbarH) * 0.75f;
-                var stackH = (h - toolbarH) * 0.25f;
-                toolbarArea = new Rect(x, y, w, toolbarH);
-                y += toolbarH;
+                var tableH = (h - _toolbarHeight) * 0.75f;
+                var stackH = (h - _toolbarHeight) * 0.25f;
+                toolbarArea = new Rect(x, y, w, _toolbarHeight);
+                y += _toolbarHeight;
                 tableArea = new Rect(x, y, w, tableH);
                 y += tableH;
                 stackArea = new Rect(x, y, w, stackH);

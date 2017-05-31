@@ -5,7 +5,7 @@ namespace Settings.GUI
 {
     internal partial class Drawer
     {
-        const int _toolbarH = 60;
+        const int _toolbarH = 80;
 
         private readonly Views _views = new Views(8);
         private IView _curView;

@@ -10,7 +10,6 @@ namespace Settings.Extension.Log
             public static readonly GUIStyle Font;
             public static readonly GUIStyle Icon;
 
-            public static readonly GUIStyle TableBG;
             public static readonly GUIStyle EvenLog;
             public static readonly GUIStyle OddLog;
             public static readonly GUIStyle SelectedLog;
@@ -43,9 +42,6 @@ namespace Settings.Extension.Log
                 Font.clipping = TextClipping.Clip;
                 Icon = new GUIStyle();
                 Icon.alignment = TextAnchor.MiddleCenter;
-
-                TableBG = new GUIStyle();
-                TableBG.normal.background = Helper.Solid(0xffffffa0);
 
                 EvenLog = MakeBaseLogStyle();
                 EvenLog.normal.background = Helper.Solid(0xeeeeeee0);

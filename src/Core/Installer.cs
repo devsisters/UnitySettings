@@ -1,6 +1,7 @@
 using UnityEngine;
 using SystemInfo = Settings.Extension.SystemInfo;
 using Log = Settings.Extension.Log;
+using Scene = Settings.Extension.Scene;
 
 namespace Settings
 {
@@ -60,8 +61,7 @@ namespace Settings
         {
             // inject SystemInfo
             {
-                var view = new SystemInfo.View();
-                settings.AddView(view);
+                settings.AddView(new SystemInfo.View());
             }
 
             // inject Log
@@ -77,6 +77,11 @@ namespace Settings
                 var view = new Log.View(viewConfig, organizer);
                 view.OnClickClear += () => stash.Clear();
                 settings.AddView(view);
+            }
+
+            // inject scene
+            {
+                settings.AddView(new Scene.View());
             }
         }
     }
