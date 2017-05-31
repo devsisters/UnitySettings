@@ -70,17 +70,30 @@ namespace Settings.Extension.Log
             UpDownSelectedLogWithCurKey(coolTimeFast);
         }
 
-        private void UpdateKeyboardCollapse()
+        private void UpdateKeyboardShortcut()
         {
             if (Input.GetKeyDown(KeyCode.Space))
                 _config.Collapse = !_config.Collapse;
+            if (Input.GetKeyDown(KeyCode.C))
+                _isClickedClear.On();
+            if (Input.GetKeyDown(KeyCode.L))
+                _config.Filter.Log = !_config.Filter.Log;
+            if (Input.GetKeyDown(KeyCode.W))
+                _config.Filter.Warning = !_config.Filter.Warning;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                var flag = !_config.Filter.Error;
+                _config.Filter.Error = flag;
+                _config.Filter.Assert = flag;
+                _config.Filter.Exception = flag;
+            }
         }
 
         private void UpdateKeyboard()
         {
             UpdateKeyboardAction();
             UpdateKeyboardStay();
-            UpdateKeyboardCollapse();
+            UpdateKeyboardShortcut();
         }
     }
 }
