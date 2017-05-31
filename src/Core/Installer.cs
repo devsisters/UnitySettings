@@ -71,7 +71,7 @@ namespace Settings
             gameObject.name = "Installer (For Recompile)";
 
             // change parent to Settings.
-            if (transform.parent != _instance.transform.parent)
+            if (transform.parent != _instance.transform)
                 transform.SetParent(_instance.transform, false);
 
             // initialize settings
