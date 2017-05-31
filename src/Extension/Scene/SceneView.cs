@@ -56,7 +56,7 @@ namespace Settings.Extension.Scene
         {
             GUILayout.BeginArea(area, GUI.Styles.BG);
 
-            var sceneCount = SceneManager.sceneCount;
+            var sceneCount = SceneManager.sceneCountInBuildSettings;
             var drawnScenes = new List<string>(sceneCount);
             for (var i = 0; i != sceneCount; ++i)
             {
