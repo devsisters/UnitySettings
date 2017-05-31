@@ -25,29 +25,26 @@ namespace Settings.Extension.Scene
             // up down focus
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if (!_focus.HasValue)
-                    _focus = 0;
-                ++_focus;
+                if (!_focus.HasValue) _focus = -1;
+                else --_focus;
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                if (!_focus.HasValue)
-                    _focus = 0;
-                --_focus;
+                if (!_focus.HasValue) _focus = 0;
+                else ++_focus;
             }
 
             if (!_focus.HasValue) return;
 
             // cull focus
-            var max = SceneManager.sceneCount;
-            _focus = Mathf.Clamp(_focus.Value, 0, max);
+            var max = SceneManager.sceneCountInBuildSettings;
+            _focus = (_focus.Value + max) % max;
 
             // on hit space
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                var scene = SceneManager.GetSceneAt(_focus.Value);
-                SceneManager.LoadScene(scene.name);
+                SceneManager.LoadScene(_focus.Value);
                 _focus = null;
             }
         }
@@ -57,28 +54,23 @@ namespace Settings.Extension.Scene
             GUILayout.BeginArea(area, GUI.Styles.BG);
 
             var sceneCount = SceneManager.sceneCountInBuildSettings;
-            var drawnScenes = new List<string>(sceneCount);
             for (var i = 0; i != sceneCount; ++i)
             {
-                var scene = SceneManager.GetSceneAt(i);
-
-                // draw check
-                var isDrawn = drawnScenes.Contains(scene.path);
-                if (isDrawn) continue;
-                drawnScenes.Add(scene.path);
+                var scene = SceneManager.GetSceneByBuildIndex(i);
 
                 // select style
                 var isCurrentScene = scene == SceneManager.GetActiveScene();
                 var style = isCurrentScene ? Styles.ButtonSelected : Styles.Button;
 
                 // draw button
-                var order = drawnScenes.Count - 1;
-                var rect = new Rect(0, order * _buttonHeight, area.width, _buttonHeight);
-                if (UnityEngine.GUI.Button(rect, scene.name, style))
-                    SceneManager.LoadScene(scene.name);
+                var rect = new Rect(0, i * _buttonHeight, area.width, _buttonHeight);
+                var path = SceneUtility.GetScenePathByBuildIndex(i);
+                var name = System.IO.Path.GetFileNameWithoutExtension(path);
+                if (UnityEngine.GUI.Button(rect, name, style))
+                    SceneManager.LoadScene(i);
 
                 // draw overlay
-                if (order == _focus)
+                if (i == _focus)
                     UnityEngine.GUI.Box(rect, "", Styles.ButtonFocusOverlay);
             }
 
