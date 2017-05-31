@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using FPS = Settings.Extension.FPS;
 using SystemInfo = Settings.Extension.SystemInfo;
 using Log = Settings.Extension.Log;
 using Scene = Settings.Extension.Scene;
@@ -95,6 +96,13 @@ namespace Settings
 
         private static void InjectDependency(Settings settings)
         {
+            // inject FPS
+            {
+                var fpsCounter = new FPS.Counter();
+                settings.AddBehaviourListener(fpsCounter);
+                settings.AddToolbarWidget(new FPS.ToolbarWidget(fpsCounter));
+            }
+
             // inject SystemInfo
             {
                 settings.AddView(new SystemInfo.View());
@@ -115,7 +123,7 @@ namespace Settings
                 settings.AddView(view);
             }
 
-            // inject scene
+            // inject Scene
             {
                 settings.AddView(new Scene.View());
             }

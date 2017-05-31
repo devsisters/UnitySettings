@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Views = System.Collections.Generic.List<Settings.GUI.IView>;
 
 namespace Settings.GUI
@@ -10,6 +11,7 @@ namespace Settings.GUI
         private readonly Views _views = new Views(8);
         private IView _curView;
         private readonly Table _toolbarTable;
+        private readonly List<IToolbarWidget> _toolbarWidgets = new List<IToolbarWidget>();
 
         public System.Action OnClose;
 
@@ -21,11 +23,16 @@ namespace Settings.GUI
                 Styles.ToolbarBG);
         }
 
-        public void Add(IView view)
+        public void AddView(IView view)
         {
             _views.Add(view);
             if (_curView == null)
                 _curView = view;
+        }
+
+        public void AddToolbarWidget(IToolbarWidget toolbarWidget)
+        {
+            _toolbarWidgets.Add(toolbarWidget);
         }
 
         public void Update()

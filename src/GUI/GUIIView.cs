@@ -14,6 +14,6 @@ namespace Settings.GUI
         }
 
         public virtual void Update() { }
-        public abstract void OnGUI(UnityEngine.Rect area);
+        public abstract void OnGUI(Rect area);
     }
 }

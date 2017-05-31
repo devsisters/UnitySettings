@@ -39,6 +39,7 @@
     <Compile Include="src\Extension\Log\Log\*.cs" />
     <Compile Include="src\Extension\Log\View\*.cs" />
     <Compile Include="src\Extension\Scene\*.cs" />
+    <Compile Include="src\Extension\FPS\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

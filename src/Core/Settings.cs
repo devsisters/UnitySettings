@@ -1,5 +1,6 @@
 using UnityEngine;
 using BehaviourListeners = System.Collections.Generic.List<Settings.IBehaviourListener>;
+using FPSCounter = Settings.Extension.FPS.Counter;
 
 namespace Settings
 {
@@ -97,7 +98,13 @@ namespace Settings
         public void AddView(GUI.IView view)
         {
             Init();
-            _guiDrawer.Add(view);
+            _guiDrawer.AddView(view);
+        }
+
+        public void AddToolbarWidget(GUI.IToolbarWidget toolbarWidget)
+        {
+            Init();
+            _guiDrawer.AddToolbarWidget(toolbarWidget);
         }
     }
 }

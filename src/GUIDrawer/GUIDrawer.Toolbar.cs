@@ -25,6 +25,14 @@ namespace Settings.GUI
             var closeRect = new Rect(area.xMax - _toolbarH, area.y, _toolbarH, area.height);
             if (UnityEngine.GUI.Button(closeRect, Icons.Close, Styles.ToolbarButton))
                 OnClose();
+
+            // draw widgets
+            for (var i = _toolbarWidgets.Count - 1; i >= 0; --i)
+            {
+                var rect = closeRect;
+                rect.x -= _toolbarH * (i + 1);
+                _toolbarWidgets[i].OnGUI(rect);
+            }
         }
 
         private void OnGUIToolbarIcon(int i)
