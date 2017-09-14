@@ -13,6 +13,7 @@ namespace Settings
         private bool _isInited { get { return _guiDrawer != null; } }
         private GUI.Drawer _guiDrawer;
         private bool _isShowingGUI;
+        public bool IsShowingGUI => _isShowingGUI;
         private IGesture _gesture;
         private readonly BehaviourListeners _behaviourListeners = new BehaviourListeners(8);
 
