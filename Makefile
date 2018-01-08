@@ -1,6 +1,5 @@
 build:
 	xbuild UnitySettings.csproj /verbosity:minimal /p:Configuration=Release
-	cp bin/UnitySettings.dll example/Assets
 
 unit:
 	xbuild UnitySettings-Test.csproj /verbosity:minimal
