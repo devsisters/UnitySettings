@@ -23,18 +23,21 @@ namespace Settings.GUI
         void OnSelect(int index);
     }
 
-    public class ListView : GUI.IView
+    public class ListView : IView
     {
         private static class Styles
         {
-            public static readonly GUIStyle Button;
+            public static readonly GUIStyle ButtonEven;
+            public static readonly GUIStyle ButtonOdd;
             public static readonly GUIStyle ButtonSelected;
             public static readonly GUIStyle ButtonFocusOverlay;
 
             static Styles()
             {
-                Button = new GUIStyle(GUI.Styles.ButtonGray);
-                Button.alignment = TextAnchor.MiddleCenter;
+                ButtonEven = new GUIStyle(GUI.Styles.ButtonLightGray);
+                ButtonEven.alignment = TextAnchor.MiddleCenter;
+                ButtonOdd = new GUIStyle(GUI.Styles.ButtonGray);
+                ButtonOdd.alignment = TextAnchor.MiddleCenter;
                 ButtonSelected = new GUIStyle(GUI.Styles.ButtonGraySelected);
                 ButtonSelected.alignment = TextAnchor.MiddleCenter;
                 ButtonFocusOverlay = new GUIStyle();
@@ -42,7 +45,7 @@ namespace Settings.GUI
             }
         }
 
-        private readonly int _cellHeight = 80;
+        private readonly int _cellHeight;
         private readonly IListViewDelegate _delegate;
         private int? _focus;
 
@@ -96,7 +99,9 @@ namespace Settings.GUI
                 var item = _delegate.GetItem(i);
 
                 // select style
-                var style = item.ShouldHighlight ? Styles.ButtonSelected : Styles.Button;
+                var style = item.ShouldHighlight
+                    ? Styles.ButtonSelected
+                    : (i % 2 == 0 ? Styles.ButtonEven : Styles.ButtonOdd);
 
                 // draw button
                 var rect = new Rect(0, i * _cellHeight, area.width, _cellHeight);

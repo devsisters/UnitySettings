@@ -6,7 +6,7 @@ namespace Settings.GUI
     {
         public static Color32 UintToColor(uint color)
         {
-            Color32 c;
+            var c = new Color32();
             c.r = (byte)((color >> 24) & 0xFF);
             c.g = (byte)((color >> 16) & 0xFF);
             c.b = (byte)((color >> 8) & 0xFF);

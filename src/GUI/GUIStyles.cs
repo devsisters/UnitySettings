@@ -6,6 +6,7 @@ namespace Settings.GUI
     {
         public static readonly GUIStyle BG;
         public static readonly GUIStyle ButtonGray;
+        public static readonly GUIStyle ButtonLightGray;
         public static readonly GUIStyle ButtonGraySelected;
 
         static Styles()
@@ -18,7 +19,14 @@ namespace Settings.GUI
             ButtonGray.margin = new RectOffset(2, 2, 2, 2);
             ButtonGray.fontSize = 32;
             ButtonGray.normal.background = Helper.Solid(0x9e9e9ef0);
-            ButtonGray.hover.background = Helper.Solid(0x757575f0);
+            ButtonGray.hover.background = Helper.Solid(0x696969f0);
+
+            ButtonLightGray = new GUIStyle();
+            ButtonLightGray.padding = new RectOffset(10, 10, 10, 10);
+            ButtonLightGray.margin = new RectOffset(2, 2, 2, 2);
+            ButtonLightGray.fontSize = 32;
+            ButtonLightGray.normal.background = Helper.Solid(0xa9a9a9f0);
+            ButtonLightGray.hover.background = Helper.Solid(0x757575f0);
 
             ButtonGraySelected = new GUIStyle(ButtonGray);
             ButtonGraySelected.fontStyle = FontStyle.Bold;
