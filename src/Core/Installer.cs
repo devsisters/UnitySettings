@@ -13,7 +13,8 @@ namespace Settings
     {
         [NonSerialized]
         private bool _isInited = false;
-        public bool EnableGesture = true;
+        public bool EnableGestureForPlayer = true;
+        public bool EnableGestureForEditor = false;
         public KeyCode KeyboardShortcutForShow = KeyCode.BackQuote;
 
         private static Settings _instance;
@@ -77,7 +78,8 @@ namespace Settings
             // initialize settings
             if (isInstantiated)
             {
-                _instance.EnableGesture = EnableGesture;
+                _instance.EnableGesture = Application.isEditor
+                    ? EnableGestureForEditor : EnableGestureForPlayer;
                 _instance.KeyboardShortcutForShow = KeyboardShortcutForShow;
             }
 
