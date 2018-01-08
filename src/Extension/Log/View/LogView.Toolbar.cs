@@ -39,6 +39,7 @@ namespace Settings.Extension.Log
             // draw actions
             if (DrawToolbarButton(Icons.Clear)) _isClickedClear.On();
             DrawToolbarToggle(Icons.Collapse, ref c.Collapse);
+            DrawToolbarToggle(Icons.KeepScrollToLast, ref c.KeepScrollToLast);
 
             // draw show sample
             if (!c.Collapse)

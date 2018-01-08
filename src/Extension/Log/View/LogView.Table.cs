@@ -84,6 +84,12 @@ namespace Settings.Extension.Log
 
         private void OnGUITable(Rect area, AbstractLogs logs)
         {
+            if (_config.KeepScrollToLast)
+            {
+                _selectedLog = logs.Count - 1;
+                _table.SetScrollToKeepIn(area, _selectedLog);
+            }
+
             if (_keepInSelectedLog)
             {
                 _table.SetScrollToKeepIn(area, _selectedLog);

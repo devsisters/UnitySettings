@@ -23,6 +23,7 @@ namespace Settings.Extension.Log
         public class Config
         {
             public bool Collapse = false;
+            public bool KeepScrollToLast = true;
             public bool ShowTime = false;
             public bool ShowScene = false;
             public Mask Filter = Mask.AllTrue;

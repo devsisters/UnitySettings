@@ -20,7 +20,7 @@ public class SampleListView : ListView
     }
 
     public SampleListView()
-        : base("Sample List View", null, 80, new ListViewDelegate())
+        : base("Sample List View", GUIContent.none, 80, new ListViewDelegate())
     {
     }
 }

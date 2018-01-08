@@ -29,6 +29,7 @@ namespace Settings.Extension.Log
 
         private void UpDownSelectedLogWithCurKey(float cooltime)
         {
+            _config.KeepScrollToLast = false;
             _keepInSelectedLog = true;
             _selectedLog += UpDownAmountForKey(_curUpDownKey);
             _upDownTimeLeft = cooltime;
@@ -74,6 +75,8 @@ namespace Settings.Extension.Log
         {
             if (Input.GetKeyDown(KeyCode.Space))
                 _config.Collapse = !_config.Collapse;
+            if (Input.GetKeyDown(KeyCode.Comma))
+                _config.KeepScrollToLast = !_config.KeepScrollToLast;
             if (Input.GetKeyDown(KeyCode.C))
                 _isClickedClear.On();
             if (Input.GetKeyDown(KeyCode.L))
