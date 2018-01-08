@@ -5,6 +5,7 @@ public class Main : MonoBehaviour
     void Start()
     {
         Settings.Installer.Install();
+        Settings.Installer.Instance.AddView(new SampleListView());
     }
 
     void OnEnable()
